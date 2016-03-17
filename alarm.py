@@ -59,7 +59,8 @@ def change_volume(prop_iface, start_vol, end_vol, duration_min):
 		for vol_step in range(1, duration_sec+1):
 			time.sleep(1)
 			current_vol = current_vol + vol_level
-			print 'Set volume(' + str(vol_step) + 'step) to ' + str(current_vol)
+			if(vol_step % 10 == 0):
+				print 'Set volume(' + str(vol_step) + 'step) to ' + str(current_vol)
 			prop_iface.Set('org.mpris.MediaPlayer2.Player', 'Volume', current_vol)
 
 	print 'Set volume(end) to ' + str(end_vol)
