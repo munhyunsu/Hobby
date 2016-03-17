@@ -48,7 +48,7 @@ def stop_music(player_iface):
 # End of stop_music()
 
 
-def change_volume(prop_iface, start_vol, end_vol, duration_min):
+def change_volume_per_min(prop_iface, start_vol, end_vol, duration_min):
 	print 'Set volume(start) to ' + str(start_vol)
 	prop_iface.Set('org.mpris.MediaPlayer2.Player', 'Volume', start_vol)
 
@@ -63,7 +63,26 @@ def change_volume(prop_iface, start_vol, end_vol, duration_min):
 
 	print 'Set volume(end) to ' + str(end_vol)
 	prop_iface.Set('org.mpris.MediaPlayer2.Player', 'Volume', end_vol)
-# End of change_volume()
+# End of change_volume_per_min()
+
+
+def change_volume_per_sec(prop_iface, start_vol, end_vol, duration_min):
+	print 'Set volume(start) to ' + str(start_vol)
+	prop_iface.Set('org.mpris.MediaPlayer2.Player', 'Volume', start_vol)
+
+	if(duration_min > 0):
+		duration_sec = 60 * duration_min
+		vol_level = (end_vol - start_vol) / duration_sec
+		current_vol = start_vol
+		for vol_step in range(1, duration_sec+1):
+			time.sleep(1)
+			current_vol = current_vol + vol_level
+			print 'Set volume(' + str(vol_step) + 'step) to ' + str(current_vol)
+			prop_iface.Set('org.mpris.MediaPlayer2.Player', 'Volume', current_vol)
+
+	print 'Set volume(end) to ' + str(end_vol)
+	prop_iface.Set('org.mpris.MediaPlayer2.Player', 'Volume', end_vol)
+# End of change_volume_per_sec()
 ##### End of Function Definition Area
 
 
@@ -81,9 +100,9 @@ def main():
 	
 	play_music(player_iface)
 
-	change_volume(prop_iface, start_vol, end_vol, duration_min)
+	change_volume_per_sec(prop_iface, start_vol, end_vol, duration_min)
 
-	change_volume(prop_iface, end_vol, start_vol, duration_min)
+	change_volume_per_sec(prop_iface, end_vol, start_vol, duration_min)
 	
 	stop_music(player_iface)
 ##### End of Main Area
