@@ -36,44 +36,6 @@ def connect_to_mpris2(music_player_name):
 # End of connect_to_mpris2()
 
 
-def play_with_change_volume(prop_iface, player_iface, start_vol, end_vol, duration_min):
-	print 'Play the Music'
-	player_iface.Play()
-	
-	vol_level = (end_vol - start_vol) / duration_min
-
-	print 'Set volume to ' + str(start_vol)
-	prop_iface.Set('org.mpris.MediaPlayer2.Player', 'Volume', start_vol)
-	current_vol = start_vol
-	for vol_step in range(1, duration_min+1):
-		time.sleep(60)
-		current_vol = current_vol + vol_level
-		print 'Set volume(' + str(vol_step) + 'step) to ' + str(current_vol)
-		prop_iface.Set('org.mpris.MediaPlayer2.Player', 'Volume', current_vol)
-	print 'Set volume(last) to ' + str(current_vol)
-	prop_iface.Set('org.mpris.MediaPlayer2.Player', 'Volume', end_vol)
-# End of play_with_change_volume()
-
-
-def stop_with_change_volume(prop_iface, player_iface, start_vol, end_vol, duration_min):
-	vol_level = (end_vol - start_vol) / duration_min
-
-	print 'Set volume to ' + str(start_vol)
-	prop_iface.Set('org.mpris.MediaPlayer2.Player', 'Volume', start_vol)
-	current_vol = start_vol
-	for vol_step in range(1, duration_min+1):
-		time.sleep(60)
-		current_vol = current_vol + vol_level
-		print 'Set volume(' + str(vol_step) + 'step) to ' + str(current_vol)
-		prop_iface.Set('org.mpris.MediaPlayer2.Player', 'Volume', current_vol)
-	print 'Set volume(last) to ' + str(current_vol)
-	prop_iface.Set('org.mpris.MediaPlayer2.Player', 'Volume', end_vol)
-
-	print 'Stop the Music'
-	player_iface.Stop()
-# End of stop_with_change_volume()
-
-
 def play_music(player_iface):
 	print 'Play the Music'
 	player_iface.Play()
@@ -109,18 +71,15 @@ def main():
 	sleep_min = 1
 	start_vol = 0.0
 	end_vol = 1.0
-	duration = 1
+	duration_min = 1
 
 	(prop_iface, player_iface) = connect_to_mpris2(music_player)
 
 	sleep(sleep_min)
-
-	#play_with_change_volume(prop_iface, player_iface, start_vol, end_vol, duration)
 	
 	play_music(player_iface)
 
-	change_volume(prop_iface, start_vol, end_vol, duration)
-
+	change_volume(prop_iface, start_vol, end_vol, duration_min)
 ##### End of Main Area
 
 if __name__ == '__main__':
