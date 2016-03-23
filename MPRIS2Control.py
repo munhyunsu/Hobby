@@ -1,11 +1,30 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
 
+####################
+#####
+##### Developing. This Source code is not working.
+#####
+####################
+
+
 import sys
 import dbus
 import time
 
-##### Function Definition Area
+
+##### ##### Class Definition Area
+class MPRIS2Controler:
+	##### MPRIS2Controler Function Definition Area
+	def __init__():
+		sleep_sec = 0
+		start_vol = 0.0
+		end_vol = 0.0
+		duration_time = 0
+		session_bus = None
+		prop_iface = None
+		player_iface = None
+
 def sleep(sleep_min):
 	sleep_sec = 60 * sleep_min
 	print 'I sleep for ' + str(sleep_sec) + ' Seconds'
@@ -59,8 +78,8 @@ def change_volume(prop_iface, start_vol, end_vol, duration_min):
 	print 'Set volume(end) to ' + str(end_vol)
 	prop_iface.Set('org.mpris.MediaPlayer2.Player', 'Volume', end_vol)
 # End of change_volume()
-##### End of Function Definition Area
-
+	##### End of MPRIS2Controler Function Definition Area
+##### End of Class Definition Area
 
 ##### Main Area
 def main():
