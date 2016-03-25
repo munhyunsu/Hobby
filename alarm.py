@@ -65,7 +65,7 @@ def change_volume(prop_iface, start_vol, end_vol, duration_min):
 ##### Main Area
 def main():
 	music_player = 'clementine'
-	sleep_min = 60 * 2.5
+	sleep_min = 60 * 4
 	start_vol = 0.0
 	end_vol = 1.0
 	duration_min = 30
