@@ -2,4 +2,4 @@
 - 쉐이미 요청
 
 # 사용법
-python score.py INPUTFILE OUTPUTFILE
+python score.py 학생답안 선생님답안
