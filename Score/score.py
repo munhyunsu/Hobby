@@ -1,130 +1,166 @@
 #/usr/bin/python
 # -*- coding: utf8 -*-
 
-##### 임포트 시작 #####
-# 인자 얻기
-import sys
-# csv 다루기
-import csv
 
-##### 임포트 끝 #####
+import sys # 인자 얻기
+import csv # csv 다루기
 
 
-
-##### 메인 시작 #####
 def main():
-    # 인자 확인
-    # 인자가 모자랄 경우 강제 종료
-    if( len(sys.argv) < 3 ):
+    """
+    메인 메소드
+    """
+    if( len(sys.argv) < 3 ): # 인자를 확인하고, 모자랄 경우 강제 종료
         print '사용법: python score.py 학생답안 선생님답안\n'
         sys.exit(0)
 
-    # 입력 인자 출력 for 사용자편의 
-    print '받은 입력:', str(sys.argv[0]), str(sys.argv[1]), str(sys.argv[2]), '\n'
+    print '받은 입력:', str(sys.argv[0]), \
+            str(sys.argv[1]), str(sys.argv[2]), # 사용자 편의를 위해 
+                                                # 입력 인자 출력
 
-    # 입력 인자 변수에 할당
-    student = str(sys.argv[1])
-    teacher = str(sys.argv[2])
-    result = str(sys.argv[1]).split('.')[0] + str('_학생별점수.csv')
-    print student, '에 있는 답안 결과를', teacher, '와 대조해 점수를 출력합니다.\n'
+    student_input = str(sys.argv[1]) # 학생 답안
+    teacher_input = str(sys.argv[2]) # 선생님 답안
+    # 사용자 편의를 위해 진행 사항 출력
+    print student_input, '에 있는 답안 결과를', \
+            teacher_input, '와 대조해 점수를 출력합니다.\n' 
 
-    # 답안 파일 읽어오기
-    teacher_file = open(teacher, 'r')
-    teacher_list = list(csv.reader(teacher_file, delimiter = ',', quotechar = '"'))
-    answer_list = list()
-    for (answer_number, answer_score) in teacher_list:
-        answer_list.append( (int(answer_number), int(answer_score)) )
+    teacher_file = open(teacher_input, 'r') # 답안 파일 읽어와 리스트에 저장
+    teacher_list = list(csv.reader(teacher_file, 
+            delimiter = ',', quotechar = '"'))
+    teacher_file.close() # 선생님 답안 닫기
 
-    # 결과 파일 만들기
-    result_file = open(result, 'w')
-    result_csv = csv.writer(result_file, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+    answer_list = dict() # 선생님 답안을 dict() 형식으로 저장
+    for (problem_number, answer_number_list, answer_score) in teacher_list:
+        answer_list[int(problem_number)] = ( # 문제 번호
+                set(), # 답은 OR가 가능
+                int(answer_score) # 점수
+                )
+        for answer_number in (answer_number_list.strip()).split(' '):
+            ((answer_list[int(problem_number)])[0]).add(int(answer_number))
+    print answer_list
 
-    # 학생 파일 읽어오기
-    student_file = open(student, 'r')
-    student_list = list(csv.reader(student_file, delimiter = ',', quotechar = '"'))
+    student_file = open(student_input, 'r') # 학생 답안 불러오기
+    student_list = list(csv.reader(student_file, 
+            delimiter = ',', quotechar = '"')) # 학생 답안 리스트
+    student_file.close() # 학생 답안 닫기
 
-    # 학생 파일 순회
-    for rows in student_list:
-        # 학생 정보 임시 저장
-        s_grade = rows[0].strip()
-        s_class = rows[1].strip()
-        s_number = rows[2].strip()
-        # 답 리스트로 저장
-        s_answer = rows[3:len(rows)]
-        # 점수는 0으로 초기화
-        s_score = 0
+    student_score_file_name = '학생별점수.csv' # 결과 파일 이름
+    student_score_file = open(student_score_file_name, 'w')
+    student_score_csv = csv.writer(student_score_file, 
+            delimiter = ',', quotechar = '"', 
+            quoting = csv.QUOTE_MINIMAL) # csv파일 생성
+    student_score_csv.writerow(['학년', '반', '번호', '점수'])
+
+    for rows in student_list: # 학생 파일 순회
+        current_student_grade = int(rows[0]) # 현재 정보
+        current_student_class = int(rows[1])
+        current_student_number = int(rows[2])
+        current_student_answer_list = rows[3:len(rows)] # 현재 답 리스트
+        current_student_score = 0 # 현재 학생 점수
         
         # 답 체크
-        for index in range(0, len(s_answer)):
-            # 답을 입력 안 했을 경우가 존재 예외처리 해야 함
-            # 이중 if문보다 나을 것으로 판단(가독성)
-            try:
-                if( (answer_list[index])[0] == int(s_answer[index]) ):
-                    s_score = s_score + (answer_list[index])[1]
+        for index in range(0, len(current_student_answer_list)):
+            try: # 답을 입력 안 했을 경우가 존재, 예외처리
+                current_student_answer = \
+                        int(current_student_answer_list[index]) # 제출 답
+                                                           # 이중 답 무시
+                current_problem_answer_set = \
+                        (answer_list[index+1])[0] # 실제 답
+                current_problem_score = \
+                        (answer_list[index+1])[1] # 점수
+            except ValueError: # int()에서 ValueError가 발생
+                pass
+            if(current_student_answer 
+                    in current_problem_answer_set): # 정답일 경우
+                current_student_score = \
+                        current_student_score + \
+                        current_problem_score # 점수 추가
+        
+        student_score_csv.writerow([current_student_grade, 
+                current_student_class, 
+                current_student_number, 
+                current_student_score])
+    student_score_file.close() # 학생 점수 파일 닫기
+
+    student_answer_rate = dict() # 학생 답안 비율
+    for (problem_number, answer_number_list, answer_score) in teacher_list:
+        student_answer_rate[int(problem_number)] = dict()
+    for rows in student_list: # 학생 파일 순회
+        current_student_answer_list = rows[3:len(rows)] # 현재 답 리스트
+
+        for index in range(0, len(current_student_answer_list)):
+            try: # 답을 입력하지 않았거나, 이중 답일 경우
+                current_student_answer = \
+                        int(current_student_answer_list[index])
             except ValueError:
                 pass
-        
-        result_csv.writerow([s_grade, s_class, s_number, s_score])
+            (student_answer_rate[index+1])[current_student_answer] = \
+                    student_answer_rate[index+1].get( \
+                            current_student_answer, 0) \
+                    + 1
+    print student_answer_rate
 
-    ### 추가
-    result_answer_rate = str(sys.argv[1]).split('.')[0] + str('_문항별정답률.csv')
-    answer_rate_file = open(result_answer_rate, 'w')
-    answer_rate_csv = csv.writer(answer_rate_file, delimiter = ',' , quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+    answer_rate_file_name = '문항별정답률.csv' # 결과 파일 이름
+    answer_rate_file = open(answer_rate_file_name, 'w')
+    answer_rate_csv = csv.writer(answer_rate_file, 
+            delimiter = ',' , quotechar = '"', 
+            quoting = csv.QUOTE_MINIMAL) # csv파일 생성
+    answer_rate_csv.writerow(['문제번호', '답', '정답률', 
+            '1번', '2번', '3번', '4번', '5번']) # 결과파일 헤더
 
-    # 답안 수 초기화
-    answer_rate = list()
-    for rows in teacher_list:
-        answer_rate.append(dict())
+    for (problem_number, answer_number_list, answer_score) in teacher_list:
+        answer_rate = dict() # 답안 비율 계산
+        answer_rate[1] = float( \
+                student_answer_rate[int(problem_number)].get(1, 0)) \
+                / float( \
+                sum(student_answer_rate[int(problem_number)].values()))
+        answer_rate[2] = float( \
+                student_answer_rate[int(problem_number)].get(2, 0)) \
+                / float( \
+                sum(student_answer_rate[int(problem_number)].values()))
+        answer_rate[3] = float( \
+                student_answer_rate[int(problem_number)].get(3, 0)) \
+                / float( \
+                sum(student_answer_rate[int(problem_number)].values()))
+        answer_rate[4] = float( \
+                student_answer_rate[int(problem_number)].get(4, 0)) \
+                / float( \
+                sum(student_answer_rate[int(problem_number)].values()))
+        answer_rate[5] = float( \
+                student_answer_rate[int(problem_number)].get(5, 0)) \
+                / float( \
+                sum(student_answer_rate[int(problem_number)].values()))
 
-    # 문항별 답안 수 집계
-    for rows in student_list:
-        student_answer = rows[3:len(rows)]
-        for index in range(0, len(student_answer)):
-            try:
-                dict_key = int(student_answer[index])
-                (answer_rate[index])[dict_key] = (answer_rate[index]).get(dict_key, 0) + 1
-            except ValueError:
-                dict_key = int(0)
-                (answer_rate[index])[dict_key] = (answer_rate[index]).get(dict_key, 0) + 1
-                
-    index = 0
-    for answer in answer_rate:
-        answer_0 = float(answer.get(0, 0)) / float(sum(answer.values()))
-        answer_1 = float(answer.get(1, 0)) / float(sum(answer.values()))
-        answer_2 = float(answer.get(2, 0)) / float(sum(answer.values()))
-        answer_3 = float(answer.get(3, 0)) / float(sum(answer.values()))
-        answer_4 = float(answer.get(4, 0)) / float(sum(answer.values()))
-        answer_5 = float(answer.get(5, 0)) / float(sum(answer.values()))
+        current_answer_set = set() # 답 세트
+        for answer_number in (answer_number_list.strip()).split(' '):
+            current_answer_set.add(int(answer_number))
 
-        answer_rate_csv.writerow([(answer_list[index])[0], answer_0, answer_1, answer_2, answer_3, answer_4, answer_5])
-        index = index + 1
+        answer_string = None # 다중 답을 위한 리스트 계산
+        current_answer_list = list(current_answer_set)
+        current_answer_list.sort()
+        for answer_number in current_answer_list:
+            if answer_string != None:
+                answer_string = answer_string + ' ' + str(answer_number)
+            else:
+                answer_string = str(answer_number)
 
+        collect_rate = 0.0 # 정답 비율 계산
+        for answer_number in current_answer_set:
+            collect_rate = collect_rate + answer_rate[answer_number]
 
-    ### 추가 끝
+        answer_rate_csv.writerow([int(problem_number),
+                answer_string,
+                collect_rate,
+                answer_rate[1],
+                answer_rate[2],
+                answer_rate[3],
+                answer_rate[4],
+                answer_rate[5]]) # 파일로 작성
+    answer_rate_file.close() # 답 비율 파일 닫기
 
-
-
-
-
-
-
-    # 결과 출력
     print '계산 완료!'
-    print '출력 결과는', result, '입니다\n'
-    # 사사문구
     print '추가 보완 사항은 개인적으로 연락주세용!\n'
 
-    # 파일 닫기
-    teacher_file.close()
-    result_file.close()
-    student_file.close()
-    answer_rate_file.close()
-##### 메인 끝 #####
 
-
-
-
-##### 스크립트 시작 #####
 if __name__ == '__main__':
     main()
-##### 스크립트 끝 #####
