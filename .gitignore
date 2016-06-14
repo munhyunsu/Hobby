@@ -1,6 +1,10 @@
 # syntax_test
 test/
 
+# .csv Files
+*.csv
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

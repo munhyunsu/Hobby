@@ -30,9 +30,9 @@ def main():
 
     # 답안 파일 읽어오기
     teacher_file = open(teacher, 'r')
-    teacher_csv = csv.reader(teacher_file, delimiter = ',', quotechar = '"')
+    teacher_list = list(csv.reader(teacher_file, delimiter = ',', quotechar = '"'))
     answer_list = list()
-    for (answer_number, answer_score) in teacher_csv:
+    for (answer_number, answer_score) in teacher_list:
         answer_list.append( (int(answer_number), int(answer_score)) )
 
     # 결과 파일 만들기
@@ -41,14 +41,14 @@ def main():
 
     # 학생 파일 읽어오기
     student_file = open(student, 'r')
-    student_csv = csv.reader(student_file, delimiter = ',', quotechar = '"')
+    student_list = list(csv.reader(student_file, delimiter = ',', quotechar = '"'))
 
     # 학생 파일 순회
-    for rows in student_csv:
+    for rows in student_list:
         # 학생 정보 임시 저장
-        s_grade = rows[0]
-        s_class = rows[1]
-        s_number = rows[2]
+        s_grade = rows[0].strip()
+        s_class = rows[1].strip()
+        s_number = rows[2].strip()
         # 답 리스트로 저장
         s_answer = rows[3:len(rows)]
         # 점수는 0으로 초기화
@@ -72,14 +72,12 @@ def main():
     answer_rate_csv = csv.writer(answer_rate_file, delimiter = ',' , quotechar = '"', quoting = csv.QUOTE_MINIMAL)
 
     # 답안 수 초기화
-    teacher_file.seek(0)
     answer_rate = list()
-    for rows in teacher_csv:
+    for rows in teacher_list:
         answer_rate.append(dict())
 
     # 문항별 답안 수 집계
-    student_file.seek(0)
-    for rows in student_csv:
+    for rows in student_list:
         student_answer = rows[3:len(rows)]
         for index in range(0, len(student_answer)):
             try:
