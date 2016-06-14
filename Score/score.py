@@ -44,7 +44,7 @@ def main():
             delimiter = ',', quotechar = '"')) # 학생 답안 리스트
     student_file.close() # 학생 답안 닫기
 
-    student_score_file_name = '학생별점수.csv' # 결과 파일 이름
+    student_score_file_name = 'ScorePerStudent.csv' # 결과 파일 이름
     student_score_file = open(student_score_file_name, 'w')
     student_score_csv = csv.writer(student_score_file, 
             delimiter = ',', quotechar = '"', 
@@ -100,7 +100,7 @@ def main():
                     + 1
     print student_answer_rate
 
-    answer_rate_file_name = '문항별정답률.csv' # 결과 파일 이름
+    answer_rate_file_name = 'AnswerRatePerProblem.csv' # 결과 파일 이름
     answer_rate_file = open(answer_rate_file_name, 'w')
     answer_rate_csv = csv.writer(answer_rate_file, 
             delimiter = ',' , quotechar = '"', 
