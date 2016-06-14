@@ -4,6 +4,10 @@ test/
 # .csv Files
 *.csv
 
+# Hobby/Score Example
+!/Score/student.csv
+!/Score/teacher.csv
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
