@@ -1,3 +1,9 @@
+# backup files
+*.b
+
+# Java class
+*.class
+
 # syntax_test
 test/
 
