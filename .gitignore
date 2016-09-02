@@ -9,6 +9,8 @@ test/
 
 # .csv Files
 *.csv
+# .json files
+*.json
 
 # Hobby/Score Example
 !/Score/student.csv
