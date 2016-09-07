@@ -35,9 +35,13 @@ import json
 
 
 ##### ##### ===== Function Area =====
-def read_pcap(file_path):
+def read_pcap(file_path, json_path):
     packet = open(file_path, 'rb').read()
     magic_number = struct.unpack('!4s2s2s4s4s4s4s', packet[0:24])[0]
+    if magic_number == b'\xd4\xc3\xb2\xa1':
+        byte_order = 'little'
+    else:
+        byte_order = 'big'
     print('magic number', '0x' + str(magic_number))
     network_type = struct.unpack('!4s2s2s4s4s4s4s', packet[0:24])[6]
     packet = packet[24:]
@@ -60,14 +64,15 @@ def read_pcap(file_path):
         time_stamp = struct.unpack('!4s4s4s4s', packet[0:16])[0]
         if(magic_number == b'd4c3b2a1'):
             time_stamp = struct.unpack('<I', time_stamp)[0]
-        time_stamp = int.from_bytes(time_stamp, byteorder='big')
-        time_stamp = time.strftime('%Y.%m.%d. %H:%M:%S', time.gmtime(time_stamp))
+        time_stamp = int.from_bytes(time_stamp, byteorder=byte_order)
+        time_stamp = time.strftime('%Y.%m.%d. %H:%M:%S', 
+                time.gmtime(time_stamp))
 #        print(time_stamp)
         saved_size = struct.unpack('!4s4s4s4s', packet[0:16])[2]
         if(magic_number == b'd4c3b2a1'):
             saved_size = struct.unpack('<I', saved_size)[0]
-        saved_size = int.from_bytes(saved_size, byteorder='big')
-#        print(saved_size)
+        saved_size = int.from_bytes(saved_size, byteorder=byte_order)
+#        print('saved_size', saved_size)
 
         cur_packet = packet[16:]
         packet = packet[saved_size+16:]
@@ -106,7 +111,7 @@ def read_pcap(file_path):
         #igmp['igmpreports'].append({time_stamp, multicast_address})
 
 #    print(igmp)
-    jsonfile = open('igmp.json', 'w')
+    jsonfile = open(json_path, 'w')
     json.dump(igmp, jsonfile, indent = 4, sort_keys = True)
     jsonfile.close()
 # End read_pcap()
@@ -120,13 +125,14 @@ def read_pcap(file_path):
 # Start main()
 def main():
     # Get source dir, des file
-    if len(sys.argv) < 2:
-        print('We need 1 arguments')
-        print('.py [PCAPFILE]')
+    if len(sys.argv) < 3:
+        print('We need 2 arguments')
+        print('.py [PCAPFILE] [JSONFILE')
         sys.exit()
     file_path = sys.argv[1]
+    json_path = sys.argv[2]
 
-    read_pcap(file_path)
+    read_pcap(file_path, json_path)
 # End main()
 ##### ##### ===== Function Area End =====
 
