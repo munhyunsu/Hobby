@@ -127,7 +127,7 @@ def main():
     # Get source dir, des file
     if len(sys.argv) < 3:
         print('We need 2 arguments')
-        print('.py [PCAPFILE] [JSONFILE')
+        print('.py [PCAPFILE] [JSONFILE]')
         sys.exit()
     file_path = sys.argv[1]
     json_path = sys.argv[2]
