@@ -94,7 +94,7 @@ class ClockItem(object):
 ##### Main Area
 def main():
     music_player = 'clementine'
-    sleep_min = 60 * 5.5
+    sleep_min = 60 * 4
     start_vol = 0.0
     end_vol = 1.0
     duration_min = 30
