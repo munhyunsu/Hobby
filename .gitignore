@@ -11,6 +11,8 @@ test/
 *.csv
 # .json files
 *.json
+# .png files
+*.png
 
 # Hobby/Score Example
 !/Score/student.csv
