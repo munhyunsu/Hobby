@@ -18,6 +18,7 @@ def get_program(timestamp, channelnumber):
 pop_schedule_week.asp?ch_no=' + channelnumber + '&nowdate=' + \
 time.strftime('%Y%m%d', stime)
 
+    print(channel_url)
     # check channel directory exist?
     file_dir = './channel_htmls/'
     #file_path = file_dir + channel_url
@@ -25,12 +26,13 @@ time.strftime('%Y%m%d', stime)
         os.makedirs(file_dir)
 
     # check chnnel file exist?
-    file_path = file_dir + channel_url
+    file_path = file_dir + channelnumber + '_' + time.strftime('%Y%m%d', stime) + '.html'
     if not os.path.exists(file_path): # If not, download channel info.
+        time.sleep(3)
         response = urllib.request.urlopen(channel_url)
-        html = response.readall()
+        html = response.read()
         html_file = open(file_path, 'w')
-        html_file.write(html)
+        html_file.write(html.decode('euc-kr'))
         html_file.close()
 
     # open channel information html
@@ -71,12 +73,20 @@ def program_analysis(input_path, output_path):
     # output list
     program_json = list()
     for node in viewchannel_json:
-        (promgram_name, program_age, program_genre) = \
+        (program_name, program_age, program_genre) = \
                 get_program(node['timestamp'], node['channelnumber'])
+        node['programname'] = program_name
+        node['programage'] = program_age
+        node['programgenre'] = program_genre
         
+        program_json.append(node)
 
-            
-
+    # Write to json
+    program_json_file = open(output_path, 'w')
+    json.dump(program_json, program_json_file, ensure_ascii= False, \
+            indent = 4, sort_keys = True)
+    program_json_file.close()
+        
 
 
 

@@ -16,6 +16,8 @@ test/
 !/Score/student.csv
 !/Score/teacher.csv
 
+# IPTV Analysis
+channel_htmls/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
