@@ -14,6 +14,9 @@ test/
 # .png files
 *.png
 
+# .pcap
+*.pcap
+
 # Hobby/Score Example
 !/Score/student.csv
 !/Score/teacher.csv

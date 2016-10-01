@@ -66,7 +66,7 @@ def read_pcap(file_path, json_path):
             time_stamp = struct.unpack('<I', time_stamp)[0]
         time_stamp = int.from_bytes(time_stamp, byteorder=byte_order)
         time_stamp = time.strftime('%Y.%m.%d. %H:%M:%S', 
-                time.gmtime(time_stamp))
+                time.localtime(time_stamp))
 #        print(time_stamp)
         saved_size = struct.unpack('!4s4s4s4s', packet[0:16])[2]
         if(magic_number == b'd4c3b2a1'):

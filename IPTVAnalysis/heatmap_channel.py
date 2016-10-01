@@ -4,6 +4,7 @@
 import sys
 import json
 import datetime
+import numpy
 import matplotlib.pyplot as plt
 
 
@@ -14,7 +15,7 @@ def draw_heatmap(input_path, output_path):
         draw_data.append(list())
     for node in draw_data:
         for index in range(0, 24):
-            node.append(0)
+            node.append(numpy.nan)
 
     #print(draw_data)
     program_json_file = open(input_path, 'r')
@@ -31,7 +32,9 @@ def draw_heatmap(input_path, output_path):
         (draw_data[time_weekday])[time_hour] = channel_number
 
     # draw plot
-    plt.imshow(draw_data, cmap = 'Greys', interpolation = 'nearest')
+    #plt.imshow(draw_data, cmap = 'Greys', interpolation = 'nearest')
+    #plt.imshow(draw_data, cmap = 'Paired', interpolation = 'nearest', vmin = 0, vmax = 185)
+    plt.imshow(draw_data, cmap = 'Paired', interpolation = 'nearest')
     plt.ylabel('Weekdays')
     plt.xlabel('Hours')
     plt.title('What Did I Watch ? Heatmap')

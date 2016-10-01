@@ -28,7 +28,7 @@ time.strftime('%Y%m%d', stime)
     # check chnnel file exist?
     file_path = file_dir + channelnumber + '_' + time.strftime('%Y%m%d', stime) + '.html'
     if not os.path.exists(file_path): # If not, download channel info.
-        time.sleep(3)
+        #time.sleep(3)
         response = urllib.request.urlopen(channel_url)
         html = response.read()
         html_file = open(file_path, 'w')
