@@ -9,7 +9,7 @@ import datetime
 import urllib.request
 from bs4 import BeautifulSoup
 
-def get_program(timestamp, channelnumber):
+def get_program(timestamp, channelnumber, one_more = True):
     # convert string to time
     stime = time.strptime(timestamp, '%Y.%m.%d. %H:%M:%S')
     
@@ -28,7 +28,7 @@ time.strftime('%Y%m%d', stime)
     # check chnnel file exist?
     file_path = file_dir + channelnumber + '_' + time.strftime('%Y%m%d', stime) + '.html'
     if not os.path.exists(file_path): # If not, download channel info.
-        #time.sleep(3)
+        time.sleep(3)
         response = urllib.request.urlopen(channel_url)
         html = response.read()
         html_file = open(file_path, 'w')
@@ -60,6 +60,11 @@ time.strftime('%Y%m%d', stime)
             break
         else:
             time_now = time_now - datetime.timedelta(minutes = 10)
+            if (time_now.hour == 0) and (time_now.minute == 0) and \
+                    one_more:
+                time_now = time_now - datetime.timedelta(minutes = 10)
+                return get_program(time_now.strftime('%Y.%m.%d. %H:%M:%S'), \
+                        channelnumber, False)
         
     return (None, None, None)
 

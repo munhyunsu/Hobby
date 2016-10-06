@@ -11,17 +11,21 @@ def main():
 
     print('For exit, press ctrl + c')
     while(True):
-        with urllib.request.urlopen(url) as f:
-            if f.code == 200:
-                html = f.read()
-                soup = BeautifulSoup(html, 'html5lib')
-                if soup.title is not None:
-                    print(f.code, 'Success', soup.title.text, '\a')
-                else:
-                    print(f.code, 'Connected but not html')
-            else:
-                print(f.code, 'Fail, sleep 3 Seconds')
-        time.sleep(5)
+        try:
+            with urllib.request.urlopen(url) as f:
+                if f.code == 200:
+                    html = f.read()
+                    soup = BeautifulSoup(html, 'html5lib')
+                    if soup.title is not None:
+                        print(f.code, 'Success', soup.title.text, '\a')
+                    else:
+                        print(f.code, 'Connected but not html')
+        except urllib.error.HTTPError:
+            print('May be 404. sleep')
+        except KeyboardInterrupt:
+            print('pressed ctrl + c. exit')
+            break
+        time.sleep(60)
 
 
 if __name__ == '__main__':

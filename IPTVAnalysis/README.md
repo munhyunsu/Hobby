@@ -1,3 +1,13 @@
+# 사용법
+
+## 실행순서
+```
+python3 igmpreport_extract_from_pcap.py 0824-1005.pcap igmpreport.json 
+python3 channel_analysis_from_igmpreport.py igmpreport.json channel.json
+python3 remove_unknown_channel.py channel.json viewchannel.json
+python3 program_analysis.py viewchannel.json program.json
+```
+
 # Changelog
 
 ## [160907] v0.0.2

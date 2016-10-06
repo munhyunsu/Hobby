@@ -15,7 +15,7 @@ def draw_heatmap(input_path, output_path):
         draw_data.append(list())
     for node in draw_data:
         for index in range(0, 24):
-            node.append(numpy.nan)
+            node.append(dict())
 
     #print(draw_data)
     program_json_file = open(input_path, 'r')
@@ -29,7 +29,20 @@ def draw_heatmap(input_path, output_path):
         time_weekday = time_now.weekday()
         time_hour = time_now.hour
         channel_number = int(node['channelnumber'])
-        (draw_data[time_weekday])[time_hour] = channel_number
+        ((draw_data[time_weekday])[time_hour])[channel_number] = \
+                (draw_data[time_weekday])[time_hour].get( \
+                channel_number, 0) + 1
+
+    for node in draw_data:
+        for index in range(0, 24):
+            if len(node[index]) != 0:
+                draw_value = max(node[index])
+                if draw_value == 0:
+                    draw_value = numpy.nan
+            else:
+                draw_value = numpy.nan
+            node[index] = draw_value
+
 
     # draw plot
     #plt.imshow(draw_data, cmap = 'Greys', interpolation = 'nearest')
@@ -37,7 +50,7 @@ def draw_heatmap(input_path, output_path):
     plt.imshow(draw_data, cmap = 'Paired', interpolation = 'nearest')
     plt.ylabel('Weekdays')
     plt.xlabel('Hours')
-    plt.title('What Did I Watch ? Heatmap')
+    plt.title('Most watched channel number heatmap')
     plt.yticks(range(0, 7), ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'])
     plt.xticks(range(0, 24), list(range(0, 24)))
     cbar = plt.colorbar(orientation = 'horizontal')
