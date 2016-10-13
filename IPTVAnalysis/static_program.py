@@ -30,12 +30,12 @@ def top_contents(input_path):
 
     print('가장 많이 본 컨텐츠!')
     for top in sorted(content_number, key = content_number.get, \
-            reverse = True)[:10]:
+            reverse = True):
         print(top, ': ', content_number[top], '회')
 
     print('가장 오랫동안 본 컨텐츠!')
     for top in sorted(content_hour, key = content_hour.get, \
-            reverse = True)[:10]:
+            reverse = True):
         print(top, ': ', content_hour[top], '시간')
 
 
