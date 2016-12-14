@@ -1,6 +1,7 @@
 /**
  * @file process_monitor.c
  * @Author LuHa(munhyunsu@gmail.com)
+ * 참고: http://bewareofgeek.livejournal.com/2945.html
  */
 
 #include <sys/socket.h>
@@ -378,30 +379,6 @@ static int handle_proc_ev(int nl_sock)
 
     return 0;
 }
-
-/*
-const char* get_process_name_by_pid(const int pid)
-{
-    char* name = (char*)calloc(1024, sizeof(char));
-    if(name == 0){
-        sprintf(name, "/proc/%d/cmdline", pid);
-        FILE* f = fopen(name,"r");
-        if(f == 0){
-            size_t size;
-            size = fread(name, sizeof(char), 1024, f);
-            if(size>0){
-                if('\n'==name[size-1]) {
-                    name[size-1]='\0';
-                }
-            }
-            fclose(f);
-        }
-    }
-    return name;
-}*/
-
-
-
 
 
 /**SIGINT 핸들러
