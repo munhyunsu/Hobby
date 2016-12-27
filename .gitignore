@@ -24,6 +24,9 @@ test/
 # IPTV Analysis
 channel_htmls/
 
+# OTTLoger
+!/OTTLogger/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
