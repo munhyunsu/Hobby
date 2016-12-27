@@ -18,16 +18,18 @@ def unzip_cp949(input_path):
     dirfiles = os.listdir(path = input_path)
     unzip_queue = list()
     for new_file in dirfiles:
-        unzip_queue.append(input_path + '/' + new_file)
+        if new_file[-3:].lower() == 'zip':
+            unzip_queue.append(input_path + '/' + new_file)
     
     while len(unzip_queue) > 0:
         files = unzip_queue.pop()
-        if os.path.isdir(files):
-            dirfiles = os.listdir(path = files)
-            for new_file in dirfiles:
-                unzip_queue.append(files + '/' + new_file)
-            continue
-        if files[-3:] == 'zip':
+#        if os.path.isdir(files):
+#            dirfiles = os.listdir(path = files)
+#            for new_file in dirfiles:
+#                if new_file[-3:].lower() == 'zip':
+#                    unzip_queue.append(files + '/' + new_file)
+#            continue
+        if files[-3:].lower() == 'zip':
             _unzip_cp949(files)
         else:
             print('Not zip', files)
