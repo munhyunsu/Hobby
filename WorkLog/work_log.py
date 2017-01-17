@@ -87,6 +87,8 @@ def write_csv_log(alive_member):
 
 
 def main():
+    config = configparser.ConfigParser()
+    config.read('settings.ini')
 
     try:
         print('기록을 시작합니다.')
@@ -98,7 +100,11 @@ def main():
 
             write_csv_log(alive_member)
 
-            time.sleep(600)
+            time.sleep( \
+                    int( \
+                            (config['main'])['sleep_time'] \
+                    )
+            )
     except KeyboardInterrupt:
         print('기록을 중지합니다.')
 
