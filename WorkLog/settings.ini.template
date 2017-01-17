@@ -1,3 +1,6 @@
+[main]
+sleep_time = 
+
 [arp_request]
 interface = 
 src_mac = 

@@ -13,14 +13,14 @@ def read_member_dict_from_file():
     config = configparser.ConfigParser()
     config.read('settings.ini')
     for mac in config['members']:
-        member_dict[mac] = (config['members'])[mac]
+        member_dict[mac.lower()] = (config['members'])[mac]
 
     return member_dict
 
 
 
 def get_alive_member(member_dict):
-    alive_member = list()
+    alive_member = set()
 
     config = configparser.ConfigParser()
     config.read('settings.ini')
@@ -68,7 +68,7 @@ def get_alive_member(member_dict):
                     arp_reply)
             if arp_struct[10].hex() == sender_mac:
                 if arp_struct[8].hex() in member_dict:
-                    alive_member.append(member_dict[arp_struct[8].hex()])
+                    alive_member.add(member_dict[arp_struct[8].hex()])
     except Exception as err:
         pass
 
