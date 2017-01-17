@@ -87,12 +87,20 @@ def write_csv_log(alive_member):
 
 
 def main():
-    member_dict = read_member_dict_from_file()
 
-    alive_member = get_alive_member(member_dict)
+    try:
+        print('기록을 시작합니다.')
+        print('중지하시려면 Ctrl + C를 누르세요.')
+        while True:
+            member_dict = read_member_dict_from_file()
 
-    write_csv_log(alive_member)
+            alive_member = get_alive_member(member_dict)
 
+            write_csv_log(alive_member)
+
+            time.sleep(600)
+    except KeyboardInterrupt:
+        print('기록을 중지합니다.')
 
 if __name__ == '__main__':
     main()
