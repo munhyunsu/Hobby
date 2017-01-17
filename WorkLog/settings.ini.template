@@ -1,0 +1,7 @@
+[arp_request]
+interface = 
+src_mac = 
+src_ip = 
+
+[members]
+macaddress = membername

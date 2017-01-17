@@ -21,11 +21,9 @@ test/
 !/Score/student.csv
 !/Score/teacher.csv
 
-# IPTV Analysis
-channel_htmls/
+# ini files
+*.ini
 
-# OTTLoger
-!/OTTLogger/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
