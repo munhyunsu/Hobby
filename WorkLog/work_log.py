@@ -78,6 +78,9 @@ def get_alive_member(member_dict):
 
         
 def write_csv_log(alive_member):
+    if len(alive_member) == 0:
+        return
+
     with open('alive.csv', 'a', newline = '') as csvfile:
         alive_writer = csv.writer(csvfile, \
                 delimiter = ',', quotechar = '"', \
