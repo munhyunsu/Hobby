@@ -1,6 +1,9 @@
 # 출근했는지 로그를 남기자!
 
 ## 버전히스토리
+  - 0.1.4
+    - Apple Macbook은 Padding을 통해서 60Bytes Packet으로 보냄
+    - struct unpack 버그 수정
   - 0.1.3
     - 출근한 사람이 없을 경우 기록하지 않음
   - 0.1.2

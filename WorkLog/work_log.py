@@ -65,12 +65,14 @@ def get_alive_member(member_dict):
         for index in range(0, 1024):
             arp_reply = arp_socket.recv(1024)
             arp_struct = struct.unpack('@6s6s2s2s2s1s1s2s6s4s6s4s', \
-                    arp_reply)
+                    arp_reply[:42])
             if arp_struct[10].hex() == sender_mac:
                 if arp_struct[8].hex() in member_dict:
                     alive_member.add(member_dict[arp_struct[8].hex()])
-    except Exception as err:
+    except socket.timeout:
         pass
+    except Exception as err:
+        print('Exception: {0}'.format(err))
 
     arp_socket.close()
 
