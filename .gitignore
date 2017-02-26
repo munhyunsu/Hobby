@@ -1,3 +1,11 @@
+# python venv
+*/bin
+*/include
+*/lib
+*/lib64
+pip-selfcheck.json
+pyvenv.cfg
+
 # backup files
 *.b
 
