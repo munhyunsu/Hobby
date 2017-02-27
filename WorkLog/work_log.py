@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 
+import configparser
 import socket
+import sys
 import struct
 import csv
 import time
-import configparser
 
 
 def read_member_dict_from_file():
@@ -88,30 +89,112 @@ def write_csv_log(alive_member):
                 delimiter = ',', quotechar = '"', \
                 quoting = csv.QUOTE_ALL)
         alive_writer.writerow([time.ctime(), alive_member])
-    
+
+# 스니핑 소켓 생성
+# @arg: socket - interface 가 있는 config
+def create_socket(config):
+    # 설정파일 확인
+    if not 'socket' in config:
+        print('[FATAL] 설정 파일에 socket 세션이 필요합니다.')
+        return None
+    if not 'interface' in config['socket']:
+        print('[FATAL] 설정 파일 socket 세션에' +
+                'interface 항목이 필요합니다.')
+        return None
+    # 소켓 생성시 예외 발생 가능
+    try:
+        # 소켓 생성
+        read_socket = socket.socket(family=socket.AF_PACKET, \
+                type=socket.SOCK_RAW)
+        # 인터페이스, 이더넷 종류
+        # https://linux.die.net/include/linux/if_ether.h
+        socket_interface = (config['arp_request'])['interface']
+        socket_ethernet = 0x0004 # Every packet (be careful!!!)
+        # 소켓 바인드
+        read_socket.bind((socket_interface, socket_ethernet))
+    except Exception as err:
+        print('[ERROR] create socket 예외 발생')
+        return None
+
+    return read_socket
 
 
+# 맥 주소 파싱
+# @arg: 스니핑 소켓
+def read_mac_address(read_socket):
+    # 읽을 데이터가 없을 떄를 위해 타임 아웃 설정
+    read_socket.settimeout(5)
+    # 타임 아웃 예외 발생 가능
+    try:
+        # WLAN 802.11 MTU(2304) + WPA-TKIP(20)
+        # https://en.wikipedia.org/wiki/Maximum_transmission_unit
+        read_data = read_socket.recv(2324)
+        # MAC 주소 파싱
+        read_mac = parse_data(read_data)
+    except socket.timeout:
+        print('[DEBUG] Socket timeout')
+        return None
+    # MAC 주소 반환
+    return read_mac
+
+
+# Probe Request의 MAC 주소 파싱
+def parse_data(read_data):
+    # bytes 형만 파싱
+    if type(read_data) != bytes:
+        print('[ERROR] parse_data 에 주어진 read_data 가 bytes ' +
+              '타입이 아닙니다.')
+        return None
+    # 데이터 커서 생성
+    data_cursor = read_data
+    if len(data_cursor) < 8:
+        return None
+    # radiotab header length
+    # http://www.radiotap.org/
+    radiotab = struct.unpack('!1s1s2s4s', data_cursor[0:8])
+    radiotab_length = int.from_bytes(radiotab[2], byteorder='little')
+    # 데이터 커서 이동
+    data_cursor = data_cursor[radiotab_length:]
+    if len(data_cursor) < 22:
+        return None
+    # 802.11 frame
+    frame80211 = struct.unpack('!2s2s6s6s6s', data_cursor[0:22])
+    # probe request
+    subtype = frame80211[0].hex()
+    if subtype[0] != '4':
+        return None
+    source_mac_address = frame80211[3].hex()
+    # MAC 주소 반환
+    return source_mac_address
+
+# 메인
 def main():
+    # 설정파일 불러오기
     config = configparser.ConfigParser()
     config.read('settings.ini')
 
+    # 종료를 위한 try-catch
     try:
         print('기록을 시작합니다.')
         print('중지하시려면 Ctrl + C를 누르세요.')
+
+        # TODO: 소켓 만들기
+        read_socket = create_socket(config)
+        if read_socket == None:
+            print('[FATAL] socket creation fail')
+            sys.exit(0)
+
+        # TODO: 데이터 읽기
         while True:
-            member_dict = read_member_dict_from_file()
-
-            alive_member = get_alive_member(member_dict)
-
-            write_csv_log(alive_member)
-
-            time.sleep( \
-                    int( \
-                            (config['main'])['sleep_time'] \
-                    )
-            )
+            mac_addr = read_mac_address(read_socket)
+            # TODO: 데이터 파싱
+            if mac_addr != None:
+                continue
+            # TODO: 데이터 기록
+            
     except KeyboardInterrupt:
         print('기록을 중지합니다.')
+        sys.exit(0)
 
 if __name__ == '__main__':
     main()
