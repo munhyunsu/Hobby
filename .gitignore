@@ -30,8 +30,6 @@ test/
 !/Score/teacher.csv
 
 # ini files
-*.ini
-
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
