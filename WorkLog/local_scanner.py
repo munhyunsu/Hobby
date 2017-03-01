@@ -39,8 +39,11 @@ class LocalMACScanner(MACScanner):
 
     # MAC 주소 다루기
     def _handle_mac(self, mac):
-        # 일정 시간마다 저장
+        # 시간 비교용 변수
         now_handle = int(time.time())
+        # 저장 셋에 추가
+        self.log_set.add(mac.upper())
+        # 일정 시간마다 저장
         if (now_handle - self.last_handle) > self.handle_time:
             # 데이터베이스 커밋
             self.cursor.execute('''
@@ -52,8 +55,6 @@ class LocalMACScanner(MACScanner):
             # 다음 저장 시간 세팅 및 변수 클리어
             self.last_handle = now_handle
             self.log_set.clear()
-        else: # 셋으로 모으기
-            self.log_set.add(mac.upper())
 
 def main():
     config_file = 'localscan.ini'

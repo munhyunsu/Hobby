@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DNLab 출석부</title>
+</head>
+<body>
+    <h1>DNLab 출석부 페이지</h1>
+    <h3>와이파이 모듈의 MAC 주소를 통해 출석을 확인합니다.</h3>
+    <h3>MAC 주소 등록후 기록을 확인할 수 있습니다.</h3>
+    <h4>3G/LTE를 사용중이더라도 와이파이를 켜두어야(연결은 하지 않아도) 출석이 확인됩니다.</h4>
+    <h3>저장된 기록이 궁금하면 학번을 입력하세요.</h3>
+    <h5>학번당 1개의 MAC 주소를 등록할 수 있습니다.</h5>
+    <form action="/cgi-bin/check.py" method="post">
+        학번: <input type="text" name="id" placeholder="학번"> <br>
+        <input type="submit" value="기록 확인">
+    </form>
+    <br>
+    <form action="userregistration.html">
+        <input type="submit" value="MAC 주소 등록/변경">
+    </form>
+    <br><br>
+    <h4>알림</h4>
+    <h5>이 출석부는 GPL3 라이선스가 달린 오픈소스프로젝트입니다.</h5>
+    <h5>여러가지 향상 가능성이 있으니 힘을 합쳐주세요.</h5>
+    <h5>어디서부터 시작해야할지 모르겠으면 공대5호관 606호로 오세요.</h5>
+    <h5>제작: 
+      <a href="mailto:munhyunsu@cs-cnu.org">Mun Hyunsu</a>
+      of DNLab
+    </h5>
+    <h5><a href="https://github.com/munhyunsu/Hobby" target="_blank">Github</a></h5>
+</body>
+</html>
