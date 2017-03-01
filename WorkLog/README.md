@@ -1,6 +1,9 @@
 # 출근했는지 로그를 남기자!
 
 ## 버전히스토리
+  - 1.0.0
+    - 클래스 형태로 변경
+    - MAC 주소와 인원 매칭 제거
   - 0.1.4
     - Apple Macbook은 Padding을 통해서 60Bytes Packet으로 보냄
     - struct unpack 버그 수정
@@ -16,10 +19,14 @@
     - 초기버전 완성
 
 ## 사용법
-  1. .ini파일을 세팅한다.
-  2. 관리자 권한으로 실행한다.
-  3. alive.csv 파일로 출력이 된다.
+  1. ifconfig [무선인터페이스] down
+  2. iwconfig [무선인터페이스] mode monitor
+    - iwconfig [무선인터페이스] mode managed
+  3. ifconfig [무선인터페이스] up
 
+  - 이렇게 했는데 결과 출력이 안 될 경우(Wireshark 에서도 안 보일 경우)
+    무선인터페이스가 모니터링 모드를 지원하지 않아서 그렇습니다.
+    작은 동글하나 구매해서 진행하세요.
 
 ## 목표
   - 시각화
@@ -33,7 +40,7 @@
   - 출력 파일 이름을 설정 파일에서 확인
   - 소켓 자는 시간 설정 파일에서 확인
   - 출력 파일 csv 헤더 추가
-  - Wireless interface를 활용해 Probe Request 메시지를 탐색
+  - Wireless interface를 활용해 Probe Request 메시지를 탐색(1.0.0 패치)
     - AP에 연결하지 않고도 확인 가능
-  - 클래스로 구조 변경
+  - 클래스로 구조 변경(1.0.0 패치)
     - 상속 고려: 여러 환경에서 동작할 수 있도록 하기 위함

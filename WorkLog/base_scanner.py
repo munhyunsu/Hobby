@@ -124,12 +124,12 @@ class MACScanner(object):
         if not 'log' in self.config:
             logging.critical('설정 파일에 log 세션이 필요합니다.')
             sys.exit(0)
-        if 'level' not in self.config['log']:
-            logging.critical('설정 파일 log 세션에'
+        if not 'level' in self.config['log']:
+            logging.critical('설정 파일 log 세션에 '
                             + 'level 항목이 필요합니다.')
             sys.exit(0)
-        if 'file' not in self.config['log']:
-            logging.critical('설정 파일 log 세션에'
+        if not 'file' in self.config['log']:
+            logging.critical('설정 파일 log 세션에 '
                              + 'file 항목이 필요합니다.')
             sys.exit(0)
         # 로그 레벨, 파일 이름 불러오기

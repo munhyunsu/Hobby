@@ -29,7 +29,9 @@ test/
 !/Score/student.csv
 !/Score/teacher.csv
 
-# ini files
+# sqlite files
+*.sqlite
+sqlite3
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
