@@ -10,7 +10,6 @@ def parse_binary_operator(op):
     values = []
     for i in (1, 2):
         values.append((yield from parse_argument((yield))))
-    print(op(*values))
     return op(*values)
 
 OPERATORS = {
@@ -27,8 +26,8 @@ OPERATORS = {
 def parse_argument(token):
     subgen, op = OPERATORS.get(token, (None, None))
     if subgen is None:
-        #return float(token)
-        return int(token)
+        return float(token)
+        #return int(token)
     else:
         return (yield from subgen(op))
 
@@ -40,10 +39,12 @@ def parse_expression():
 #        print(token, result)
         result = yield from parse_argument(token)
 
+def parse_pn_string(expr_str):
+    parser = parse_expression()
+    next(parser)
+    for result in (parser.send(i) for i in expr_str.split()):
+        if result is not None:
+            yield result
 
-pe = parse_expression()
-print(pe.send(None))
-print(pe.send('~'))
-print(pe.send('+'))
-print(pe.send(4))
-print(pe.send(3))
+results = parse_pn_string("* 2 9 * + 2 - sqrt 25 1 - 9 6")
+print("\n".join(str(i) for i in results))

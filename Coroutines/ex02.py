@@ -19,7 +19,7 @@ if __name__ == '__main__':
     #print('aa')
     avg = averager()
     #print('bb')
-    print(avg.next())
+    print(avg.send(None))
     #print('cc')
     print(avg.send(10))
     #print('dd')
