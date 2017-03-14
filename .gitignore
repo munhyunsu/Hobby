@@ -6,6 +6,9 @@
 pip-selfcheck.json
 pyvenv.cfg
 
+# Danbooru image directory
+image/
+
 # backup files
 *.b
 
