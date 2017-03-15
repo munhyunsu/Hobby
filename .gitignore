@@ -8,6 +8,8 @@ pyvenv.cfg
 
 # Danbooru image directory
 image/
+danbooru.ini
+yandere.ini
 
 # backup files
 *.b
