@@ -6,16 +6,10 @@ import os # chmod
 import sys # exit, argv
 import logging # 로깅
 import configparser # configParser
-import urllib.request # urlopen
-import urllib.parse # urlencode
-import base64 # Basic Authorization
 import sqlite3 # SQL
-import time # sleep
-import json # json loads
-import datetime # datetime.strptime
 
-class BaseCrawler(object):
-    """Danbooru 계열 이미지 수집기
+class BooruCrawler(object):
+    """Booru 계열 이미지 수집기
     """
     def __init__(self, config_file):
         """설정 파일 입력 받기
@@ -77,17 +71,16 @@ class BaseCrawler(object):
                + '"' + post_dict['tag_string'] + '", '
                + '"' + post_dict['file_ext'] + '", '
                + '"' + post_dict['file_url'] + '")')
+        logging.debug('Query: {0}'.format(query))
         cursor.execute(query)
         connector.commit()
-        logging.debug('Query: {0}'.format(query))
-
 
     def _update_database(self, post):
         """데이터베이스 업데이트
         """
         connector = self.connector
         cursor = self.cursor
-        post_dict = self._set_post_dict(post)
+        post_dict = self._get_post_dict(post)
         query = ('UPDATE OR IGNORE image SET '
                + 'created_at=' + post_dict['created_at'] + ', '
                + 'source="' + post_dict['source'] + '", '
@@ -95,18 +88,17 @@ class BaseCrawler(object):
                + 'rating="' + post_dict['rating'] + '", '
                + 'tag_string="' + post_dict['tag_string'] + '", '
                + 'file_ext="' + post_dict['file_ext'] + '", '
-               + 'file_url="' + post_dcit['file_url'] + '" '
+               + 'file_url="' + post_dict['file_url'] + '" '
                + 'WHERE '
                + 'id=' + post_dict['id'])
+        logging.debug('Query: {0}'.format(query))
         cursor.execute(query)
         connector.commit()
-        logging.debug('Query: {0}'.format(query))
 
     def _get_post_dict(self, post):
         """데이터베이스 업데이트 쿼리 생성
         """
         raise NotImplemented
-
 
     def _is_duplicate(self, post):
         """중복된 데이터가 있는지 확인
@@ -128,7 +120,6 @@ class BaseCrawler(object):
             return True
         else:
             return False
-            
 
     def _parse_id_from_post(self, post):
         """포스트 데이터에서 아이디 추출
@@ -151,7 +142,6 @@ class BaseCrawler(object):
         """
         raise NotImplemented
 
-
     def _get_image_path(self, post):
         """이미지 저장 위치 반환
         """
@@ -163,7 +153,6 @@ class BaseCrawler(object):
         """
         raise NotImplemented
 
-
     def _create_save_dir(self):
         config = self.config
         save_dir = config['file']['save_dir']
@@ -171,16 +160,14 @@ class BaseCrawler(object):
             os.makedirs(save_dir, exist_ok = True)
             return True
         except Exception as err:
-            logging.critical('_get_image_directory 예외 발생: {0}'.format(
-                    err))
+            logging.critical('_get_image_directory '
+                           + '예외 발생: {0}'.format(err))
             return False
-            
 
     def _set_opener(self):
         """오프너 제작
         """
         raise NotImplemented
-
 
     def _set_connector_and_cursor(self):
         config = self.config
@@ -201,8 +188,8 @@ class BaseCrawler(object):
             (self.connector, self.cursor) = (connector, cursor)
             return True
         except Exception as err:
-            logging.critical('__set_logging 예외 발생: {0}'.format(
-                    err))
+            logging.critical('__set_connector_and_cursor '
+                           + '예외 발생: {0}'.format(err))
             return False
 
     def _set_logging(self):

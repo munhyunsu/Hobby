@@ -1,30 +1,26 @@
 #!/usr/bin/env python3
 
-from BaseCrawler import base_crawler
+from BooruCrawler import booru_crawler
 import check_ini
 
-import os # chmod
 import sys # exit, argv
 import logging # 로깅
 import configparser # configParser
 import urllib.request # urlopen
-import urllib.parse # urlencode
 import base64 # Basic Authorization
-import sqlite3 # SQL
-import time # sleep
 import json # json loads
 import datetime # datetime.strptime
 
-INIFILE = 'yandere.ini'
+INIFILE = 'random_crawler.ini'
 
-class YandereRandomCrawler(base_crawler.BaseCrawler):
-    """Yandere 이미지 랜덤 다운로더
+class RandomCrawler(booru_crawler.BooruCrawler):
+    """Danbooru 계열 이미지 랜덤 다운로더
     """
     def __init__(self, config_file):
         """초기화 함수
         """
         # 부모 클래스 초기화
-        base_crawler.BaseCrawler.__init__(self, config_file)
+        booru_crawler.BooruCrawler.__init__(self, config_file)
         # 입력 파일 확인
         if type(config_file) == dict:
             self.config = config_file
@@ -57,7 +53,7 @@ class YandereRandomCrawler(base_crawler.BaseCrawler):
             logging.critical('_set_opener 예외 발생 {0}'.format(
                     err))
             return False
-            
+
     def _get_metadata(self):
         """메타데이터 반환
         Generator
@@ -72,8 +68,8 @@ class YandereRandomCrawler(base_crawler.BaseCrawler):
             for index in range(0, loop_number):
                 logging.info('태그 수집: {0} {1}'.format(
                         tag, index+1))
-                request_url = (url + '/post.json?tags='
-                             + tag + '+order:random')
+                request_url = (url + '/posts.json?tags='
+                             + tag + '&random=true')
                 response = opener.open(request_url)
                 posts = json.loads(response.read().decode('utf-8'))
                 yield posts
@@ -106,8 +102,9 @@ class YandereRandomCrawler(base_crawler.BaseCrawler):
         """이미지 웹 주소 반환
         """
         config = self.config
+        base_url = config['crawl']['url']
         try:
-            image_url = post['file_url']
+            image_url = base_url + post['file_url']
             return image_url
         except Exception as err:
             logging.critical('_get_image_url 예외 발생 {0}'.format(
@@ -119,12 +116,16 @@ class YandereRandomCrawler(base_crawler.BaseCrawler):
             # 데이터베이스 변수
             post_dict = dict()
             post_dict['id'] = str(post['id'])
-            post_created_at = float(post['created_at'])
-            post_dict['created_at'] = str(post_created_at)
-            post_dict['source'] = str(post['source'])
+            post_created_at = post['created_at']
+            post_created_at = datetime.datetime.strptime(
+                    post_created_at[:-3] + post_created_at[-2:],
+                    '%Y-%m-%dT%H:%M:%S.%f%z')
+            post_dict['created_at'] = str(post_created_at.timestamp())
+            post_source = post['source']
+            post_dict['source'] = post_source.replace('\"', '\'')
             post_dict['md5'] = str(post['md5'])
             post_dict['rating'] = str(post['rating'])
-            post_tag_string = str(post['tags'])
+            post_tag_string = str(post['tag_string'])
             post_dict['tag_string'] = post_tag_string.replace('\"', '\'')
             post_dict['file_ext'] = str(post['file_ext'])
             post_dict['file_url'] = str(post['file_url'])
@@ -135,8 +136,8 @@ class YandereRandomCrawler(base_crawler.BaseCrawler):
             sys.exit(0)
 
 def main(argv):
-    yandere_random = YandereRandomCrawler(INIFILE)
-    yandere_random.start_crawl()
+    random_crawler = RandomCrawler(INIFILE)
+    random_crawler.start_crawl()
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
