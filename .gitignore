@@ -6,6 +6,10 @@
 pip-selfcheck.json
 pyvenv.cfg
 
+# KawiBawiBo src
+/KawiBawiBo/src
+/KawiBawiBo/src/*
+
 # Danbooru image directory
 image/
 
