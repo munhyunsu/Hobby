@@ -8,6 +8,7 @@ import importlib
 import importlib.machinery
 import operator
 import copy
+import time
 
 SRCPATH = './src/'
 
@@ -31,7 +32,7 @@ def start_fight():
     print('')
 
     # 강 시작
-    rest = 16
+    rest = 8
     # 강 선수에 맞춰서 엔트리 조정
     entry = list()
     for index in range(0, rest):
@@ -128,12 +129,14 @@ def get_score(player):
 def get_result(p1, p2):
     p1_score = {'win': 0, 'lose': 0, 'draw': 0}
     p2_score = {'win': 0, 'lose': 0, 'draw': 0}
-    p1m = importlib.machinery.SourceFileLoader('*', p1[1]).load_module()
-    p2m = importlib.machinery.SourceFileLoader('*', p2[1]).load_module()
+    #p1m = importlib.machinery.SourceFileLoader('get_hand', p1[1]).load_module()
+    #p2m = importlib.machinery.SourceFileLoader('get_hand', p2[1]).load_module()
     p1_last = None
     p2_last = None
     for node in range(0, 10000):
+        p1m = importlib.machinery.SourceFileLoader('get_hand', p1[1]).load_module()
         p1_hand = p1m.get_hand(p1_last)
+        p2m = importlib.machinery.SourceFileLoader('get_hand', p2[1]).load_module()
         p2_hand = p2m.get_hand(p2_last)
         if p1_hand == 'kawi' and p2_hand == 'kawi':
             p1_result = 'draw'

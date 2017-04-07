@@ -158,6 +158,7 @@ class KawiBawiBoFight(tkinter.Frame):
 
 
 def main(argv):
+    os.makedirs(SRCPATH, exist_ok = True)
     root = tkinter.Tk()
     app = KawiBawiBoFight(master = root)
     app.mainloop()

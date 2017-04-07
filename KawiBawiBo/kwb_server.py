@@ -84,7 +84,7 @@ def main():
     os.makedirs(SRCPATH, exist_ok = True)
     loop = asyncio.get_event_loop()
     coro = loop.create_server(KWBServerProtocol, 
-                              '', 6292,
+                              '', 8080,
                               reuse_address = True,
                               reuse_port = True)
     print('가위바위보 서버가 시작되었습니다.')
