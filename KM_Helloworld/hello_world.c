@@ -1,16 +1,16 @@
 /* Hello World */
+#include <linux/init.h>
 #include <linux/module.h>
-
 MODULE_LICENSE("Dual BSD/GPL");
 
-int my_init_module(void) {
-    printk("<1>Hello, Hyunsu Mun\n");
+static int hello_init(void) {
+    printk(KERN_ALERT "Hello, Hyunsu Mun\n");
     return 0;
 }
 
-void my_cleanup_module(void) {
-    printk("<1>Goodbye, Hyunsu Mun\n");
+static void hello_exit(void) {
+    printk(KERN_ALERT "Goodbye, Hyunsu Mun\n");
 }
 
-module_init(my_init_module);
-module_exit(my_cleanup_module);
+module_init(hello_init);
+module_exit(hello_exit);
