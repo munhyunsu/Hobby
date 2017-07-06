@@ -27,6 +27,8 @@ STARTSCREEN = 'start_screen'
 PLAYGAME = 'play_game'
 GAMEOVER = 'game_over'
 QUIT = 'quit'
+# OPTIONS
+FPS = 60
 # PyGame
 screen = None
 font_title = pygame.font.Font(None, 65)
@@ -48,6 +50,7 @@ def main(argv):
     pygame.display.set_caption('Dodge ' + VERSION)
     # fps
     fps_clock = pygame.time.Clock()
+    fps_clock.tick(FPS)
     # start_game
     main_loop()
 
