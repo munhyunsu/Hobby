@@ -36,8 +36,8 @@ font_big = pygame.font.Font(None, 36)
 font_default = pygame.font.Font(None, 28)
 SPEED = 1
 cscore = 0
-max_bullet = 25
-break_bullet = 10
+max_bullet = 50
+break_bullet = 3
 
 ## MAIN
 def main(argv):
@@ -65,6 +65,7 @@ def main_loop():
             user_action = play_game()
         elif user_action == GAMEOVER:
             user_action = game_over()
+    pygame.quit()
     sys.exit(0)
 
 
@@ -131,7 +132,7 @@ def play_game():
 
         if len(bullets) < max_bullet:
             bullets.add(random_bullet())
-            
+
         bullets.update()
         bullets.draw(screen)
         screen.blit(airplane.image, airplane.rect)
@@ -156,6 +157,7 @@ def game_over():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 screen.fill(BLACK)
+                cscore = 0
                 return STARTSCREEN
     return GAMEOVER
 
@@ -175,14 +177,14 @@ def draw_text(text, font, surface, x, y, main_color, back_color):
 ## AIRPLANE
 class AirPlane(pygame.sprite.Sprite):
     def __init__(self):
-        super(AirPlane).__init__()  
+        super(AirPlane).__init__()
         self.image = pygame.Surface((20, 20))
         self.rect = self.image.get_rect()
         self.centerx = self.rect.centerx
         self.centery = self.rect.centery
-        pygame.draw.circle(self.image, YELLOW, 
+        pygame.draw.circle(self.image, YELLOW,
                 (self.centerx, self.centery), 10, 0)
-    
+
     def set_position(self, x, y):
         self.rect.x = x - self.centerx
         self.rect.y = y - self.centery
@@ -205,12 +207,12 @@ class AirPlane(pygame.sprite.Sprite):
 ## BULLET
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, xpos, ypos, xspeed, yspeed):
-        super(Bullet, self).__init__()  
+        super(Bullet, self).__init__()
         self.image = pygame.Surface((10, 10))
         self.rect = self.image.get_rect()
         self.centerx = self.rect.centerx
         self.centery = self.rect.centery
-        pygame.draw.circle(self.image, RED, 
+        pygame.draw.circle(self.image, RED,
                 (self.centerx, self.centery), 5, 0)
         self.rect.x = xpos
         self.rect.y = ypos
@@ -269,7 +271,7 @@ def random_bullet():
         ypos = random.randint(0, HEIGHT)
         xspeed = random.uniform(0, 1)
         yspeed = random.uniform(-1, 1)
-    return Bullet(xpos, ypos, 
+    return Bullet(xpos, ypos,
             xspeed / break_bullet, yspeed / break_bullet)
 
 

@@ -59,6 +59,7 @@ def main_loop():
             user_action = play_game()
         elif user_action == GAMEOVER:
             user_action = game_over()
+    pygame.quit()
     sys.exit(0)
 
 
