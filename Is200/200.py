@@ -21,18 +21,20 @@ def main(argv):
         target = TARGET
 
     # main loop
-    try:
-        while(True):
+    while(True):
+        try:       
             with urllib.request.urlopen(target) as f:
                 if f.code == 200:
                     print('[200 OK] from {0}'.format(target))
                 else:
                     print('[Error] from {0}'.format(target))
+            time.sleep(30)
+        except KeyboardInterrupt:
+            print('Good shopping')
+            break
+        except urllib.error.URLError:
+            print('Website not exist')
             time.sleep(10)
-    except KeyboardInterrupt:
-        print('Good shopping')
-    except urllib.error.URLError:
-        print('Website not exist')
 
 
 
