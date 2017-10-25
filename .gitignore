@@ -42,6 +42,8 @@ sqlite3
 
 # bitcoin dat
 *.dat
+info*
+output*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
