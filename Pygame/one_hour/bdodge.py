@@ -37,7 +37,7 @@ font_default = pygame.font.Font(None, 28)
 SPEED = 1
 cscore = 0
 max_bullet = 50
-break_bullet = 3
+break_bullet = 2
 
 ## MAIN
 def main(argv):

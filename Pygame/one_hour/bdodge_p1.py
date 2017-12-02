@@ -36,7 +36,7 @@ font_big = pygame.font.Font(None, 36)
 font_default = pygame.font.Font(None, 28)
 SPEED = 1
 cscore = 0
-max_bullet = 50
+max_bullet = 100
 break_bullet = 3
 
 ## MAIN
@@ -129,6 +129,8 @@ def play_game():
                     return GAMEOVER
 
         # miss something
+        if airplane.collide(bullets):
+            return GAMEOVER
 
         if len(bullets) < max_bullet:
             bullets.add(random_bullet())
