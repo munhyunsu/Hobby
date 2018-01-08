@@ -6,6 +6,9 @@
 pip-selfcheck.json
 pyvenv.cfg
 
+# Fitbit
+/Fitcraft/fitness_collection
+
 # KawiBawiBo src
 /KawiBawiBo/src
 /KawiBawiBo/src/*
