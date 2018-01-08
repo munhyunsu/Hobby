@@ -65,7 +65,7 @@ def process_files(file_queue):
 
     print('# Group E is fitcraft')
     print('E = ', gusere)
-    print('# Group F is fitcraft')
+    print('# Group F is only fitbit')
     print('F = ', guserf)
 
 
