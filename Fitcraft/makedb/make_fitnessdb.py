@@ -3,7 +3,9 @@
 import sys
 import logging
 
+FORMAT = '%(created)s:%(levelno)s:%(message)s'
 logging.basicConfig(stream = sys.stdout,
+                    format = FORMAT,
                     level = logging.DEBUG)
 
 def main(argv):
