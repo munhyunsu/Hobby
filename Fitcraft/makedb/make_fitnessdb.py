@@ -14,10 +14,16 @@ def main(argv):
     if len(argv) < 2:
         logging.debug('We need argument for path')
         return
+    dir_queue = list()
 
-    file_queue = get_file_list(argv[1:])
-    print(get_data_from_list(file_queue))
+    for arg in argv:
+        if os.path.isdir(arg) == True:
+            dir_queue.append(arg)
 
+    for file_path in get_file_list(dir_queue):
+        print(get_data(file_path))
+        # we can access all of data
+        break
 
 
 
@@ -29,7 +35,8 @@ def get_file_list(dir_queue):
         with os.scandir(path) as it:
             for entry in it:
                 if not entry.name.startswith('.') and entry.is_file():
-                    file_queue.append(entry.path)
+                    #file_queue.append(entry.path)
+                    yield entry.path
                 else:
                     dir_queue.append(entry.path)
 
@@ -37,12 +44,10 @@ def get_file_list(dir_queue):
 
 
 
-def get_data_from_list(file_queue):
-    while len(file_queue) > 0:
-        path = file_queue.pop()
-        with open(path, 'r') as rfile:
-            data = json.load(rfile)
-            return data
+def get_data(file_path):
+    with open(file_path, 'r') as rfile:
+        data = json.load(rfile)
+        return data
 
 
 
