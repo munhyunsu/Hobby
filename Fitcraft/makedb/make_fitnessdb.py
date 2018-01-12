@@ -4,6 +4,7 @@ import sys
 import os
 import logging
 import json
+import sqlite3
 
 FORMAT = '%(created)s:%(levelno)s:%(message)s'
 logging.basicConfig(stream = sys.stdout,
@@ -24,6 +25,14 @@ def main(argv):
         print(get_data(file_path))
         # we can access all of data
         break
+
+
+def connect_database(name = 'fitcraft.db')
+    connector = sqlite3.connect(name)
+    cursor = connector.cursor()
+    
+    
+
 
 
 
