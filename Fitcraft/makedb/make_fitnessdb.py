@@ -33,6 +33,11 @@ def main(argv):
 
 
 
+def insert_data(connector, cursor, data):
+    # TODO(LuHa): data parsing, insert
+    pass
+
+
 def create_tables(connector, cursor):
     # it contain ROWID INTEGER PRIMARY KEY defaults
     cursor.execute('''CREATE TABLE IF NOT EXISTS steps (
