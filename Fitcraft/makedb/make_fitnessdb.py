@@ -21,18 +21,38 @@ def main(argv):
         if os.path.isdir(arg) == True:
             dir_queue.append(arg)
 
+    (connector, cursor) = connect_database('fitcraft.db')
+
+
     for file_path in get_file_list(dir_queue):
         print(get_data(file_path))
         # we can access all of data
         break
 
+    close_database(connector)
 
-def connect_database(name = 'fitcraft.db')
+
+
+def create_tables(connector, cursor):
+    # it contain ROWID INTEGER PRIMARY KEY defaults
+    cursor.execute('''CREATE TABLE IF NOT EXISTS steps (
+                        datetime TEXT NOT NULL,
+                        user TEXT NOT NULL,
+                        value INTEGER NOT NULL)
+                   '''
+    connector.commit()
+
+
+def connect_database(name = 'fitcraft.db'):
     connector = sqlite3.connect(name)
     cursor = connector.cursor()
     
-    
+    return (connector, cursor)
 
+
+
+def close_database(connector):
+    connector.close()
 
 
 
