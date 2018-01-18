@@ -23,7 +23,6 @@ def main(argv):
 
     (connector, cursor) = connect_database('fitcraft.db')
 
-
     for file_path in get_file_list(dir_queue):
         print(get_data(file_path))
         # we can access all of data
@@ -69,7 +68,6 @@ def get_file_list(dir_queue):
         with os.scandir(path) as it:
             for entry in it:
                 if not entry.name.startswith('.') and entry.is_file():
-                    #file_queue.append(entry.path)
                     yield entry.path
                 else:
                     dir_queue.append(entry.path)
