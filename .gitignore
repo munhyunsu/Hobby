@@ -9,6 +9,7 @@ pyvenv.cfg
 # Fitbit
 /Fitcraft/fitness_collection
 /Fitcraft/serverlog_collection
+*.db
 
 # KawiBawiBo src
 /KawiBawiBo/src
