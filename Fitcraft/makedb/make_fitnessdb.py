@@ -9,7 +9,7 @@ import sqlite3
 FORMAT = '%(created)s:%(levelno)s:%(message)s'
 logging.basicConfig(stream = sys.stdout,
                     format = FORMAT,
-                    level = logging.INFO)
+                    level = logging.DEBUG)
 
 def main(argv):
     if len(argv) < 2:
@@ -33,14 +33,16 @@ def main(argv):
 
 
 def insert_data(connector, data):
+    # dt = datetime.datetime.strptime('2015-11-08 23:59:00 +0900', '%Y-%m-%d %H:%M:%S %z')
+    # calendar.timegm(dt.utctimetuple())
     # TODO(LuHa): data parsing, insert
     if 'activities-steps' in data:
         db_name = 'steps'
         date = data['activities-steps'][0]['dateTime']
         for values in data['activities-steps-intraday']['dataset']:
+            timestr = (date + ' ' + values['time'])
             logging.debug(
-                    (db_name, date, values['time'], values['value']))
-
+                    (db_name, timestr, values['value']))
     if 'sleep' in data:
         db_name = 'sleeps'
         date = data['sleep'][0]['dateOfSleep']
