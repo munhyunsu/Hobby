@@ -3,7 +3,7 @@
 
 import socket
 
-HOST = '168.188.129.94'
+HOST = ''
 PORT = 80
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
