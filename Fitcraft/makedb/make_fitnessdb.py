@@ -12,7 +12,7 @@ import calendar
 FORMAT = '%(created)s:%(levelno)s:%(message)s'
 logging.basicConfig(stream = sys.stdout,
                     format = FORMAT,
-                    level = logging.DEBUG)
+                    level = logging.INFO)
 
 def main(argv):
     if len(argv) < 2:
@@ -25,21 +25,26 @@ def main(argv):
             dir_queue.append(arg)
 
     connector = connect_database('fitcraft.db')
+    create_tables(connector)
 
     for file_path in get_file_list(dir_queue):
-        # we can access all of data
-        insert_data(connector, file_path)
-        break
+        try:
+            insert_data(connector, file_path)
+        except Exception as e:
+            logging.critical((str(e) + file_path))
+            with open(file_path, 'r') as f:
+                logging.critical(f.read())
 
     close_database(connector)
 
 
 
 def insert_data(connector, file_path):
+    cursor = connector.cursor()
+    db_data = list()
     data = get_data(file_path)
     user = file_path.split('/')[-1]
     user = user.split('.')[0]
-    # TODO(LuHa): data parsing, insert
     if 'activities-steps' in data:
         db_name = 'steps'
         date = data['activities-steps'][0]['dateTime']
@@ -50,6 +55,7 @@ def insert_data(connector, file_path):
             timeepoch = calendar.timegm(timedt.utctimetuple())
             logging.debug(
                     (db_name, user, timeepoch, values['value']))
+            db_data.append((timeepoch, user, values['value']))
     if 'sleep' in data:
         db_name = 'sleeps'
         date = data['sleep'][0]['dateOfSleep']
@@ -60,6 +66,7 @@ def insert_data(connector, file_path):
             timeepoch = calendar.timegm(timedt.utctimetuple())
             logging.debug(
                     (db_name, user, timeepoch, values['value']))
+            db_data.append((timeepoch, user, values['value']))
     if 'activities-heart' in data:
         db_name = 'hearts'
         date = data['activities-heart'][0]['dateTime']
@@ -70,6 +77,12 @@ def insert_data(connector, file_path):
             timeepoch = calendar.timegm(timedt.utctimetuple())
             logging.debug(
                     (db_name, user, timeepoch, values['value']))
+            db_data.append((timeepoch, user, values['value']))
+    cursor.executemany(('INSERT INTO '
+                      + db_name
+                      + ' VALUES (?, ?, ?)'), db_data)
+        
+    connector.commit()
 
 
 
