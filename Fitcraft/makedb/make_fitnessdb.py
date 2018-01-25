@@ -5,6 +5,9 @@ import os
 import logging
 import json
 import sqlite3
+import datetime
+import calendar
+
 
 FORMAT = '%(created)s:%(levelno)s:%(message)s'
 logging.basicConfig(stream = sys.stdout,
@@ -25,36 +28,48 @@ def main(argv):
 
     for file_path in get_file_list(dir_queue):
         # we can access all of data
-        insert_data(connector, get_data(file_path))
+        insert_data(connector, file_path)
         break
 
     close_database(connector)
 
 
 
-def insert_data(connector, data):
-    # dt = datetime.datetime.strptime('2015-11-08 23:59:00 +0900', '%Y-%m-%d %H:%M:%S %z')
-    # calendar.timegm(dt.utctimetuple())
+def insert_data(connector, file_path):
+    data = get_data(file_path)
+    user = file_path.split('/')[-1]
+    user = user.split('.')[0]
     # TODO(LuHa): data parsing, insert
     if 'activities-steps' in data:
         db_name = 'steps'
         date = data['activities-steps'][0]['dateTime']
         for values in data['activities-steps-intraday']['dataset']:
-            timestr = (date + ' ' + values['time'])
+            timestr = (date + ' ' + values['time'] + ' +0900')
+            timedt = datetime.datetime.strptime(timestr, 
+                                                '%Y-%m-%d %H:%M:%S %z')
+            timeepoch = calendar.timegm(timedt.utctimetuple())
             logging.debug(
-                    (db_name, timestr, values['value']))
+                    (db_name, user, timeepoch, values['value']))
     if 'sleep' in data:
         db_name = 'sleeps'
         date = data['sleep'][0]['dateOfSleep']
         for values in data['sleep'][0]['minuteData']:
+            timestr = (date + ' ' + values['dateTime'] + ' +0900')
+            timedt = datetime.datetime.strptime(timestr, 
+                                                '%Y-%m-%d %H:%M:%S %z')
+            timeepoch = calendar.timegm(timedt.utctimetuple())
             logging.debug(
-                    (db_name, date, values['dateTime'], values['value']))
+                    (db_name, user, timeepoch, values['value']))
     if 'activities-heart' in data:
         db_name = 'hearts'
         date = data['activities-heart'][0]['dateTime']
         for values in data['activities-heart-intraday']['dataset']:
+            timestr = (date + ' ' + values['time'] + ' +0900')
+            timedt = datetime.datetime.strptime(timestr, 
+                                                '%Y-%m-%d %H:%M:%S %z')
+            timeepoch = calendar.timegm(timedt.utctimetuple())
             logging.debug(
-                    (db_name, date, values['time'], values['value']))
+                    (db_name, user, timeepoch, values['value']))
 
 
 
