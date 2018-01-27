@@ -78,6 +78,7 @@ def insert_data(connector, file_path):
             logging.debug(
                     (db_name, user, timeepoch, values['value']))
             db_data.append((timeepoch, user, values['value']))
+    # TODO(LuHa): Check row is insered already
     cursor.executemany(('INSERT INTO '
                       + db_name
                       + ' VALUES (?, ?, ?)'), db_data)
