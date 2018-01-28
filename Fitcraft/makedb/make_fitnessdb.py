@@ -45,6 +45,7 @@ def insert_data(connector, file_path):
     data = get_data(file_path)
     user = file_path.split('/')[-1]
     user = user.split('.')[0]
+    # TODO(LuHa): check data form
     if 'activities-steps' in data:
         db_name = 'steps'
         date = data['activities-steps'][0]['dateTime']
