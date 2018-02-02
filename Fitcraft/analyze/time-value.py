@@ -4,10 +4,14 @@ import sys
 import matplotlib
 import sqlite
 
+DBCONN
+
 def main(argv):
-    with open('', 'r') as fread:
-        fread.read()
-    pass    
+    pass
+
+def get_database():
+    if DBCONN == None:
+    pass
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
