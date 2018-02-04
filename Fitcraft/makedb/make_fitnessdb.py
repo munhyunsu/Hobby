@@ -46,6 +46,8 @@ def insert_data(connector, file_path):
     user = file_path.split('/')[-1]
     user = user.split('.')[0]
     # TODO(LuHa): check data form
+    if 'objects' in data:
+        data = data['objects']
     if 'activities-steps' in data:
         db_name = 'steps'
         date = data['activities-steps'][0]['dateTime']
@@ -79,11 +81,16 @@ def insert_data(connector, file_path):
             logging.debug(
                     (db_name, user, timeepoch, values['value']))
             db_data.append((timeepoch, user, values['value']))
-    # TODO(LuHa): Check row is insered already
-    cursor.executemany(('INSERT INTO '
+    for timeepoch, user, value in db_data:
+        cursor.execute(('SELECT * FROM '
                       + db_name
-                      + ' VALUES (?, ?, ?)'), db_data)
-        
+                      + ' WHERE datetime = ? AND user = ?'), (timeepoch, user))
+        result = cursor.fetchall()
+        if len(result) != 0:
+            continue
+        cursor.execute(('INSERT INTO '
+                      + db_name
+                      + ' VALUES (?, ?, ?)'), (timeepoch, user, value))
     connector.commit()
 
 
