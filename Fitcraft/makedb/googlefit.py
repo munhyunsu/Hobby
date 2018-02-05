@@ -24,9 +24,6 @@ def main(argv):
         if os.path.isdir(arg) == True:
             dir_queue.append(arg)
 
-    connector = connect_database('fitcraft.db')
-    create_tables(connector)
-
     for file_path in get_file_list(dir_queue):
         try:
             print(file_path)
