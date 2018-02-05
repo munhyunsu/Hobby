@@ -61,16 +61,15 @@ def get_sequence(data):
         temp = list()
         for i in range(starttime, endtime, 60):
             cursor = cursor + base
-            temp.append(int(cursor))
-            #print(i, int(cursor))
+            temp.append([i, int(cursor)])
             cursor = cursor - int(cursor)
 
         if value != 0:
-            if value == sum(temp):
-                result.append((starttime, endtime, value, sum(temp)))
+            if value == sum(i[1] for i in temp):
+                result.append((starttime, endtime, value, sum(i[1] for i in temp)))
             else:
-                temp[len(temp)-1] = temp[len(temp)-1] + (value-sum(temp))
-                result.append((starttime, endtime, value, sum(temp)))
+                temp[len(temp)-1][1] = temp[len(temp)-1][1] + (value-sum(i[1] for i in temp))
+                result.append((starttime, endtime, value, sum(i[1] for i in temp)))
 
     for row in result:
         print(row)
