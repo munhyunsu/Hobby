@@ -47,26 +47,33 @@ def googlefit(file_path):
 
 
 def get_sequence(data):
-    starttime = int(data['point'][0]['startTimeNanos']) / 10**9
-    starttime = int(starttime)
-    endtime = int(data['point'][0]['endTimeNanos']) / 10**9
-    endtime = int(endtime)
-    value = int(data['point'][0]['value'][0]['intVal'])
+    result = list()
+    for index in range(0, len(data['point'])):
+        starttime = int(data['point'][index]['startTimeNanos']) / 10**9
+        starttime = int(starttime)
+        endtime = int(data['point'][index]['endTimeNanos']) / 10**9
+        endtime = int(endtime)
+        value = int(data['point'][index]['value'][0]['intVal'])
 
-    interval = int((endtime-starttime) / 60)
-    base = value/interval
-    cursor = 0
-    temp = list()
-    for i in range(starttime, endtime, 60):
-        cursor = cursor + base
-        temp.append(int(cursor))
-        print(i, int(cursor))
-        cursor = cursor - int(cursor)
+        interval = int((endtime-starttime) / 60)
+        base = value/interval
+        cursor = 0
+        temp = list()
+        for i in range(starttime, endtime, 60):
+            cursor = cursor + base
+            temp.append(int(cursor))
+            #print(i, int(cursor))
+            cursor = cursor - int(cursor)
 
-    if value != 0:
-        return (starttime, endtime, value, sum(temp))
-    else:
-        return None
+        if value != 0:
+            if value == sum(temp):
+                result.append((starttime, endtime, value, sum(temp)))
+            else:
+                temp[len(temp)-1] = temp[len(temp)-1] + (value-sum(temp))
+                result.append((starttime, endtime, value, sum(temp)))
+
+    for row in result:
+        print(row)
 
 def insert_data(connector, file_path):
     cursor = connector.cursor()
