@@ -82,21 +82,46 @@ def insert_data(connector, file_path):
             logging.debug(
                     (db_name, user, timeepoch, values['value']))
             db_data.append((timeepoch, user, values['value']))
-#    for timeepoch, user, value in db_data:
-#        cursor.execute(('SELECT * FROM '
-#                      + db_name
-#                      + ' WHERE datetime = ? AND user = ?'), 
-#                      (timeepoch, user))
-#        result = cursor.fetchall()
-#        if len(result) != 0:
-#            continue
-#        cursor.execute(('INSERT INTO '
-#                      + db_name
-#                      + ' VALUES (?, ?, ?)'), (timeepoch, user, value))
+#    if 'point' in data:
+#        db_name = 'steps'
+#        sequence = get_googlefit_sequence(data)
+#        for timeepoch, value in sequence:
+#            logging.debug(
+#                    (db_name, user, timeepoch, value))
+#            db_data.append((timeepoch, user, value))
     cursor.executemany(('INSERT INTO '
                       + db_name
                       + ' VALUES (?, ?, ?)'), db_data)
     connector.commit()
+
+
+def get_googlefit_sequence(data):
+    result = list()
+    for index in range(0, len(data['point'])):
+        starttime = int(data['point'][index]['startTimeNanos']) / 10**9
+        starttime = int(starttime)
+        endtime = int(data['point'][index]['endTimeNanos']) / 10**9
+        endtime = int(endtime)
+        value = int(data['point'][index]['value'][0]['intVal'])
+        
+        base = value / (int((endtime - starttime) / 60))
+        cursor = 0
+        temp = list()
+        for epochtime in range(starttime, endtime, 60):
+            cursor = cursor + base
+            temp.append([epochtime, int(cursor)])
+            cursor = cursor - int(cursor)
+
+        if value != sum(i[1] for i in temp):
+            temp[len(temp)-1][1] = (temp[len(temp)-1][1] 
+                                 + (value - sum(i[1] for i in temp)))
+        
+        result.extend(temp)
+
+    return result
+
+
+
 
 
 
