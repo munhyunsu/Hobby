@@ -27,6 +27,7 @@ def main(argv):
     for file_path in get_file_list(dir_queue):
         try:
             print(file_path)
+            googlefit(file_path)
             insert_data(connector, file_path)
         except Exception as e:
             logging.critical((str(e) + file_path))
@@ -37,13 +38,16 @@ def main(argv):
 
 
 
+def googlefit(file_path):
+    pass
+
+
 def insert_data(connector, file_path):
     cursor = connector.cursor()
     db_data = list()
     data = get_data(file_path)
     user = file_path.split('/')[-1]
     user = user.split('.')[0]
-    # TODO(LuHa): check data form
     if 'objects' in data:
         data = data['objects']
     if 'activities-steps' in data:
