@@ -26,21 +26,47 @@ def main(argv):
 
     for file_path in get_file_list(dir_queue):
         try:
-            print(file_path)
+            #print(file_path)
             googlefit(file_path)
-            insert_data(connector, file_path)
         except Exception as e:
             logging.critical((str(e) + file_path))
             with open(file_path, 'r') as f:
                 logging.critical(f.read())
 
-    close_database(connector)
 
 
 
 def googlefit(file_path):
-    pass
+    data = get_data(file_path)
+    if 'point' not in data:
+        return
+    result = get_sequence(data)
+    if result != None:
+        print(result)
+        sys.exit(0)
 
+
+def get_sequence(data):
+    starttime = int(data['point'][0]['startTimeNanos']) / 10**9
+    starttime = int(starttime)
+    endtime = int(data['point'][0]['endTimeNanos']) / 10**9
+    endtime = int(endtime)
+    value = int(data['point'][0]['value'][0]['intVal'])
+
+    interval = int((endtime-starttime) / 60)
+    base = value/interval
+    cursor = 0
+    temp = list()
+    for i in range(starttime, endtime, 60):
+        cursor = cursor + base
+        temp.append(int(cursor))
+        print(i, int(cursor))
+        cursor = cursor - int(cursor)
+
+    if value != 0:
+        return (starttime, endtime, value, sum(temp))
+    else:
+        return None
 
 def insert_data(connector, file_path):
     cursor = connector.cursor()
