@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
 import sys
-
+import csv
 
 
 def main(argv):
-    pass
+    rfile = open(argv[1], 'r')
+    csv_reader = csv.DictReader(rfile)
+
 
 
 
