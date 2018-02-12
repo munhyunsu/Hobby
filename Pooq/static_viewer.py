@@ -2,7 +2,7 @@
 
 import sys
 import csv
-
+import sqlite3
 
 def main(argv):
     rfile = open(argv[1], 'r')
