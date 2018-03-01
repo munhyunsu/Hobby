@@ -11,3 +11,6 @@ var game={
   },
 }
 
+$(window).load(function() {
+  game.init*(;
+});
