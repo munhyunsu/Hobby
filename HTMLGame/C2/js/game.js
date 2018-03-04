@@ -61,4 +61,9 @@ init: function(){
   // Get handler for game canvas and context
   game.canvas=$('#gamecanvas')[0];
   game.context=game.canvas.getContext('2d');
-}, 
+},
+
+showLevelScreen:function(){
+  $('.gamelayer').hide();
+  $('#gameselectscreen').show('slow');
+},
