@@ -40,3 +40,16 @@
   border:0;
 }
 
+/* Loading Screen */
+#loadingscreen {
+  background:rgba(100, 100, 100, 0.3);
+}
+
+#loadingmessage {
+  margin-top:400px;
+  text-align:center;
+  height:48px;
+  color:white;
+  background:url(images/loader.gif) no-repeat center;
+  font:12px Arial;
+}
