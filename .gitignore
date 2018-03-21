@@ -6,6 +6,12 @@
 pip-selfcheck.json
 pyvenv.cfg
 
+#pcap2har
+*.har
+*.pcap
+/AppPerformance/pcap2har/bin
+/AppPerformance/pcap2har/lib64
+
 # Fitbit
 /Fitcraft/fitness_collection
 /Fitcraft/serverlog_collection
