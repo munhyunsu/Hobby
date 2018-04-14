@@ -15,4 +15,26 @@ if user_input not in HANDS:
 com_input = random.choice(HANDS)
 
 # 결과 출력
-print(user_input, com_input, sep = ' vs ')
+if com_input == '가위':
+    if user_input == '가위':
+        result = '비겼다!'
+    elif user_input == '바위':
+        result = '플레이어 승리!'
+    elif user_input == '보':
+        result = '컴퓨터 승리!'
+elif com_input == '바위':
+    if user_input == '가위':
+        result = '컴퓨터 승리!'
+    elif user_input == '바위':
+        result = '비겼다!'
+    elif user_input == '보':
+        result = '플레이어 승리!'
+elif com_input == '보':
+    if user_input == '가위':
+        result = '플레이어 승리!'
+    elif user_input == '바위':
+        result = '컴퓨터 승리!'
+    elif user_input == '보':
+        result = '비겼다!'
+
+print('가위, 바위, 보! {0}'.format(result))
