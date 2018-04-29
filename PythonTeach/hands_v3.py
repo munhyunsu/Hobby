@@ -5,7 +5,7 @@ HANDS = ['가위', '바위', '보']
 print(HANDS)
 
 tried = 0
-while True:
+while tried < 100:
     # 사용자 입력
     user_input = input('입력하세요: ')
     user_input = user_input.strip()
