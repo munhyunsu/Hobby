@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     port_server = atoi(argv[1]); // port number
 
     /* create socket */
-    if( (sock_server = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
+    if( (sock_server = /* NEEDFIX: socket create */socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
         printf("socket() error\n");
         exit(1);
     }
@@ -41,14 +41,14 @@ int main(int argc, char* argv[]) {
     addr_server.sin_port = htons(port_server); // port number
 
     /* bind socket to address and port */
-    if( bind(sock_server, (struct sockaddr *) &addr_server, 
+    if( /* NEEDFIX: bind socket */bind(sock_server, (struct sockaddr *) &addr_server, 
             sizeof(addr_server)) < 0) {
         printf("bind() error\n");
         exit(1);
     }
 
     /* listen connection */
-    if( listen(sock_server, MAXBACKLOG) < 0) {
+    if( /* NEEDFIX: listen */listen(sock_server, MAXBACKLOG) < 0) {
         printf("listen() error\n");
         exit(1);
     }
@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
     while(1) {
         /* create client socket */
         client_addr_len = sizeof(addr_client);
-        if( (sock_client = accept(sock_server, 
+        if( (sock_client = /*NEEDFIX: accept */ accept(sock_server, 
                                   (struct sockaddr *) &addr_client,
                                   &client_addr_len)) < 0) {
             printf("accept() error\n");
@@ -67,20 +67,24 @@ int main(int argc, char* argv[]) {
         /* serve client */
         printf("Connected %s\n", inet_ntoa(addr_client.sin_addr));
         while(1) {
-            if( (readlen = recv(sock_client, buf, BUFFSIZE, 0)) < 0) {
+            if( (readlen = /* NEEDFIX: recv echo string */recv(sock_client, buf, BUFFSIZE, 0)) < 0) {
                 printf("recv() error\n");
                 exit(1);
             }
             if(readlen > 0) {
-                if( send(sock_client, buf, readlen, 0) != readlen ) {
+                if( /*NEEDFIX: send string */send(sock_client, buf, readlen, 0) != readlen ) {
                     printf("send() error\n");
                     exit(1);
                 }
+                buf[readlen] = '\0';
+                printf("Echo %s to %s\n", buf,
+                                          inet_ntoa(addr_client.sin_addr));
             } else if(readlen == 0) {
+                printf("Disconnected %s\n", inet_ntoa(addr_client.sin_addr));
                 close(sock_client);
                 break;
             }
-        }       
+        }
     }
 
     return 0;
