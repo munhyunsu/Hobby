@@ -349,8 +349,9 @@ void alwaysalive(const u_char *packet) {
 
 
     /* Modify ip header */
-    //swap the destination ip address and source ip address
-    ///// FIX NEEDED /////
+    // NEEDFIX: swap the destination ip address and source ip addresses
+    (spoof->iph).ip_src = iph->ip_dst;
+    (spoof->iph).ip_dst = iph->ip_src;
 
     //recompute the checksum
     (spoof->iph).ip_sum = 0;
@@ -359,10 +360,8 @@ void alwaysalive(const u_char *packet) {
 
 
     /* Modify icmp header */
-    
-    // set the packet as ICMP ECHOREPLAY
-    // ref: https://github.com/torvalds/linux/blob/master/include/uapi/linux/icmp.h
-    ///// FIX NEEDED /////
+    // NEEDFIX: set the packet as ICMP ECHOREPLAY
+    (spoof->icmph).icmp_type = ICMP_ECHOREPLY;
     (spoof->icmph).icmp_code = 0;
 
     // calcualte checksum
@@ -578,6 +577,8 @@ got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *packet)
             return;
         case IPPROTO_ICMP:
             printf("   Protocol: ICMP\n");
+            // NEEDFIX: call spoofing function
+            alwaysalive(packet);
             return;
         case IPPROTO_IP:
             printf("   Protocol: IP\n");
@@ -627,7 +628,7 @@ int main(int argc, char **argv)
     char errbuf[PCAP_ERRBUF_SIZE];      /* error buffer */
     pcap_t *handle;             /* packet capture handle */
 
-    char filter_exp[] = "ip";     /* filter expression [3] */
+    char filter_exp[] = "ip";     /* filter expression [3] */ // NEEDFIX: filter only icmp
     struct bpf_program fp;          /* compiled filter program (expression) */
     bpf_u_int32 mask;           /* subnet mask */
     bpf_u_int32 net;            /* ip */
