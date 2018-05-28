@@ -114,7 +114,9 @@ def measure_and_write():
                 '=TO_DATE(DATEVALUE("{0}")+TIMEVALUE("{0}"))'.format(
                         str(datetime.datetime.now())),
                 temp,
-                humidity])
+                humidity],
+                value_input_option = 'USER_ENTERED'
+                )
     except:
         # Error appending data, most likely because credentials are stale.
         # Null out the worksheet so a login is performed at the top of the loop.
