@@ -110,7 +110,11 @@ def measure_and_write():
 
     # Append the data in the spreadsheet, including a timestamp
     try:
-        worksheet.append_row((str(datetime.datetime.now()), temp, humidity))
+        worksheet.append_row([
+                '=TO_DATE(DATEVALUE("{0}")+TIMEVALUE("{0}"))'.format(
+                        str(datetime.datetime.now())),
+                temp,
+                humidity])
     except:
         # Error appending data, most likely because credentials are stale.
         # Null out the worksheet so a login is performed at the top of the loop.
