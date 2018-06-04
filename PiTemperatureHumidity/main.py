@@ -1,15 +1,25 @@
 #!/usr/bin/env python3
 
 import sys
+import time
+import datetime
 
 from adafruit_dht import measure_and_write
 from utils import check_internet
 
 def main(argv = sys.argv):
-    if not check_internet:
-        sys.exit(0)
+    for index in range(0, 30):
+        try:
+            measure_and_write()
+            return 0
+        except:
+            if index == 29:
+                return 1
+            print('{0}: Somethine is wrong(loop: {1})'.format(
+                    datetime.datetime.now(),
+                    index+1))
+            time.sleep(60)
 
-    measure_and_write()
 
 if __name__ == '__main__':
     sys.exit(main())
