@@ -1,3 +1,4 @@
 # TODO
-- reconnect loop
+- change Function to Class
+- (Done) reconnect loop
   - not infinity
