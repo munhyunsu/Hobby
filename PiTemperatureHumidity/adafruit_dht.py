@@ -82,7 +82,6 @@ def login_open_sheet(oauth_key_file, spreadsheet):
     credentials = ServiceAccountCredentials.from_json_keyfile_name(oauth_key_file, scope)
     gc = gspread.authorize(credentials)
     worksheet = gc.open(spreadsheet).sheet1
-    error_count = 0
     return worksheet
 
 def measure_and_write():
