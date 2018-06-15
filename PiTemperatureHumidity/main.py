@@ -12,12 +12,13 @@ def main(argv = sys.argv):
         try:
             measure_and_write()
             return 0
-        except:
+        except Exception as e:
             if index == 29:
                 return 1
-            print('{0}: Somethine is wrong(loop: {1})'.format(
+            print('{0}: Somethine is wrong(loop: {1}, exception: {2})'.format(
                     datetime.datetime.now(),
-                    index+1))
+                    index+1,
+                    e))
             time.sleep(60)
 
 

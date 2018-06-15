@@ -77,19 +77,9 @@ GDOCS_SPREADSHEET_NAME = ''
 from credential import GDOCS_OAUTH_JSON, GDOCS_SPREADSHEET_NAME
 
 def login_open_sheet(oauth_key_file, spreadsheet):
-    for index in range(0, 12):
-        """Connect to Google Docs spreadsheet and return the first worksheet."""
-        try:
-            scope =  ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-            credentials = ServiceAccountCredentials.from_json_keyfile_name(oauth_key_file, scope)
-            gc = gspread.authorize(credentials)
-            worksheet = gc.open(spreadsheet).sheet1
-            error_count = 0
-            return worksheet
-        except Exception as ex:
-            print(datetime.datetime.now(), 'Google sheet login failed with error:', ex)
-            #sys.exit(1)
-            time.sleep(10)
-            continue
-    print('Unable to login and get spreadsheet.  Check OAuth credentials, spreadsheet name, and make sure spreadsheet is shared to the client_email address in the OAuth .json file!')
-    sys.exit(1)
+    """Connect to Google Docs spreadsheet and return the first worksheet."""
+    scope =  ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(oauth_key_file, scope)
+    gc = gspread.authorize(credentials)
+    worksheet = gc.open(spreadsheet).sheet1
+    return worksheet
