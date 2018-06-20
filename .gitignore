@@ -1,4 +1,6 @@
 # python venv
+venv/
+.idea
 */bin
 */include
 */lib
