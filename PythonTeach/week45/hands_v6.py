@@ -84,7 +84,7 @@ def main(argv):
     computer = Player('컴퓨터', com = True)
     referee = Referee()
 
-    for index range(0, 10):
+    for index in range(0, 10):
         # 심판의 통제하에 경기 시작!
         referee.go(player, computer)
         print('{0} 라운드 끝!'.format(referee.rounds))
