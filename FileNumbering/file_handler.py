@@ -1,6 +1,7 @@
 import sys
 import os
 from operator import itemgetter
+import shutil
 
 def get_files(path, ext = '', recursive = False):
     '''
@@ -33,3 +34,15 @@ def get_files_by_mtime(path):
     result.sort(key = itemgetter(1))
 
     return result
+
+
+
+def copy_files(path_list, prefix):
+    os.makedirs('./output', exist_ok = True)
+    for index in range(0, len(path_list)):
+        spath = path_list[index][0]
+        opath = './output/{0}{1:03d}.{2}'.format(prefix, index+1, spath.split('.')[-1])
+        shutil.copy2(spath, opath)
+        # print('{0} to {1}'.format(spath, opath))
+
+    return index+1
