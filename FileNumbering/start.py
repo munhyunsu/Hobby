@@ -22,6 +22,8 @@ def main(argv = sys.argv):
     print('{0} files copied from {1}'.format(fnums, spath))
 
     # TODO(LuHa): Preserve original files or not?
+    print('Do you want preserve original files?')
+    print('If you do not want to it, copied files are located in ./output/')
 
 if __name__ == '__main__':
     sys.exit(main())
