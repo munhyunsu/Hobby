@@ -25,5 +25,14 @@ def main(argv = sys.argv):
     print('Do you want preserve original files?')
     print('If you do not want to it, copied files are located in ./output/')
 
+    user_input = input('Yes(y) or No(n): ')
+    user_input = user_input.strip()
+    user_input = user_input.lower()
+
+    if user_input == 'n':
+        print('Move copied files to original one')
+
+    print('Program ended')
+
 if __name__ == '__main__':
     sys.exit(main())
