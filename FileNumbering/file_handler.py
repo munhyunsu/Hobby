@@ -2,6 +2,7 @@ import sys
 import os
 from operator import itemgetter
 import shutil
+import subprocess
 
 def get_files(path, ext = '', recursive = False):
     '''
@@ -34,6 +35,12 @@ def get_files_by_mtime(path):
     result.sort(key = itemgetter(1))
 
     return result
+
+
+
+def move_copied_file(path):
+    pass
+
 
 
 

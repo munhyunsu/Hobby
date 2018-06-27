@@ -15,24 +15,35 @@ def main(argv = sys.argv):
     spath = argv[1]
     prefix = argv[2]
 
+    # copy and sort files
     path = get_files_by_mtime(spath)
-
     fnums = copy_files(path, prefix)
-
     print('{0} files copied from {1}'.format(fnums, spath))
 
-    # TODO(LuHa): Preserve original files or not?
-    print('Do you want preserve original files?')
-    print('If you do not want to it, copied files are located in ./output/')
+    # preserve or not
+    print('Do you want move copied files to original files?')
+    print('If you want to it, original files are deleted')
+    print('This function is working in only linux')
 
-    user_input = input('Yes(y) or No(n): ')
+    user_input = request_input('Yes(y) or No(n): ')
+    if user_input == 'y':
+        move_copied_to_original()
+        print('Move copied files to original one')
+
+
+
+    print('Program ended')
+
+
+
+def request_input(txt = ''):
+    user_input = input(txt)
     user_input = user_input.strip()
     user_input = user_input.lower()
 
-    if user_input == 'n':
-        print('Move copied files to original one')
+    return user_input
 
-    print('Program ended')
+
 
 if __name__ == '__main__':
     sys.exit(main())
