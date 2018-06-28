@@ -44,6 +44,8 @@ def move_copied_file(path):
     command = 'mv ./output path'
     subprocess.check_call(command, shell=True)
 
+    return True
+
 
 
 
