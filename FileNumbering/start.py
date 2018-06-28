@@ -1,6 +1,6 @@
 import sys
 
-from file_handler import get_files_by_mtime, copy_files
+from file_handler import get_files_by_mtime, copy_files, move_copied_file
 
 def main(argv = sys.argv):
     '''
@@ -27,10 +27,8 @@ def main(argv = sys.argv):
 
     user_input = request_input('Yes(y) or No(n): ')
     if user_input == 'y':
-        move_copied_to_original()
+        move_copied_file(path)
         print('Move copied files to original one')
-
-
 
     print('Program ended')
 
