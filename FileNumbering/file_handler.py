@@ -39,6 +39,7 @@ def get_files_by_mtime(path):
 
 
 def move_copied_file(path):
+    #TODO(LuHa): To cross-platform module
     command = 'mv path ./original'
     subprocess.check_call(command, shell=True)
     command = 'mv ./output path'
