@@ -42,9 +42,9 @@ def move_copied_file(path):
     # TODO(LuHa): To cross-platform module
     # using shutil
     # TODO(LuHa): Args, return variable
-    command = 'mv path ./original'
+    command = 'mv {0} ./original'.format(path)
     subprocess.check_call(command, shell=True)
-    command = 'mv ./output path'
+    command = 'mv ./output {0}'.format(path)
     subprocess.check_call(command, shell=True)
 
     return True
