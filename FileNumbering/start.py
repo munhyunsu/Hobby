@@ -2,6 +2,8 @@ import sys
 
 from file_handler import get_files_by_mtime, copy_files, move_copied_file
 
+
+# TODO(LuHa): considering current working directory
 def main(argv = sys.argv):
     '''
     Main function
