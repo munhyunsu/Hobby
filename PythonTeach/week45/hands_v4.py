@@ -63,7 +63,7 @@ def main(argv):
         #com_input = get_com_input()
         com = get_com_input()
 
-        # 시도 카운트d
+        # 시도 카운트
         tried = tried + 1
 
         # 결과 출력
