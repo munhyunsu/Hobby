@@ -1,9 +1,27 @@
+import os
 import sys
+import csv
+import pickle
+
+DATA_PATH = 'user.pickle'
+
+
+def read_data():
+    if not os.path.exists(DATA_PATH):
+        return list()
+    with open(DATA_PATH, 'rb') as f:
+        user_list = pickle.load(f)
+        return user_list
+
+
+def write_data(user_list):
+    with open(DATA_PATH, 'wb') as f:
+        pickle.dump(user_list, f)
 
 
 def main():
     user_input = None
-    user_list = list()
+    user_list = read_data()
     while user_input != 0:
         print('0. 종료')
         print('1. 사용자 목록 출력')
@@ -19,6 +37,7 @@ def main():
                     '아이디': nick}
             user_list.append(user)
 
+    write_data(user_list)
     print('종료합니다.')
 
 
