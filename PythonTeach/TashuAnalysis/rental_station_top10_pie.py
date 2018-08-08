@@ -9,6 +9,7 @@ def main_2013_1():
 
     plt.title('2013 SS, Tashu Top 10 Ratio')
     plt.pie(counts, labels=stations)
+    # plt.savefig('pie_2013_1.png')
     plt.show()
 
 
