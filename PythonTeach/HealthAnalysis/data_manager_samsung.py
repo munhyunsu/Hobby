@@ -27,6 +27,8 @@ class DataManagerSamsung(DataManager):
         result = list()
         time_pointer = datetime.datetime.fromtimestamp(unixtime,
                                                        tz=datetime.timezone(datetime.timedelta(hours=time_delta)))
+        # BUG?
+        time_pointer = time_pointer - datetime.timedelta(hours=time_delta)
         with open(json_path, 'r') as f:
             json_data = json.load(f)
             for entry in json_data:

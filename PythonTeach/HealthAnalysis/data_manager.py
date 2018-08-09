@@ -70,27 +70,7 @@ class DataManager(object):
     #     date = date.replace(tzinfo=datetime.timezone(datetime.timedelta(hours=time_delta)))
     #     return date
     #
-    # def get_weekday_steps(self):
-    #     weeks = {0: 'Mon',
-    #              1: 'Tue',
-    #              2: 'Wed',
-    #              3: 'Thu',
-    #              4: 'Fri',
-    #              5: 'Sat',
-    #              6: 'Sun'}
-    #     result_dict = dict()
-    #     files = self.get_files(ext='.csv')
-    #     for file in files:
-    #         step_list = self.get_steps(file)
-    #         for (start_time, step) in step_list:
-    #             date = self.get_time_struct(file, start_time, 9)
-    #             result_dict[weeks[date.weekday()]] = result_dict.get(weeks[date.weekday()], 0) + int(step)
-    #
-    #     weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    #     counts = list()
-    #     for week in weeks:
-    #         counts.append(result_dict[week])
-    #     return counts
+
     #
     # def get_feature_data(self):
     #     feature_vector = list()

@@ -10,7 +10,7 @@ def main():
     print(weeks, counts)
 
     colors = ['ORANGERED', 'SLATEBLUE', 'SLATEBLUE', 'SLATEBLUE', 'SLATEBLUE', 'ORANGE', (220/255, 118/255, 51/255)]
-    plt.title('Steps by weekdays, 2018-07')
+    plt.title('Steps by weekdays')
     plt.bar(weeks, counts, color=colors)
     plt.show()
 
