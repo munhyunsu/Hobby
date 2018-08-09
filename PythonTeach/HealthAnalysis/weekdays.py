@@ -5,7 +5,7 @@ from HealthAnalysis.data_manager import DataManager
 
 
 def main():
-    data_manager = DataManager('data/')
+    data_manager = DataManager('google_data/')
     weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     counts = data_manager.get_weekday_steps()
 

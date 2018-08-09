@@ -11,7 +11,7 @@ from HealthAnalysis.data_manager import DataManager
 
 
 def main():
-    data_manager = DataManager('data/')
+    data_manager = DataManager('google_data/')
     (feature, target) = data_manager.get_feature_data()
 
     # regr = linear_model.LinearRegression()
