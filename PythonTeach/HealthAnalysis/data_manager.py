@@ -43,18 +43,7 @@ class DataManager(object):
         raise NotImplementedError
 
 
-    # def get_hourly_steps(self):
-    #     result_dict = dict()
-    #     files = self.get_files(ext='.csv')
-    #     for file in files:
-    #         step_list = self.get_steps(file)
-    #         for (start_time, step) in step_list:
-    #             date = self.get_time_struct(file, start_time, 9)
-    #             result_dict[date.hour] = result_dict.get(date.hour, 0) + int(step)
-    #     result = list()
-    #     for index in range(0, 24):
-    #         result.append(result_dict.get(index, 0))
-    #     return result
+
 
 
     #

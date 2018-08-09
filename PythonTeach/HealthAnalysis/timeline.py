@@ -7,10 +7,14 @@ from HealthAnalysis.data_manager_samsung import DataManagerSamsung
 
 
 def get_hourly_steps(steps):
-
+    result_dict = dict()
     for time_struct, step in steps:
-        pass
+        result_dict[time_struct.hour] = result_dict.get(time_struct.hour, 0) + int(step)
 
+    result = list()
+    for index in range(0, 24):
+        result.append(result_dict.get(index, 0))
+    return result
 
 
 def main():
@@ -18,6 +22,7 @@ def main():
     step_list = data_manager.get_steps()
     counts = get_hourly_steps(step_list)
 
+    hours = list(range(0, 24))
     print('0 to 23: {0}'.format(counts))
 
     os.makedirs('line_data', exist_ok=True)

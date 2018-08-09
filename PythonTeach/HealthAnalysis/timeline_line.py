@@ -9,7 +9,7 @@ def main():
 
     print(hours, counts)
 
-    plt.title('Hourly steps, 2018-07')
+    plt.title('Hourly steps')
     plt.plot(hours, counts, 'mo--')
     plt.show()
 
