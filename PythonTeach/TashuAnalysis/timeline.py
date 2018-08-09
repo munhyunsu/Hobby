@@ -8,7 +8,7 @@ import pickle
 def main_2013_1():
     print('----- 2013 상반기 시간별 대여수 -----')
     hour_count = dict()
-    with open('data/2013_1.csv', 'r') as f:
+    with open('google_data/2013_1.csv', 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
             try:
@@ -34,7 +34,7 @@ def main_2013_1():
 def main_2013_2():
     print('----- 2013 하반기 시간별 대여수 -----')
     hour_count = dict()
-    with open('data/2013_2.csv', 'r') as f:
+    with open('google_data/2013_2.csv', 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
             try:
@@ -60,7 +60,7 @@ def main_2013_2():
 def main_2014_1():
     print('----- 2014 상반기 시간별 대여수 -----')
     hour_count = dict()
-    with open('data/2014_1.csv', 'r') as f:
+    with open('google_data/2014_1.csv', 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
             try:
@@ -86,7 +86,7 @@ def main_2014_1():
 def main_2014_2():
     print('----- 2014 하반기 시간별 대여수 -----')
     hour_count = dict()
-    with open('data/2014_2.csv', 'r') as f:
+    with open('google_data/2014_2.csv', 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
             try:
@@ -112,7 +112,7 @@ def main_2014_2():
 def main_2015_1():
     print('----- 2015 상반기 시간별 대여수 -----')
     hour_count = dict()
-    with open('data/2015_1.csv', 'r') as f:
+    with open('google_data/2015_1.csv', 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
             try:
@@ -138,7 +138,7 @@ def main_2015_1():
 def main_2015_2():
     print('----- 2015 하반기 시간별 대여수 -----')
     hour_count = dict()
-    with open('data/2015_2.csv', 'r') as f:
+    with open('google_data/2015_2.csv', 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
             try:
