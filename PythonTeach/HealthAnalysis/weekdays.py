@@ -1,4 +1,5 @@
 import os
+import sys
 import pickle
 
 from HealthAnalysis.data_manager_google import DataManagerGoogle
@@ -20,39 +21,22 @@ def get_weekday_steps(steps):
     return counts
 
 
-def main_google():
-    data_manager = DataManagerGoogle('google_data/')
+def main(argv=()):
+    if len(argv) < 2:
+        sys.exit(0)
+    if argv[1] == 'google':
+        data_manager = DataManagerGoogle('google_data/')
+    elif argv[1] == 'apple':
+        data_manager = DataManagerApple('apple_data/')
+    elif argv[1] == 'samsung':
+        data_manager = DataManagerSamsung('samsung_data/')
+    else:
+        sys.exit(0)
     step_list = data_manager.get_steps()
     counts = get_weekday_steps(step_list)
 
     weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    print('0 to 23: {0}'.format(counts))
-
-    os.makedirs('bar_data', exist_ok=True)
-    with open('bar_data/weeks.pickle', 'wb') as f:
-        pickle.dump((weeks, counts), f)
-
-
-def main_apple():
-    data_manager = DataManagerApple('apple_data/')
-    step_list = data_manager.get_steps()
-    counts = get_weekday_steps(step_list)
-
-    weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    print('0 to 23: {0}'.format(counts))
-
-    os.makedirs('bar_data', exist_ok=True)
-    with open('bar_data/weeks.pickle', 'wb') as f:
-        pickle.dump((weeks, counts), f)
-
-
-def main_samsung():
-    data_manager = DataManagerSamsung('samsung_data/')
-    step_list = data_manager.get_steps()
-    counts = get_weekday_steps(step_list)
-
-    weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    print('0 to 23: {0}'.format(counts))
+    print('Sun to Sat: {0}'.format(counts))
 
     os.makedirs('bar_data', exist_ok=True)
     with open('bar_data/weeks.pickle', 'wb') as f:
@@ -60,6 +44,6 @@ def main_samsung():
 
 
 if __name__ == '__main__':
-    # main_google()
-    # main_apple()
-    main_samsung()
+    # main(('weekdays.py', 'google'))
+    main(('weekdays.py', 'apple'))
+    # main(('weekdays.py', 'samsung'))
