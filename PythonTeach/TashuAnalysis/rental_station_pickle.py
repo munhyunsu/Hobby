@@ -4,6 +4,8 @@ import pickle
 
 from operator import itemgetter
 
+from matplotlib import pyplot as plt
+
 
 def main_2013_1():
     rent_count = dict()
@@ -25,6 +27,9 @@ def main_2013_1():
     for index in range(0, 10):
         stations.append(rent_list[index][0])
         counts.append(rent_list[index][1])
+
+    plt.pie(counts, labels=stations)
+    plt.show()
 
     os.makedirs('pie_data', exist_ok=True)
     with open('pie_data/top10_2013_1.pickle', 'wb') as f:

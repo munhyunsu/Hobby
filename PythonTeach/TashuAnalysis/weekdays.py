@@ -21,7 +21,7 @@ def main_2013_1():
         for row in reader:
             try:
                 date = datetime.datetime.strptime(row['RENT_DATE'], '%Y%m%d%H%M%S')
-                weekday_count[WEEKS[date.weekday()]] = weekday_count.get(WEEKS[date.weekday()], 0) + 1
+                weekday_count[date.hour] = weekday_count.get(WEEKS[date.weekday()], 0) + 1
             except ValueError:
                 pass
 
