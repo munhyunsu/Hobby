@@ -11,7 +11,7 @@ class DataManagerGoogle(DataManager):
 
     def parse_file(self, fpath):
         result = list()
-        with open(fpath, 'r') as f:
+        with open(fpath, 'r', encoding='utf8') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 try:
