@@ -7,7 +7,10 @@ def raise_exception():
     raise Exception
 
 def main():
-    raise_exception()
+    try:
+        raise_exception()
+    except Exception as e:
+        print(e)
 
 
 if __name__ == '__main__':
