@@ -20,6 +20,7 @@ def main(argv=sys.argv):
     print_table_dict(timetable.get_target())
     print(len(timetable.get_target().keys()))
 
+    print(timetable.find_by_room('2-2'))
 
 if __name__ == '__main__':
     main()

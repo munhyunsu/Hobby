@@ -45,3 +45,14 @@ class TimeTable(object):
                 targets[key] = table[key]
 
         return targets
+
+    def find_by_room(self, room):
+        result = list()
+        table = self.table
+        for key in table.keys():
+            for index in range(0, len(table[key])):
+                lecture = table[key][index]
+                if lecture.endswith(room):
+                    result.append((index, key, lecture))
+        result.sort()
+        return result
