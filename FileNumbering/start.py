@@ -29,7 +29,7 @@ def main(argv = sys.argv):
 
     user_input = request_input('Yes(y) or No(n): ')
     if user_input == 'y':
-        move_copied_file(path)
+        move_copied_file(spath)
         print('Move copied files to original one')
 
     print('Program ended')
