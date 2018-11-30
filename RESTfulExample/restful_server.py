@@ -6,7 +6,7 @@ from server_daemon import HTTPDaemon
 
 
 IPADDRESS = ''
-PORT = 8080
+PORT = 8877
 HANDLER = RESTRequestHandler
 
 
