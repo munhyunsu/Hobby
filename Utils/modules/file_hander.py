@@ -1,11 +1,11 @@
 import os
 
-def get_files(path, ext = '', recursive = False):
-    '''
+def get_files(path, ext='', recursive=False):
+    """
     Read all files in path
     :param path: path for reading
     :return: absolute path of all files in directory list
-    '''
+    """
     path_list = [path]
 
     while len(path_list) > 0:
