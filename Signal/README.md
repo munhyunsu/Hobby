@@ -6,6 +6,6 @@
 - Why?
 
 ## File explanation
-- \_shell.py : 
-- \_preexec\_fn.py : 
-- \_new\_session.py : 
+- \_shell.py : bash-py3-bash-py3
+- \_preexec\_fn.py : bash-py3-bash-py3
+- \_new\_session.py : bash-py3 | init-py3
