@@ -1,5 +1,5 @@
 import re
-from operator import itemgetter, methodcaller
+from operator import itemgetter
 
 
 def split_head_number_tail(target):
@@ -43,3 +43,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
