@@ -3,20 +3,15 @@ import sys
 from file_handler import get_files_by_mtime, copy_files, move_copied_file
 
 
-# TODO(LuHa): considering current working directory
-# TODO(LuHa): rename procecced files
 def main(argv = sys.argv):
-    '''
-    Main function
-    :param argv:
-    :return:
-    '''
     if len(argv) < 3:
         print('Need [SourcePath] [Prefix]')
         sys.exit(0)
 
     spath = argv[1]
     prefix = argv[2]
+
+    # TODO(LuHa): Check the output directory is empty
 
     # copy and sort files
     path = get_files_by_mtime(spath)

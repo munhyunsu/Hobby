@@ -5,3 +5,4 @@
 
 ## TODO
 - Keep unchanged files
+- Check output directory is empty
