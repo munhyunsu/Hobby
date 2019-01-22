@@ -16,5 +16,5 @@ def get_files(path, ext='', recursive=False):
                     if entry.name.endswith(ext):
                         yield entry.path
                     else:
-                        if recursive == True:
+                        if recursive:
                             path_list.append(entry.path)
