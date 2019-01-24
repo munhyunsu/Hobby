@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 int main() {
-    printf("Escalate permission to root\n");
+    printf("Escalate permission from %d to root\n", getuid());
     setuid(0);
     printf("Execute rtcwake with uid: %d\n", getuid());
     system("rtcwake -m freeze -s 1");
