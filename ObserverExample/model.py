@@ -11,4 +11,5 @@ class Model(object):
         data = copy.deepcopy(self.default_form)
         data['who'] = who
         self.data.append(data)
+        print(self.data)
 
