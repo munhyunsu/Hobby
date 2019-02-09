@@ -6,7 +6,6 @@ import time
 from bs4 import BeautifulSoup
 
 def main():
-    url = 'http://www.python.org/'
     url = 'http://www.pokemonstore.co.kr/shop/main/index.php'
 
     print('For exit, press ctrl + c')
