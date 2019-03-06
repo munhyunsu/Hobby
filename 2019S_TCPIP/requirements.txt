@@ -1,0 +1,5 @@
+scapy
+matplotlib
+PyX
+cryptography
+IPython
