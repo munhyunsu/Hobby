@@ -3,3 +3,4 @@ matplotlib
 PyX
 cryptography
 IPython
+jupyter
