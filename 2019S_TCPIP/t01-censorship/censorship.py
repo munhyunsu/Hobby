@@ -4,7 +4,10 @@ from scapy.all import *
 ARGS = None
 DEBUG = False
 
-
+"""
+Ref(EAPOL): https://en.wikipedia.org/wiki/IEEE_802.1X
+Ref: https://medium.com/@debookee/promiscuous-vs-monitoring-mode-d603601f5fa
+"""
 load_layer('tls')
 
 def pkt_handler(pkts):
