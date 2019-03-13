@@ -17,6 +17,9 @@ def pkt_handler(pkts):
         pkt_type = pkt['Ether'].type
         if pkt_type != 0x0800:
             continue
+        """
+        Ref: https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
+        """
         proto = pkt['IP'].proto
         if proto == 0x06:
             src_port = pkt['TCP'].sport
@@ -37,7 +40,6 @@ def tls_handler(pkt):
 
 def dns_handler(pkt):
     """
-    Ref: https://en.wikipedia.org/wiki/Transport_Layer_Security#Protocol_details
     Ref: https://tools.ietf.org/html/rfc1035
     """
     print('Here is DNS handler')
