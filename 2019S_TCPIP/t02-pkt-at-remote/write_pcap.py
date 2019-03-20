@@ -19,6 +19,7 @@ def main():
         else:
             print('Append {0}'.format(ARGS.output))
     try:
+        print('Start sniff')
         sniff(prn=pkt_writer, filter=ARGS.filter)
     except KeyboardInterrupt:
         pass
