@@ -51,3 +51,32 @@ host -t any www.whitehouse.gov
 host -t ptr 208.xxx
 ```
 
+## CSMA/CD
+- Carrior Sence Multiple Access / Collision Detection
+
+## Distributed Distributed Coordination Function: CSMA/CA
+- Carrior Sence Multiple Access / Collision Avoidance
+- RTS: Request to Send
+- CTS: Clear to Send
+- ACK: Acknowledgement
+
+### Hidden Terminal Problem
+- A -- B -- C
+- Solved by RTS/CTS
+
+## IP
+
+### Important things
+- Src/Dst IP Address
+- Protocol / Next header
+- Time-to-Live / Hop Limit
+
+### Maximum Transmission Unit
+- Ethernet: 1500 Bytes
+- IP: 65535 Bytes
+- Flagmentation: Identification, Don't flagment, Flagmentation
+
+### 
+
+
+
