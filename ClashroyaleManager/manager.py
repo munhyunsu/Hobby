@@ -19,8 +19,11 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--data', type=str, 
-                        default='user.json',
-                        help='The json file for user data')
+                        default='data.json',
+                        help='The json file for archving data')
+    parser.add_argument('-u', '--user', type=str,
+                        required=True,
+                        help='The csv file from deckshop.pro')
 
     ARGS = parser.parse_args()
 
