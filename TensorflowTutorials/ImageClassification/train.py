@@ -1,12 +1,28 @@
+import os
 import sys
+import urllib.request
+import shutil
+import tarfile
 
 import tensorflow as tf
 
+DATA_URL = 'http://download.tensorflow.org/models/image/imagenet/inception-v3-2016-03-01.tar.gz'
 FLAGS = None
 
 
 def pprint(data):
     print('\x1B[33m\x1B[100m{0}\x1B[0m'.format(data))
+
+
+def download_extract(url, path):
+    if not tf.gfile.Exists(path):
+        tf.gfile.MakeDirs(path)
+    filename = url.split('/')[-1]
+    filepath = os.path.join(path, filename)
+    if not os.path.exists(filepath):
+        with urllib.request.urlopen(url) as response, open(filepath, 'wb') as out_file:
+            shutil.copyfileobj(response, out_file)
+    tarfile.open(filepath, 'r:gz').extractall(path)
 
 
 def main(_):
@@ -16,7 +32,12 @@ def main(_):
     tf.gfile.MakeDirs(FLAGS.summaries_dir)
     pprint('Created summaries directory: {0}'.format(FLAGS.summaries_dir))
 
+    # Download pre-trained model: inception-v3
+    pprint('Download file from {0}'.format(DATA_URL))
+    download_extract(DATA_URL, FLAGS.model_dir)
+    pprint('Download completed')
 
+    #
 
 
     # For DEBUG
