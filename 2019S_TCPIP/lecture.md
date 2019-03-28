@@ -76,7 +76,50 @@ host -t ptr 208.xxx
 - IP: 65535 Bytes
 - Flagmentation: Identification, Don't flagment, Flagmentation
 
-### 
+## ICMP
+- Not data transfer protocol, it is alert or notify information protocol
+
+### IP control protocol
+- ping, traceroute
+
+### ICMP Type
+- [ping] Echo Request(128) / Echo Reply(129)
+- [traceroute] Time exceeded(3) / Destination unreachable(1)
+  - used TTL(IPv4) or Hop limit(IPv6) field
+
+### traceroute
+- Send a UDP packet with TTL field 1, 2, 3, ...
+- If the router receive expired packet then reply time exceeded ICMP packet to sender
+- The last hop(target server) send a destination unreachable packet
+
+## UDP
+
+## TCP
+- Ethernet CSMA/CD: manage medium
+- Retransmission in TCP: manage error
+
+### ARQ and Retransmission
+
+### Delay
+1. Processing
+2. Propagation
+3. Transmit
+4. Queueing: Not constant
+  - Packet switching network
+  - Non circuit switching network
+
+### Flow control vs Congestion control
+- Flow control
+  - Rate-based vs. window-based
+  - Receiver's signal: window update
+- Congestion control
+  - Implicit signal
+
+### RTT timer
+- The average changes
+  - Statistical process
+  - True RTT
+
 
 
 

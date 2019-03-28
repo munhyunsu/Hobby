@@ -18,6 +18,6 @@ iptables -P INPUT ACCEPT
 
 - append rule
 ```bash
-iptables -A INPUT -p tcp -dport 80 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 ```
 
