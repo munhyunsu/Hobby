@@ -1,4 +1,5 @@
 from data import data_handler
+from interface import cli
 
 ARGS = None
 
@@ -7,11 +8,13 @@ class Manager(object):
         self.data = data_handler.load(path)
 
     def start(self):
+        cli.intro()
         print(self.data)
 
 
 def main():
     manager = Manager(ARGS.data)
+    manager.start()
 
 
 if __name__ == '__main__':
