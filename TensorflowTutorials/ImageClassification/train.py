@@ -37,9 +37,6 @@ def main(_):
     download_extract(DATA_URL, FLAGS.model_dir)
     pprint('Download completed')
 
-    #
-
-
     # For DEBUG
     pprint(FLAGS)
 
@@ -201,3 +198,4 @@ if __name__ == '__main__':
         )
     FLAGS, unparsed = parser.parse_known_args()
     tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+
