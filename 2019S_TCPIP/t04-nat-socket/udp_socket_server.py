@@ -11,7 +11,7 @@ def main(_):
     while True:
         try:
             data, addr = sock.recvfrom(1560)
-            print('Received from {0}'.format(addr))
+            print('Received {0} bytes from {1}'.format(len(data), addr))
             sock.sendto(data, addr)
             print('Echo {0} to {1}'.format(data, addr))
         except KeyboardInterrupt:
