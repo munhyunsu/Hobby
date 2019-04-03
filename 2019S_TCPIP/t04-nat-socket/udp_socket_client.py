@@ -5,6 +5,7 @@ FLAGS = None
 
 def main(_):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.settimeout(5)
     print('Opened UDP echo client')
 
     while True:
@@ -17,6 +18,8 @@ def main(_):
         except KeyboardInterrupt:
             print('Terminated UDP echo client')
             break
+        except socket.timeout:
+            print('Server is not responding')
 
 
 if __name__ == '__main__':
