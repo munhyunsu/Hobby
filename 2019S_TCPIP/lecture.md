@@ -120,6 +120,22 @@ host -t ptr 208.xxx
   - Statistical process
   - True RTT
 
+## IGMP: Internet group management protocol
+- IP multicast: IGMP
 
+## PPP
+- DSL: Digital subscriber line
+  - Digital multiplexer
+  - Using telephone line, it create data link line
+- At nowadays, PPP was used at VPN called PPTP
+  - Point-to-Point Tunneling Protocol
+
+### GRE(Genegic Routing Encapsulation)
+
+### Van jacobson
+- tcpdump
+- traceroute
+- TCP/IP compression
+- Need to read white paper
 
 
