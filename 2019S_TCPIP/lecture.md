@@ -92,6 +92,9 @@ host -t ptr 208.xxx
 - If the router receive expired packet then reply time exceeded ICMP packet to sender
 - The last hop(target server) send a destination unreachable packet
 
+### The packet size over MTU
+- ICMP packet
+
 ## UDP
 
 ## TCP
@@ -120,6 +123,27 @@ host -t ptr 208.xxx
   - Statistical process
   - True RTT
 
+### TCP sequence number
+- 2^32: 4,294,967,296
+  - 4G bytes file size
+
+### TCP Payload
+- 1.4K bytes
+  - 1460 bytes
+
+### TCP checksum
+- Calculate with header and payload
+
+### TCP options
+- Window scale: the default size which are 64K bytes is too small
+  - It is in only SYN packet
+- Maximum segment size: It is not a negotiation
+  - It is a limit
+  - MSS option is in only SYN packet
+- SACK
+  - A pair of 32-bit sequence
+  - n SACK block (n8+2)
+
 ## IGMP: Internet group management protocol
 - IP multicast: IGMP
 
@@ -137,5 +161,4 @@ host -t ptr 208.xxx
 - traceroute
 - TCP/IP compression
 - Need to read white paper
-
 
