@@ -46,8 +46,8 @@ def main(_):
     url = 'https://api.meethue.com/oauth2/token?code={code}&grant_type=authorization_code'.format_map(flag_var)
     r = requests.post(url, headers = header)
 
-    print(r.headers)
-    print(r.content.encode('utf-8'))
+    tokens = eval(r.content.decode('utf-8').strip())
+    print(tokens)
 
 
 if __name__ == '__main__':
