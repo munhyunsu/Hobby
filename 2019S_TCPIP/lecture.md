@@ -144,6 +144,26 @@ host -t ptr 208.xxx
   - A pair of 32-bit sequence
   - n SACK block (n8+2)
 
+### RTO: Retransmission timer
+- use variance
+  - Classic version
+  - Standard version
+- Retransmission ambiguity
+  - Karn's algorithm
+  - Ignore retransmitted segments
+  - Timestamp option
+- Nagle algorithm
+  - bulk data transfer
+  - application such as ssh was not applied
+
+### TCP persist timer
+- Ask client's window size
+
+### Silly window syndrome (SW)
+- Avoidance
+  - Receiver: small windows are not advertised
+  - Sender: small segment are not sent
+
 ## IGMP: Internet group management protocol
 - IP multicast: IGMP
 
@@ -161,4 +181,3 @@ host -t ptr 208.xxx
 - traceroute
 - TCP/IP compression
 - Need to read white paper
-
