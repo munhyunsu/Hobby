@@ -1,6 +1,7 @@
 import webbrowser
 import requests
 import hashlib
+import json
 
 FLAGS = None
 
@@ -49,6 +50,10 @@ def main(_):
     tokens = eval(r.content.decode('utf-8').strip())
     print(tokens)
 
+    # export token to file
+    with open(flag_var['output'], 'w') as f:
+        jsom.dump(token, f, indent=True, ensure_ascii_False)
+    
 
 if __name__ == '__main__':
     import argparse
@@ -62,6 +67,8 @@ if __name__ == '__main__':
                         help='app id')
     parser.add_argument('-d', '--deviceid', required=True,
                         help='device id')
+    parser.add_argument('-o', '--output', default='token.json',
+                        help='output file')
 
     FLAGS, _ = parser.parse_known_args()
 
