@@ -113,3 +113,4 @@ def measure_and_write():
 
     # Wait 30 seconds before continuing
     print('Wrote a row to {0}'.format(GDOCS_SPREADSHEET_NAME))
+
