@@ -3,6 +3,8 @@ import os
 from operator import itemgetter
 import shutil
 import subprocess
+import filecmp
+
 
 def get_files(path, ext = '', recursive = False):
     '''
@@ -48,8 +50,6 @@ def move_copied_file(path):
     subprocess.check_call(command, shell=True)
 
     return True
-
-
 
 
 def copy_files(path_list, prefix):
