@@ -1,5 +1,6 @@
 import os
 
+
 def get_files(path, ext='', recursive=False):
     """
     Read all files in path
@@ -18,3 +19,4 @@ def get_files(path, ext='', recursive=False):
                     else:
                         if recursive:
                             path_list.append(entry.path)
+
