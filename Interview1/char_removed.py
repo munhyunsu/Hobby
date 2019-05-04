@@ -28,7 +28,7 @@ def get_levenshtein_table(x, y):
 
 
 
-def equalsWhenOneCharRemoved(x, y, life=1):
+def equalsWhenOneCharRemoved(x, y):
     # get Levenshtein distance table
     table = get_levenshtein_table(x, y)
 
@@ -39,7 +39,7 @@ def equalsWhenOneCharRemoved(x, y, life=1):
     # [2 1 0 1]
     # [3 2 1 1]]
     path_queue = list() # Use like queue
-    path_queue.append((len(x), len(y), life)) # initial life 1
+    path_queue.append((len(x), len(y), 1)) # initial life 1
     while len(path_queue) != 0:
         index_x, index_y, life = path_queue.pop(0)
         if table[index_x, index_y] == 0: # Check is it goal?
@@ -66,7 +66,7 @@ def equalsWhenOneCharRemoved(x, y, life=1):
 
 
 def main(_):
-    print(equalsWhenOneCharRemoved(FLAGS.str_x, FLAGS.str_y, FLAGS.life))
+    print(equalsWhenOneCharRemoved(FLAGS.str_x, FLAGS.str_y))
 
 
 if __name__ == '__main__':
@@ -77,8 +77,6 @@ if __name__ == '__main__':
                         help='String X')
     parser.add_argument('-y', '--str_y', required=True, type=str,
                         help='String Y')
-    parser.add_argument('-l', '--life', default=1, type=int,
-                        help='Allowed maximum string distance')
     FLAGS, _ = parser.parse_known_args()
 
     main(_)
