@@ -20,8 +20,6 @@ class CharRemovedTests(unittest.TestCase):
         self.assertTrue(equalsWhenOneCharRemoved('xyz', 'xz'))
 
 
-
-
 if __name__ == '__main__':
     unittest.main(verbosity=2)
 
