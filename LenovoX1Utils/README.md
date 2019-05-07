@@ -3,3 +3,5 @@
 ## Features (Units)
 - wakeup\_touchscreen.c
   - Lenovo X1 Yoga gen. 3 bug resolving code
+  - It needs setuid bit
+
