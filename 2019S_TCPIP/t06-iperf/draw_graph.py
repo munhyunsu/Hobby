@@ -7,6 +7,7 @@ FLAGS = None
 def main(_):
     print(FLAGS)
     data = pd.read_csv(FLAGS.input, header=None)
+    data = data[data[0]<4]
     plt.plot(data[0], data[3], '.-')
     plt.title(FLAGS.input)
     plt.xlabel('Time (s)')

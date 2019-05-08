@@ -48,6 +48,7 @@ def main(_):
         current_time = time.time()
         mtime = current_time-start_time
         command_line = 'ss -i sport = :{0}'.format(FLAGS.port)
+        #command_line = 'ss -i dport = :{0}'.format(FLAGS.port)
         command = shlex.split(command_line)
         process = subprocess.run(command, stdout=subprocess.PIPE, timeout=1)
         output = process.stdout.decode('utf-8')
