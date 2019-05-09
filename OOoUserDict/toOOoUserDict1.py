@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import sys
 
 
@@ -21,7 +19,6 @@ def main(argv):
     dst_file.close()
 
 
-
-
 if __name__ == '__main__':
-    sys.exit(main(sys.argv))
+    ys.exit(main(sys.argv))
+
