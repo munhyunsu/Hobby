@@ -1,0 +1,64 @@
+import socket
+import ssl
+import select
+
+FLAGS = None
+
+
+def main(_):
+    print('Parsed args {0}'.format(FLAGS))
+    print('Unparsed args {0}'.format(_))
+
+    # Create socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # reuse
+    sock.bind(('', FLAGS.port))
+    sock.listen()
+    sock.setblocking(0)
+
+    # Wrap-up secure socket
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    context.load_cert_chain(FLAGS.cert, FLAGS.key)
+    ssock = context.wrap_socket(sock, server_side=True)
+
+    # readable socks
+    sock_list = [ssock]
+
+    print('Start server')
+    while True:
+        try:
+            # get list of sockets
+            read_sock, write_sock, err_sock = select.select(sock_list, [], [])
+            
+            # loop read sock list
+            for rsock in read_sock:
+                # New connection
+                if rsock == ssock:
+                    pass # FILL HERE
+                # Request from client
+                else:
+                    pass # FILL HERE
+        except KeyboardInterrupt:
+            print('End server')
+            break
+        except ssl.SSLError:
+            pass
+
+
+if __name__ == '__main__':
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', '--port', type=int,
+                        help='Server port number')
+    parser.add_argument('-c', '--cert',
+                        required=True,
+                        help='Server certificate file path')
+    parser.add_argument('-k', '--key',
+                        required=True,
+                        help='Server key file path')
+
+    FLAGS, _ = parser.parse_known_args()
+    
+    main(_)
+

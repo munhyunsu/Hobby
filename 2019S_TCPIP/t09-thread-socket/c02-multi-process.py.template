@@ -1,7 +1,12 @@
 import socket
 import ssl
+import multiprocessing
 
 FLAGS = None
+
+
+def worker(csock, caddr):
+    pass # FILL HERE
 
 
 def main(_):
@@ -23,41 +28,21 @@ def main(_):
     while True:
         try:
             csock, caddr = ssock.accept()
-            print('Connected with {0}'.format(caddr))
-            cdata = csock.recv(1500).decode('utf-8')
-            cmethod, cpath, cproto = (cdata.split('\r\n')[0]).split(' ')
-            if cpath == '/':
-                cpath = '/index'
-            if '.' not in cpath:
-                cpath = '{0}.html'.format(cpath)
-            path = '.{0}'.format(cpath)
-            with open(path, 'r') as f:
-                content = f.read()
-            sdata = ('HTTP/1.1 200 OK\r\n'
-                     'Content-Type: text/html; encoding=utf8\r\n'
-                     'Content-Length: {0}\r\n'
-                     'Connection: close\r\n'
-                     '\r\n'
-                     '{1}').format(len(content), content).encode('utf-8')
-            csock.sendall(sdata)
-            csock.close()
+            process = multiprocessing.Process(target=worker, 
+                                              args=(csock, caddr))
+            process.start()
+            print('Start process {0}'.format(process))
         except KeyboardInterrupt:
             print('End server')
+            for process in multiprocessing.active_children():
+                print('Terminate process {0}'.format(process))
+                process.terminate()
+                process.join()
             break
         except ssl.SSLError:
             pass
         except ConnectionResetError:
             pass
-        except FileNotFoundError:
-            sdata = ('HTTP/1.1 404 Not Found\r\n'
-                     'Content-Type: text/html; encoding=utf8\r\n'
-                     'Content-Length: 2\r\n'
-                     'Connection: close\r\n'
-                     '\r\n'
-                     'No').encode('utf-8')
-            csock.sendall(sdata)
-            print('Not found: {0}'.format(path))
-            csock.close()
 
 
 if __name__ == '__main__':
