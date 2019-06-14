@@ -1,4 +1,8 @@
-import main(_):
+import asycio
+import socket
+
+
+def main(_):
     print('Parsed args {0}'.format(FLAGS))
     print('Unparsed args {0}'.format(_))
 
