@@ -1,4 +1,4 @@
-package class02;
+package experiment;
 
 import java.util.Scanner;
 import java.util.Arrays;
