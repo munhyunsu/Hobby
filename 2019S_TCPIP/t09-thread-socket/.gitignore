@@ -2,3 +2,5 @@
 *.pem
 *.html
 
+# solution
+*.py

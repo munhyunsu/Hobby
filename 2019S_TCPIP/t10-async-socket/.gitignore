@@ -1,2 +1,6 @@
 *.json
 *.pem
+*.html
+
+# solution
+*.py
