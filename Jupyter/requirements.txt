@@ -1,3 +1,14 @@
+# for upgrade
+pip
+setuptools
+
+# default package
 jupyter
 tensorflow
 matplotlib
+
+# for edgetpu
+## Install edgetpu wheel
+Pillow
+cairo
+PyGObject
