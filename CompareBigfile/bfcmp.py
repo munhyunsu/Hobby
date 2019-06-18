@@ -4,6 +4,8 @@ FLAGS = None
 def main(_):
     print('Parsed, unparsed args {0} {1}'.format(FLAGS, _))
 
+    # TODO: Read first column data from each csv files
+
 
 if __name__ == '__main__':
     import argparse
