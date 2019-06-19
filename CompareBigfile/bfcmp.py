@@ -1,9 +1,15 @@
 FLAGS = None
 
 
+def comset(seta, setb):
+    # TODO: compare set a and set b
+    pass
+
+
 def read_data(path, col_num, col_name):
     # TODO: Read data from csv by col_num | col_name exclusive
     pass
+
 
 def main(_):
     print('Parsed, unparsed args {0} {1}'.format(FLAGS, _))
