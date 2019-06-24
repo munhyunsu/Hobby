@@ -12,3 +12,4 @@ matplotlib
 Pillow
 cairo
 PyGObject
+
