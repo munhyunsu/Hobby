@@ -1,3 +1,5 @@
+import csv
+
 FLAGS = None
 
 
@@ -6,8 +8,24 @@ def comset(seta, setb):
     pass
 
 
-def read_data(path, col_num, col_name):
-    # TODO: Read data from csv by col_num | col_name exclusive
+def read_data(path, col_num=None, col_name=None):
+    # Set pivot where is data located
+    if (col_num is not None) and (col_name is not None):
+        print('Error! only one of col_num or col_name should be provided')
+        return
+    if col_num is not None:
+        col = col_num
+    elif col_name is not None:
+        col = col_name
+    data = set()
+    pass
+
+
+def _read_data_num(path, col):
+    pass
+
+
+def _read_data_col(path, col):
     pass
 
 
