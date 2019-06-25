@@ -5,6 +5,12 @@ FLAGS = None
 
 def comset(seta, setb):
     # TODO: compare set a and set b
+    """Compare two sets
+    args:
+      Set A, Set B
+    ret:
+      (Set A only, Both, Set B only)
+    """
     pass
 
 
