@@ -28,8 +28,8 @@ def compare_sets(path1, path2):
 def main(_):
     print('Parsed, unparsed args {0} {1}'.format(FLAGS, _))
 
-    for path1, path2 in itertools.combinations(lists, 2):
-        compare_sets(path1, path2)
+    compare_sets(FLAGS.f1, FLAGS.f2)
+
 
 if __name__ == '__main__':
     import argparse
