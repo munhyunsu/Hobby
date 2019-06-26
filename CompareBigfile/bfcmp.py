@@ -3,43 +3,33 @@ import csv
 FLAGS = None
 
 
-def comset(seta, setb):
-    # TODO: compare set a and set b
-    """Compare two sets
-    args:
-      Set A, Set B
-    ret:
-      (Set A only, Both, Set B only)
-    """
-    pass
+def read_data(path):
+    addresses = set()
+    with open(path, 'r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            addresses.add(row[0])
+    return addresses
 
 
-def read_data(path, col_num=None, col_name=None):
-    # Set pivot where is data located
-    if (col_num is not None) and (col_name is not None):
-        print('Error! only one of col_num or col_name should be provided')
-        return
-    if col_num is not None:
-        col = col_num
-    elif col_name is not None:
-        col = col_name
-    data = set()
-    pass
-
-
-def _read_data_num(path, col):
-    pass
-
-
-def _read_data_col(path, col):
-    pass
+def compare_sets(path1, path2):
+    set_a = read_data(path1)
+    set_b = read_data(path2)
+    set_a_only = set_a - set_b
+    set_b_only = set_b - set_a
+    set_ab_both = set_a & set_b
+    print('{0} size : {1}'.format(path1, len(set_a)))
+    print('{0} size : {1}'.format(path2, len(set_b)))
+    print('{0} only : {1}'.format(path1, len(set_a_only)))
+    print('{0} only : {1}'.format(path2, len(set_b_only)))
+    print('{0} and {1} both: {2}'.format(path1, path2, len(set_ab_both)))
 
 
 def main(_):
     print('Parsed, unparsed args {0} {1}'.format(FLAGS, _))
 
-    # TODO: Read first column data from each csv files
-
+    for path1, path2 in itertools.combinations(lists, 2):
+        compare_sets(path1, path2)
 
 if __name__ == '__main__':
     import argparse
