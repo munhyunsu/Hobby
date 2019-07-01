@@ -10,6 +10,8 @@ matplotlib
 # for edgetpu
 ## Install edgetpu wheel
 Pillow
-cairo
+pycairo
 PyGObject
 
+# speech recognition
+deepspeech
