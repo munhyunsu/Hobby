@@ -6,6 +6,8 @@ setuptools
 jupyter
 tensorflow
 matplotlib
+numpy
+pandas
 
 # for edgetpu
 ## Install edgetpu wheel
