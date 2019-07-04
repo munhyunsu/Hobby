@@ -1,0 +1,15 @@
+# for upgrade
+pip
+setuptools
+
+# practice
+jupyter
+matplotlib
+numpy
+pandas
+ipykernel
+keras
+tensorflow
+torch
+torchvision
+
