@@ -1,3 +1,5 @@
+# credential
+*.json
 start_sample.sh
 out
 *.mp3
