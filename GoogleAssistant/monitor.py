@@ -53,21 +53,6 @@ def execute():
     print('Wait for execute G.A.')
     time.sleep(1)
 
-#    p = subprocess.check_output(['ps', '-C', 'googlesamples-assistant-pushtotalk',
-#                                 '-o', 'pid='])
-#    p = p.decode('utf-8')
-#    p = int(p)
-#    print('Process id:', p)
-
-#    o = subprocess.check_output(['pacmd', 'list-sink-inputs'])
-#    o = o.decode('utf-8')
-#    can = re.findall(r'index: (\d+)', o)
-#    #idx = re.findall(r'application.name = [\S ]+', o)
-#    idx = re.findall(r'application.process.id = [\S ]+', o)
-#    index = idx.index('application.process.id = "{0}"'.format(p))
-#    print('Index', index)
-#    return can[index]
-
 
 def mute():
     idx = get_sink()
@@ -79,7 +64,6 @@ def unmute():
     idx = get_sink()
     print('Unmute', idx)
     subprocess.run(['pacmd', 'set-sink-input-mute', idx, 'false'])
-    
 
 
 def kill():
