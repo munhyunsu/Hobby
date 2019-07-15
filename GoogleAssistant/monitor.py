@@ -1,6 +1,15 @@
 import shlex
 import subprocess
 import time
+import re
+
+
+def play_time(arg):
+    now = time.localtime()
+    subprocess.run(['mpv', '--loop-playlist=no', '--keep-open=no', 
+                    'numbers/{0}.wav'.format(now.tm_hour),
+                    'numbers/{0}.wav'.format(now.tm_min)])
+
 
 def watch(fn, words, stop):
     go = False
@@ -9,20 +18,69 @@ def watch(fn, words, stop):
         new = fp.readline()
         # Once all lines are read this just returns ''
         # until the file changes and a new line appears
-        if stop in new:
+        if not go and stop in new:
             go = True
             print('turn on')
-        if go and words in new:
-            go = False
-            print('return')
-            yield new
+        if go:
+            for word in words.keys():
+                if word in new:
+                    go = False
+                    yield word, words[word]
+
+
+def get_pid(pname='googlesamples-assistant-pushtotalk'):
+    p = subprocess.check_output(['ps', '-C', pname, '-o', 'pid='])
+    p = p.decode('utf-8')
+    p = int(p)
+    return p
+    
+
+def get_sink():
+    p = get_pid()
+    o = subprocess.check_output(['pacmd', 'list-sink-inputs'])
+    o = o.decode('utf-8')
+    can = re.findall(r'index: (\d+)', o)
+    idx = re.findall(r'application.process.id = [\S ]+', o)
+    index = idx.index('application.process.id = "{0}"'.format(p))
+    return can[index]
 
 
 def execute():
     command = './start_sample.sh'
     command_line = shlex.split(command)
-    p = subprocess.Popen(command_line, shell=True)
-    return p
+    subprocess.Popen(command_line, shell=True)
+    
+    print('Wait for execute G.A.')
+    time.sleep(1)
+
+#    p = subprocess.check_output(['ps', '-C', 'googlesamples-assistant-pushtotalk',
+#                                 '-o', 'pid='])
+#    p = p.decode('utf-8')
+#    p = int(p)
+#    print('Process id:', p)
+
+#    o = subprocess.check_output(['pacmd', 'list-sink-inputs'])
+#    o = o.decode('utf-8')
+#    can = re.findall(r'index: (\d+)', o)
+#    #idx = re.findall(r'application.name = [\S ]+', o)
+#    idx = re.findall(r'application.process.id = [\S ]+', o)
+#    index = idx.index('application.process.id = "{0}"'.format(p))
+#    print('Index', index)
+#    return can[index]
+
+
+def mute():
+    idx = get_sink()
+    print('Mute', idx)
+    subprocess.run(['pacmd', 'set-sink-input-mute', idx, 'true'])
+
+
+def unmute():
+    idx = get_sink()
+    print('Unmute', idx)
+    subprocess.run(['pacmd', 'set-sink-input-mute', idx, 'false'])
+    
+
 
 def kill():
     command = 'killall start_sample.sh'
@@ -34,16 +92,24 @@ def kill():
 
 
 fn = 'out'
-words = '"how\'s the weather".'
+words = {'"how\'s the weather".': (subprocess.run, ['mpv', '--loop-playlist=no', '--keep-open=no', 'weather.mp3']),
+         '"play music".': (subprocess.run, ['mpv', '--loop-playlist=no', '--keep-open=no', 'music.mp4']),
+         '"play YouTube".': (subprocess.run, ['mpv', '--loop-playlist=no', '--keep-open=no', 'https://www.youtube.com/watch?v=UOxkGD8qRB4']),
+         '"news".': (subprocess.run, ['mpv', '--loop-playlist=no', '--keep-open=no', 'news.mp4']),
+         '"what time is it".': (play_time, None)
+         }
 stop = 'Recording audio request.'
-subprocess.run(['rm', 'out'])
-subprocess.run(['touch', 'out'])
+subprocess.run(['rm', fn])
+subprocess.run(['touch', fn])
 execute()
-for new in watch(fn, words, stop):
+for new, command in watch(fn, words, stop):
     print('Found', new)
-    kill()
-    subprocess.run(['mpv', '--loop-playlist=no', '--keep-open=no', 'weather.mp3'])
+#    kill()
+    mute()
+    command[0](command[1])
+    #subprocess.run(['mpv', '--loop-playlist=no', '--keep-open=no', 'weather.mp3'])
     print('sleep 1')
     time.sleep(1)
-    execute()
+    unmute()
+#    execute()
 
