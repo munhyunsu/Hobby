@@ -3,8 +3,12 @@ import subprocess
 import time
 import re
 
+from phue import Bridge
+b = Bridge('192.168.1.221')
+b.connect()
 
-def play_time(arg):
+
+def play_time():
     now = time.localtime()
     subprocess.run(['mpv', '--loop-playlist=no', '--keep-open=no', 
                     'numbers/{0}.wav'.format(now.tm_hour),
@@ -75,20 +79,28 @@ def kill():
     subprocess.run(command_line)
 
 
+def control_hue(on):
+    for light in b.lights:
+        light.on = on
+
+
 fn = 'out'
-words = {'"how\'s the weather".': (subprocess.run, ['mpv', '--loop-playlist=no', '--keep-open=no', 'weather.mp3']),
-         '"play music".': (subprocess.run, ['mpv', '--loop-playlist=no', '--keep-open=no', 'music.mp4']),
-         '"play YouTube".': (subprocess.run, ['mpv', '--loop-playlist=no', '--keep-open=no', 'https://www.youtube.com/watch?v=UOxkGD8qRB4']),
-         '"news".': (subprocess.run, ['mpv', '--loop-playlist=no', '--keep-open=no', 'news.mp4']),
-         '"what time is it".': (play_time, None)
+words = {'"how\'s the weather".': (subprocess.run, ['mpv', '--loop-playlist=no', 
+                                      '--keep-open=no', 'weather.mp3']),
+         '"play music".': (subprocess.run, ['mpv', '--loop-playlist=no', 
+                                      '--keep-open=no', 'music.mp4']),
+         '"news".': (subprocess.run, ['mpv', '--loop-playlist=no', 
+                                      '--keep-open=no', 'news.mp4']),
+         '"what time is it".': (play_time, None),
+         '"turn lights on".': (control_hue, True),
+         '"turn off lights".': (control_hue, False),
          }
 stop = 'Recording audio request.'
 subprocess.run(['rm', fn])
 subprocess.run(['touch', fn])
 execute()
-for new, command in watch(fn, words, stop):
-    print('Found', new)
-#    kill()
+for intent, command in watch(fn, words, stop):
+    print('Detected: ', intent)
     mute()
     command[0](command[1])
     #subprocess.run(['mpv', '--loop-playlist=no', '--keep-open=no', 'weather.mp3'])
