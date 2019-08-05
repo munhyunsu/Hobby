@@ -20,3 +20,7 @@ TFTP\_OPTIONS="--secure" to TFTP_OPTIONS="--secure --create"
 ```bash
 sudo chown -R tftp /var/lib/tftpboot
 ```
+
+- Archer C7 v5 (KR) bug
+  - Special id missing
+
