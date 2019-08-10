@@ -103,9 +103,7 @@ for intent, command in watch(fn, words, stop):
     print('Detected: ', intent)
     mute()
     command[0](command[1])
-    #subprocess.run(['mpv', '--loop-playlist=no', '--keep-open=no', 'weather.mp3'])
     print('sleep 1')
     time.sleep(1)
     unmute()
-#    execute()
 
