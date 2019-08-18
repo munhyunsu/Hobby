@@ -1,4 +1,11 @@
+# upgrade
+pip
+setup-tools
+
+# google-assistant
 google-assistant-library
 google-assistant-sdk[samples]
 google-auth-oauthlib[tool]
+
+# lib for commands
 phue
