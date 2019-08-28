@@ -18,14 +18,14 @@ async def client_handler(reader, writer):
                  'Content-Length: 6\r\n'
                  'Connection: close\r\n'
                  '\r\n'
-                 'GET OK').encode('utf-8')
+                 'GET OK\r\n').encode('utf-8')
     elif cmethod == 'POST':
         sdata = ('HTTP/1.1 200 OK\r\n'
                  'Content-Type: text/html; encoding=utf8\r\n'
                  'Content-Length: 7\r\n'
                  'Connection: close\r\n'
                  '\r\n'
-                 'POST OK').encode('utf-8')
+                 'POST OK\r\n').encode('utf-8')
     writer.write(sdata)
     await writer.drain()
     writer.close()
