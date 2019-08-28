@@ -36,7 +36,7 @@ function onEdit(e) {
   // Build rules
   var range = sheet.getRange("B2:B51");
   range.setBackground("#FFFFFF");
-  range.setValue("=IF(COUNTA(INDIRECT(ADDRESS(ROW(),COLUMN()+2)&\":\"&ADDRESS(ROW(),COLUMN()+4)))>0, \"Good\", \"Bad\")");
+  range.setValue("=IF(COUNTA(INDIRECT(ADDRESS(ROW(),COLUMN()+2)&\":\"&ADDRESS(ROW(),COLUMN()+4)))>0, \"\", \"Bad\")");
   var rule3 = SpreadsheetApp.newConditionalFormatRule()
       .whenTextEqualTo("Good")
       .setBackground("#DAF7A6")
