@@ -24,3 +24,4 @@ sudo chown -R tftp /var/lib/tftpboot
 ## Archer C7 v5 (KR) bug
   - Special id missing
   - [Ref](https://forum.openwrt.org/t/support-for-tp-link-archer-c7-v5-ru/28402)
+    - Needs image builder
