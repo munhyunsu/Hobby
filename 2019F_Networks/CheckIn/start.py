@@ -1,5 +1,6 @@
 import asyncio
-
+import sqlite3
+import random
 
 FLAGS = None
 
@@ -19,6 +20,7 @@ async def client_handler(reader, writer):
                  'Connection: close\r\n'
                  '\r\n'
                  'GET OK\r\n').encode('utf-8')
+        print('We need SELECT from DB')
     elif cmethod == 'POST':
         sdata = ('HTTP/1.1 200 OK\r\n'
                  'Content-Type: text/html; encoding=utf8\r\n'
@@ -26,6 +28,7 @@ async def client_handler(reader, writer):
                  'Connection: close\r\n'
                  '\r\n'
                  'POST OK\r\n').encode('utf-8')
+        print('We need INSERT into DB')
     writer.write(sdata)
     await writer.drain()
     writer.close()
