@@ -1,3 +1,7 @@
 # upgrade
 pip
 setuptools
+
+# CheckIn
+flask
+flask-restful
