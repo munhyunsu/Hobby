@@ -2,6 +2,8 @@ from flask import Flask, request, render_template
 from flask_restful import Resource, Api, reqparse
 
 
+## TODO(LuHa): Change flask_restful flask
+
 def get_history(student):
     return [4, 3, 2, 1]
 
