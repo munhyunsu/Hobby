@@ -1,32 +1,26 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from flask_restful import Resource, Api, reqparse
 
+app = Flask(__name__)
 
-## TODO(LuHa): Change flask_restful flask
-
-def get_history(student):
-    return [4, 3, 2, 1]
-
-
-class CheckIn(Resource):
-    def get(self):
+@app.route('/', methods=['GET', 'POST'])
+def checkin():
+    if request.method == 'GET':
         student = request.args.get('id')
         history = list()
         if student is not None:
             history = get_history(student)
-        return {'History': history}
-
-
-    def post(self):
+        return render_template('checkin.html', histories=history)
+    elif request.method == 'POST':
         headers = request.headers
         data = request.get_json()
 
         if data['password'] == 'abcd':
             print('Pass', data['student'])
 
-
-app = Flask(__name__)
-api = Api(app)
-
-api.add_resource(CheckIn, '/')
+        return redirect(f'/?id={data["student"]}', code=302)
+        
+    
+def get_history(student):
+    return [4, 3, 2, 1]
 

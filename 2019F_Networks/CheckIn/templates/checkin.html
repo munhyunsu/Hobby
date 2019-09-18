@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>출석부</title>
+<head>
+<body>
+  <h1>{{ student }} 출석된 날짜</h1>
+  {% for history in histories %}
+    <h5> {{ history }} </h5>
+  {% endfor %}
+</body>
+</html>
