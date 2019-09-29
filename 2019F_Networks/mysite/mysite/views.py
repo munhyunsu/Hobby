@@ -17,6 +17,7 @@ def index(request):
             return render(request, 'index.html')
     elif request.method == 'POST':
         uid = request.POST.get('id')
+        # Need to check already added
         date = time.strftime('%Y-%m-%dT%H:%M:%S', time.localtime())
         login = Login(user=uid,
                       date=date)
