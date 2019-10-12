@@ -115,3 +115,13 @@ iterative_process = tff.learning.build_federated_averaging_process(model_fn)
 
 print('The federated process: ')
 print(str(iterative_process.initialize.type_signature))
+
+
+
+state = iterative_process.initialize()
+
+state, metrics = iterative_process.next(state, federated_train_data)
+print('round  1, metrics={}'.format(metrics))
+for round_num in range(2, 11):
+  state, metrics = iterative_process.next(state, federated_train_data)
+  print('round {:2d}, metrics={}'.format(round_num, metrics))
