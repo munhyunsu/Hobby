@@ -2,4 +2,8 @@
 *.json
 start_sample.sh
 out
+
+# Contents
 *.mp3
+*.mp4
+*.webm
