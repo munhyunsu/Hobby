@@ -23,5 +23,7 @@ sudo chown -R tftp /var/lib/tftpboot
 
 ## Archer C7 v5 (KR) bug
   - Special id missing
-  - [Ref](https://forum.openwrt.org/t/support-for-tp-link-archer-c7-v5-ru/28402)
-    - Needs image builder
+    - [Ref](https://forum.openwrt.org/t/support-for-tp-link-archer-c7-v5-ru/28402)
+    - [Ref2](https://forum.openwrt.org/t/tp-link-archer-c7-v5-factory-bin-wont-load/22657)
+  - But, above thing is not working (Maybe I fail image building). So, I tried compile whole [OpenWRT project](https://github.com/openwrt/openwrt).
+
