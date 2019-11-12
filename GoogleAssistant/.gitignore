@@ -3,6 +3,9 @@
 start_sample.sh
 out
 
+# Pre-recorded voice
+numbers/
+
 # Contents
 *.mp3
 *.mp4
