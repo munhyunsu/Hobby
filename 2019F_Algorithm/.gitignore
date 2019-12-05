@@ -2,4 +2,7 @@
 *.in
 *.out
 *.png
+*.jpg
 
+# Copy directory
+copy/
