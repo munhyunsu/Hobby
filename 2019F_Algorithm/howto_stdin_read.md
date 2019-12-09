@@ -1,4 +1,9 @@
+# Standard input and Standard output manual
+
+## Read standard input for testcase
+
 ### C
+
 ```c
 char* readline() {
     size_t alloc_length = 1024;
@@ -116,3 +121,4 @@ ar_count = int(input())
 
 ar = list(map(int, input().rstrip().split()))
 ```
+
