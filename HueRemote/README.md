@@ -10,3 +10,7 @@ pip3 install requests
 
 ## Output
 - access token as json file
+
+## References
+  - [Hue Developer API](https://developers.meethue.com/)
+
