@@ -13,7 +13,8 @@ def main(argv = sys.argv):
 
     # copy and sort files
     path = get_files_by_mtime(spath)
-    #fnums = copy_files(path, prefix)
+    # TODO(LuHa): copy file using sha256
+
     print('{0} files copied from {1}'.format(fnums, spath))
 
     # preserve or not
