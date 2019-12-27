@@ -6,7 +6,7 @@
   ```
 
 ## TODO
-- Keep unchanged files
 - Check output directory is empty
 - OOP
   - Image class was needed
+
