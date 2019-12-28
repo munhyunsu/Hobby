@@ -5,3 +5,4 @@ class File(object):
     
     def move(self, dst):
         # Check sha256
+        pass
