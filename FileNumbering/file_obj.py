@@ -1,3 +1,4 @@
+import os
 import hashlib
 import shutil
 
@@ -22,6 +23,8 @@ class File(object):
         return sha256.hexdigest()
 
     def move(self, dst):
-        # Check sha256
+        if os.path.exists(dst):
+            return False
         shutil.move(self.path, dst)
+        return True
 
