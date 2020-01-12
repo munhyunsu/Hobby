@@ -8,7 +8,7 @@ b = Bridge('192.168.1.221')
 b.connect()
 
 
-def play_time():
+def play_time(_):
     now = time.localtime()
     subprocess.run(['mpv', '--loop-playlist=no', '--keep-open=no', 
                     'numbers/{0}.wav'.format(now.tm_hour),
