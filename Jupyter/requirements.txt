@@ -4,6 +4,12 @@ setuptools
 
 # default package
 jupyter
+jupyterlab
+## jupyter labextension install @jupyter-widgets/jupyterlab-manager
+## jupyter labextension install jupyter-matplotlib
+ipykernel
+ipympl
+
 tensorflow
 matplotlib
 numpy
@@ -17,3 +23,4 @@ PyGObject
 
 # speech recognition
 deepspeech
+
