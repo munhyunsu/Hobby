@@ -3,7 +3,7 @@ import csv
 
 from flask import Flask, request, render_template, redirect
 
-RESULT = os.path.abspath(os.path.expanduser('./midresult_netx.csv'))
+RESULT = os.path.abspath(os.path.expanduser('./Final2.csv'))
 
 def stoi(l):
     result = list()
