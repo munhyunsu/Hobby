@@ -10,11 +10,11 @@ jupyterlab
 ipykernel
 ipympl
 
+# Data science
 tensorflow
 matplotlib
 numpy
 pandas
-
 # for edgetpu
 ## Install edgetpu wheel
 Pillow
@@ -24,3 +24,5 @@ PyGObject
 # speech recognition
 deepspeech
 
+# Packet
+scapy[complete]
