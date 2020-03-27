@@ -11,11 +11,13 @@ ipykernel
 ipympl
 
 # Data science
-tensorflow
 matplotlib
 numpy
 pandas
-# for edgetpu
+
+# machine learning
+tensorflow
+
 ## Install edgetpu wheel
 Pillow
 pycairo
