@@ -20,7 +20,7 @@ import tensorflow_federated as tff
 #np.random.seed(0)
 
 ## Define preprocessing function
-NUM_CLIENTS = 10
+NUM_CLIENTS = 100
 NUM_EPOCHS = 10
 BATCH_SIZE = 20
 SHUFFLE_BUFFER = 500
@@ -86,8 +86,8 @@ def make_federated_data(dataset):
     result.append(preprocess(dd))
   return result
 
-ti = np.array_split(mnist.train.images, NUM_CLIENTS*2)
-tl = np.array_split(mnist.train.labels, NUM_CLIENTS*2)
+ti = np.array_split(mnist.train.images, NUM_CLIENTS*1)
+tl = np.array_split(mnist.train.labels, NUM_CLIENTS*1)
 data_set = list()
 for i in range(len(ti)):
     data_set.append((ti[i], tl[i]))
@@ -113,6 +113,12 @@ def model_fn():
   keras_model = create_compiled_keras_model()
   return tff.learning.from_compiled_keras_model(keras_model, sample_batch)
 
+#keras_model = create_compiled_keras_model()
+#def keras_evaluate(state, round_num):
+#  tff.learning.assign_weights_to_keras_model(keras_model, state.model)
+#  print('Evaluating before training round', round_num)
+#  keras_model.evaluate(federated_train_data[0], steps=2)
+
 iterative_process = tff.learning.build_federated_averaging_process(model_fn)
 
 print('The federated process: ')
@@ -120,14 +126,15 @@ print(str(iterative_process.initialize.type_signature))
 
 state = iterative_process.initialize()
 
-state, metrics = iterative_process.next(state, federated_train_data)
-print('round  1, metrics={}'.format(metrics))
-for round_num in range(2, 10):
+#state, metrics = iterative_process.next(state, federated_train_data)
+#print('round  1, metrics={}'.format(metrics))
+for round_num in range(0, 10):
+#  keras_evaluate(state, round_num)
   state, metrics = iterative_process.next(state, federated_train_data)
   print('round {:2d}, metrics={}'.format(round_num, metrics))
 
-print('Test')
-for round_num in range(len(federated_test_data)):
-  state, metrics = iterative_process.next(state, federated_test_data)
-  print('round {:2d}, metrics={}'.format(round_num, metrics))
+#print('Test')
+#for round_num in range(len(federated_test_data)):
+#  state, metrics = iterative_process.next(state, federated_test_data)
+#  print('round {:2d}, metrics={}'.format(round_num, metrics))
 
