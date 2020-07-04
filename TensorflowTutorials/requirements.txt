@@ -1,3 +1,5 @@
+pip
+ipympl
 tensorflow
-numpy
+#numpy # deps on tensorflow
 pandas
