@@ -1,6 +1,21 @@
+pip
+
+jupyterlab
+# ipykernel # jupyterlab
+ipympl
+## jupyter labextension install @jupyter-widgets/jupyterlab-manager
+# matplotlib # ipympl
+# numpy # ipympl
+
+tensorflow
+tensorflow_hub
+tfds-nightly
+pandas
 Cython
 contextlib2
 pillow
 lxml
-jupyter
-matplotlib
+
+pydot
+pydotplus
+graphviz
