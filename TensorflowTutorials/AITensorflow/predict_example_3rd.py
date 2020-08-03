@@ -60,7 +60,7 @@ def main():
                 continue
             predicted = export_model.predict(tf.expand_dims(user_str, -1))[0][0]
             print((f'\x1B[38;5;3m'
-                   f'예측 결과: {class_names[round(predicted)]} '
+                   f'예측 결과: {class_names[int(round(predicted))]} '
                    f'({predicted:0.4f})'
                    f'\x1B[0m'))
         except KeyboardInterrupt:
