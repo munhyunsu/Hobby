@@ -1,0 +1,9 @@
+pip
+ipympl
+tensorflow
+pandas
+tensorboard
+tensorflow-hub # Transfer learning
+Pillow # Image CNN
+tensorflow-io # Sound
+sklearn # Split dataset
