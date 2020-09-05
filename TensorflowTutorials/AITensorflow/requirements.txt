@@ -1,9 +1,7 @@
 pip
 ipympl
 tensorflow
+tensorflow_hub
+Pillow
+#numpy # deps on tensorflow
 pandas
-tensorboard
-tensorflow-hub # Transfer learning
-Pillow # Image CNN
-tensorflow-io # Sound
-sklearn # Split dataset
