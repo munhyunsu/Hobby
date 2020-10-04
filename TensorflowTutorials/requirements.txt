@@ -1,5 +1,0 @@
-pip
-ipympl
-tensorflow
-#numpy # deps on tensorflow
-pandas

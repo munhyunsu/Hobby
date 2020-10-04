@@ -1,9 +1,9 @@
+#!/usr/bin/env python3
 import os
 
 from file_obj import File
 
 FLAGS = None
-
 
 
 def main():
@@ -25,11 +25,12 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--input_dir', type=str, required=True)
+    parser.add_argument('-i', '--input_dir', type=str)
     
     FLAGS, _ = parser.parse_known_args()
 
+    if FLAGS.input_dir is None:
+        FLAGS.input_dir = os.getcwd()
     FLAGS.input_dir = os.path.abspath(os.path.expanduser(FLAGS.input_dir))
 
     main()
-
