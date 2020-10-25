@@ -47,19 +47,18 @@
 <form action="/">
   <input type="text" name="num" placeholder="학번">
   <br>
-  <input type="text" name="name" placeholder="이름">
+  <input type="text" name="phone" placeholder="통합정보시스템 이메일주소">
   <br><br>
   <input type="submit" value="Submit">
 </form>
 </div>
-{% if name is defined %}
+{% if tables is defined %}
 <div>
-<h3> {{num}} {{name}}: 총 {{total}}점!</h3>
-<ul>
-  {% for i in range(0, length) %}
-    <li>문제 {{i+1}}번: {{tscore[i]}}점 ({{score[i]}})</li>
-  {% endfor %}
-</ul>
+<p>1~5번 문제 테스트케이스별 배점</p>
+<p>마지막은 총점</p>
+{% for table in tables %}
+    {{ table|safe }}
+{% endfor %}
 </div>
 {% endif %}
 </body>
