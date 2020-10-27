@@ -5,8 +5,8 @@ public class Template {
     static boolean debug = false;
 
     public static void main(String[] args) {
-        if(args.length > 0) {
-            if(args[0].toUpperCase().equals("DEBUG")) {
+        if (args.length > 0) {
+            if (args[0].toUpperCase().equals("DEBUG")) {
                 debug = true;
             }
         }
