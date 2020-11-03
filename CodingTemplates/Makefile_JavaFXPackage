@@ -1,0 +1,28 @@
+JFLAGS = -g
+JFX = --module-path /home/harny/Github/ComputerProgramming/javafx-sdk-11.0.2/lib/
+JFXMOD = --add-modules javafx.controls,javafx.fxml
+JC = javac
+JVM = java
+.SUFFIXES: .java .class
+.java.class:
+		$(JC) $(JFLAGS) $(JFX) $(JFXMOD) $*.java
+
+CLASSES = \
+		*.java \
+		*/*.java \
+		*/*/*.java \        
+		Main.java \
+
+MAIN = Main
+
+default: classes
+
+classes: $(CLASSES:.java=.class)
+
+run: classes
+		$(JVM) $(JFX) $(JFXMOD) $(MAIN)
+
+clean:
+		$(RM) *.class
+		$(RM) ./*/*.class
+		$(RM) ./*/*/*.class
