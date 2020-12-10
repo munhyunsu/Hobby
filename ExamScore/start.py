@@ -19,7 +19,7 @@ data = dict()
 
 df = pd.read_csv('score.csv')
 df = df.fillna(0)
-df[df.columns.values[3:]] = df[df.columns.values[3:]].astype('int32')
+df[df.columns.values[3:]] = df[df.columns.values[3:]].astype('float16')
 #print(df)
 
 @app.route('/', methods=['GET'])
@@ -31,7 +31,7 @@ def score():
     if phone is not None:
         phone = phone.strip()
     try:
-        if (df[df['학번'] == num]['번호'] == phone).values[0]:
+        if (df[df['학번'] == num]['이메일'] == phone).values[0]:
             ss = df[df['학번'] == num]
         else:
             ss = None
