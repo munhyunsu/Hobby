@@ -52,11 +52,18 @@
   <input type="submit" value="Submit">
 </form>
 </div>
-{% if tables is defined %}
+{% if tables1 is defined %}
 <div>
-<p>1~5번 문제 테스트케이스별 배점</p>
-<p>마지막은 총점</p>
-{% for table in tables %}
+<p>실습</p>
+{% for table in tables1 %}
+    {{ table|safe }}
+{% endfor %}
+</div>
+{% endif %}
+{% if tables2 is defined %}
+<div>
+<p>출석 (출: 1, 결: 0, 지: 0.5, 이론: 총 16)</p>
+{% for table in tables2 %}
     {{ table|safe }}
 {% endfor %}
 </div>
