@@ -2,3 +2,5 @@ pip
 setuptools
 
 flask
+numpy
+pandas
