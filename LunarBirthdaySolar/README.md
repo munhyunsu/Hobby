@@ -5,3 +5,8 @@
 ```python
 key=''
 ```
+
+## Untrack sample.csv
+```bash
+git update-index --assume-unchanged sample.csv
+```
