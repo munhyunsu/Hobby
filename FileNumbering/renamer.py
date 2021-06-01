@@ -25,7 +25,8 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--input_dir', type=str)
+    parser.add_argument('-i', '--input_dir', type=str,
+                        default=os.getcwd())
     
     FLAGS, _ = parser.parse_known_args()
 
