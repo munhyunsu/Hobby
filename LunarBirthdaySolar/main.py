@@ -36,7 +36,8 @@ def main():
                              f'{root.findall("*//solMonth")[0].text}-'
                              f'{root.findall("*//solDay")[0].text}')
                     solar = datetime.date.fromisoformat(solar)
-            except IndexError: # Minor calandar!!
+                print(f'{name} ({birthday}) ==> {solar}')
+            except IndexError: # Minor calandar!
                 birthday = birthday - datetime.timedelta(days=1)
                 data = {'lunYear': f'{datetime.datetime.now().year}',
                         'lunMonth': f'{birthday.month:02d}',
@@ -51,7 +52,7 @@ def main():
                              f'{root.findall("*//solMonth")[0].text}-'
                              f'{root.findall("*//solDay")[0].text}')
                     solar = datetime.date.fromisoformat(solar)
-            print(f'{name} ({birthday}) ==> {solar}')
+                print(f'{name} ({birthday}) ==> {solar} (-1 Day)')
 
 
 if __name__ == '__main__':
