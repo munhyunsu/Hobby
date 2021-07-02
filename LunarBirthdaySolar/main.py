@@ -37,7 +37,20 @@ def main():
                              f'{root.findall("*//solDay")[0].text}')
                     solar = datetime.date.fromisoformat(solar)
             except IndexError: # Minor calandar!!
-                pass
+                birthday = birthday - datetime.timedelta(days=1)
+                data = {'lunYear': f'{datetime.datetime.now().year}',
+                        'lunMonth': f'{birthday.month:02d}',
+                        'lunDay': f'{birthday.day:02d}',
+                        'serviceKey': secret.key}
+                data = urllib.parse.urlencode(data)
+                url = f'{ENDPOINT}?{data}'
+                with urllib.request.urlopen(url) as req:
+                    res = req.read().decode('utf-8')
+                    root = ElementTree.fromstring(res)
+                    solar = (f'{root.findall("*//solYear")[0].text}-'
+                             f'{root.findall("*//solMonth")[0].text}-'
+                             f'{root.findall("*//solDay")[0].text}')
+                    solar = datetime.date.fromisoformat(solar)
             print(f'{name} ({birthday}) ==> {solar}')
 
 
