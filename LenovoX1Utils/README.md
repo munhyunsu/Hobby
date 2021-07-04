@@ -7,3 +7,8 @@
 - led\_controller.c
   - Lenovo X1 series keyboard backlight controll service
 
+## Commands
+- Check the xinput names
+```bash
+xinput list
+```
