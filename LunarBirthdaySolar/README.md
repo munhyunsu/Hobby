@@ -6,7 +6,14 @@
 key=''
 ```
 
+## Usage
+
+```bash
+python3 main.py
+```
+
 ## Untrack sample.csv
 ```bash
 git update-index --assume-unchanged sample.csv
 ```
+
