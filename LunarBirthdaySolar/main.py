@@ -16,7 +16,7 @@ def main():
     if DEBUG:
         print(f'Parsed: {FLAGS}')
         print(f'Unparsed: {_}')
-    print('이름 (음력) ==> 올해양력')
+    print(' 이름  (   음력   ) ==>  올해양력 ')
     with open(FLAGS.target, 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
