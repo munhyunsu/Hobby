@@ -23,7 +23,7 @@ def main():
             name = row['Name']
             birthday = datetime.date.fromisoformat(row['Birthday'])
             try:
-                data = {'lunYear': f'{datetime.datetime.now().year}',
+                data = {'lunYear': FLAGS.year,
                         'lunMonth': f'{birthday.month:02d}',
                         'lunDay': f'{birthday.day:02d}',
                         'serviceKey': secret.key}
@@ -39,7 +39,7 @@ def main():
                 print(f'{name} ({birthday}) ==> {solar}')
             except IndexError: # Minor calandar!
                 birthday = birthday - datetime.timedelta(days=1)
-                data = {'lunYear': f'{datetime.datetime.now().year}',
+                data = {'lunYear': FLAGS.year,
                         'lunMonth': f'{birthday.month:02d}',
                         'lunDay': f'{birthday.day:02d}',
                         'serviceKey': secret.key}
