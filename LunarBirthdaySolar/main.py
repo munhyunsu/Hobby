@@ -67,6 +67,8 @@ if __name__ == '__main__':
                         help='enable debug mode')
     parser.add_argument('--target', default='sample.csv',
                         help='Birthday csv file')
+    parser.add_argument('--year', default=datetime.datetime.now().year,
+                        help='Target year')
     FLAGS, _ = parser.parse_known_args()
 
     FLAGS.config = os.path.abspath(os.path.expanduser(FLAGS.target))
