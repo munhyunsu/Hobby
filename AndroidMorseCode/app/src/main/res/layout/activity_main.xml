@@ -33,6 +33,15 @@
             android:textColor="#9C27B0"
             android:textColorHint="#757575" />
 
+        <Button
+            android:id="@+id/btn_speaker"
+            style="@android:style/Widget.DeviceDefault.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dip"
+            android:text="@string/btn_speaker_text"
+            android:textAllCaps="false" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

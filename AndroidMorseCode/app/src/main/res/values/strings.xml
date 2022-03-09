@@ -2,4 +2,5 @@
     <string name="app_name">Morse Code Data Communication 2022</string>
     <string name="box_text">Type some text (only English)</string>
     <string name="box_text_sample">Type some text (only English)</string>
+    <string name="btn_speaker_text">Send data over sound (play)</string>
 </resources>
