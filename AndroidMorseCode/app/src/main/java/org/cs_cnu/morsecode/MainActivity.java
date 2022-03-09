@@ -3,6 +3,8 @@ package org.cs_cnu.morsecode;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,5 +22,12 @@ public class MainActivity extends AppCompatActivity {
         box_text = (EditText) findViewById(R.id.box_text);
         btn_speaker = (Button) findViewById(R.id.btn_speaker);
 
+        // https://developer.android.com/reference/android/view/View#setOnClickListener(android.view.View.OnClickListener)
+        btn_speaker.setOnClickListener(new View.OnClickListener() {
+            // https://developer.android.com/reference/android/view/View.OnClickListener
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 }
