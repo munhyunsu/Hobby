@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String message = box_text.getText().toString();
+                Log.i("User input", message);
             }
         });
     }
