@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             // https://developer.android.com/reference/android/view/View.OnClickListener
             @Override
             public void onClick(View v) {
+                String message = box_text.getText().toString();
             }
         });
     }
