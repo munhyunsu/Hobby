@@ -14,8 +14,10 @@ public class MorseCodeSpeakerCodeGenerator {
         this.message = message;
         this.map = map;
 
+// Need to edit below!
         StringBuilder sb = new StringBuilder();
         sb.append("-.-. ... .");
+// Need to edit above!
 
         this.morse_code = sb.toString();
         Log.i("MorseCode", "Created");
