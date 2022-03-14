@@ -26,4 +26,23 @@ public class MorseCodeSpeakerCodeGenerator {
     public String getMorseCode() {
         return this.morse_code;
     }
+
+    @Override
+    public int getSize() {
+        int size = 0;
+        for (int i = 0; i < this.morse_code.length(); i++) {
+            char ch = this.morse_code.charAt(i);
+            if (ch == '/') {
+                size = size + 1;
+            } else if (ch == ' ') {
+                size = size + 1;
+            } else if (ch == '.') {
+                size = size + 1;
+            } else if (ch == '-') {
+                size = size + 3;
+            }
+        }
+        size = size + this.morse_code.length();
+        return size;
+    }
 }
