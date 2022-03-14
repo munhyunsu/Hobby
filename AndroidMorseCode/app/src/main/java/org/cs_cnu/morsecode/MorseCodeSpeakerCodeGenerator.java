@@ -22,4 +22,8 @@ public class MorseCodeSpeakerCodeGenerator {
         this.morse_code = sb.toString();
         Log.i("MorseCode", "Created");
     }
+
+    public String getMorseCode() {
+        return this.morse_code;
+    }
 }
