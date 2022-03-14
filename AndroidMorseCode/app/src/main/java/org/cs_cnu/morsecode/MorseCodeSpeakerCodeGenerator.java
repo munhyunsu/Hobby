@@ -2,6 +2,7 @@ package org.cs_cnu.morsecode;
 
 import android.util.Log;
 
+import java.util.Iterator;
 import java.util.Map;
 
 public class MorseCodeSpeakerCodeGenerator {
@@ -27,7 +28,6 @@ public class MorseCodeSpeakerCodeGenerator {
         return this.morse_code;
     }
 
-    @Override
     public int getSize() {
         int size = 0;
         for (int i = 0; i < this.morse_code.length(); i++) {
@@ -44,5 +44,37 @@ public class MorseCodeSpeakerCodeGenerator {
         }
         size = size + this.morse_code.length();
         return size;
+    }
+
+    public Iterator<String> iterator() {
+        return new Iterator<String>() {
+            boolean start = false;
+            boolean end = false;
+            int i = 0;
+
+            @Override
+            public boolean hasNext() {
+                if (!start || !end) {
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public String next() {
+                if (!start) {
+                    start = true;
+                    i = 0;
+                }
+                if (morse_code.length() > i) {
+                    String value = Character.toString(morse_code.charAt(i));
+                    i = i + 1;
+                    return value;
+                } else {
+                    end = true;
+                }
+                return "";
+            }
+        };
     }
 }
