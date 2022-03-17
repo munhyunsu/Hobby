@@ -5,13 +5,13 @@ import android.util.Log;
 import java.util.Iterator;
 import java.util.Map;
 
-public class MorseCodeSpeakerCodeGenerator implements Iterable<String>{
+public class MorseSpeakerCodeGenerator implements Iterable<String> {
 
     final String message;
     final Map<String, String> map;
     final String morse_code;
 
-    public MorseCodeSpeakerCodeGenerator(String message, Map<String, String> map) {
+    public MorseSpeakerCodeGenerator(String message, Map<String, String> map) {
         this.message = message;
         this.map = map;
 
