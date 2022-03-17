@@ -5,7 +5,7 @@ import android.util.Log;
 import java.util.Iterator;
 import java.util.Map;
 
-public class MorseSpeakerCodeGenerator implements Iterable<String> {
+public class MorseSpeakerCodeGenerator implements MorseSpeakerThread.MorseSpeakerIterator {
 
     final String message;
     final Map<String, String> map;
