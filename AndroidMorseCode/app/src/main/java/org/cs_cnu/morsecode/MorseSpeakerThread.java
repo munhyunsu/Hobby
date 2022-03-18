@@ -29,4 +29,9 @@ public class MorseSpeakerThread extends Thread {
         this.unit_size = (int) Math.ceil(this.sample_rate * this.unit);
         setPriority(Thread.MAX_PRIORITY);
     }
+
+    @Override
+    public void run() {
+
+    }
 }
