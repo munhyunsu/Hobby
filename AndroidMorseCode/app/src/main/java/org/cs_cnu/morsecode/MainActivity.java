@@ -58,6 +58,17 @@ public class MainActivity extends AppCompatActivity {
                     btn_speaker.setEnabled(false);
                     MorseSpeakerCodeGenerator generator = new MorseSpeakerCodeGenerator(message, map);
                     text_result.setText(generator.getMorseCode());
+                    new MorseSpeakerThread(generator, new MorseSpeakerThread.MorseSpeakerCallback() {
+                        @Override
+                        public void onProgress(int current, int total) {
+                        }
+
+                        @Override
+                        public void onDone() {
+                            btn_speaker.setEnabled(true);
+                        }
+                    },
+                            sample_rate, frequency, unit).start();
                 }
             }
         });
