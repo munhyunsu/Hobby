@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String message = box_text.getText().toString();
                 Log.i("User input", message);
+                if (message.length() > 0) {
+                    btn_speaker.setEnabled(false);
+                    MorseSpeakerCodeGenerator generator = new MorseSpeakerCodeGenerator(message, map);
+                    text_result.setText(generator.getMorseCode());
+                }
             }
         });
     }
