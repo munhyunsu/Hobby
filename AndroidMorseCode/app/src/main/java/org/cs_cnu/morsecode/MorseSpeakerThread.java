@@ -23,6 +23,7 @@ public class MorseSpeakerThread extends Thread {
 
     final MorseSpeakerIterator iterator;
     final MorseSpeakerCallback callback;
+    boolean done = false;
 
     public MorseSpeakerThread(MorseSpeakerIterator iterator, MorseSpeakerCallback callback,
                               int sample_rate, float frequency, float unit) {
@@ -48,6 +49,27 @@ public class MorseSpeakerThread extends Thread {
                 2*sample_rate,
                 AudioTrack.MODE_STREAM
         );
+
+        track.setPlaybackPositionUpdateListener(new AudioTrack.OnPlaybackPositionUpdateListener() {
+            @Override
+            public void onMarkerReached(AudioTrack track) {
+                if (!done) {
+                    callback.onDone();
+                    done = true;
+                }
+            }
+
+            @Override
+            public void onPeriodicNotification(AudioTrack track) {
+                if (!done) {
+                    callback.onProgress(track.getPlaybackHeadPosition(), array_size);
+                }
+            }
+        });
+
+        track.setPositionNotificationPeriod(1);
+
+        track.play();
 
         final short[] samples = new short[array_size];
         Log.i("Size", "MorseSize: " + Integer.toString(morse_size) +
@@ -78,5 +100,6 @@ public class MorseSpeakerThread extends Thread {
 // Need to edit above!
         track.write(samples, 0, samples.length);
 
+        track.setNotificationMarkerPosition(array_size);
     }
 }
