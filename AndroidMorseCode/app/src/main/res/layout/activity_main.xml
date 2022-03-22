@@ -42,6 +42,13 @@
             android:text="@string/btn_speaker_text"
             android:textAllCaps="false" />
 
+        <ProgressBar
+            android:id="@+id/pbar_duration"
+            style="@android:style/Widget.DeviceDefault.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="24dip" />
+
         <TextView
             android:id="@+id/text_result"
             android:layout_width="match_parent"
