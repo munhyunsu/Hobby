@@ -28,6 +28,7 @@ public class MorseSpeakerCodeGenerator implements MorseSpeakerThread.MorseSpeake
         return this.morse_code;
     }
 
+    @Override
     public int getSize() {
         int size = 0;
         for (int i = 0; i < this.morse_code.length(); i++) {
