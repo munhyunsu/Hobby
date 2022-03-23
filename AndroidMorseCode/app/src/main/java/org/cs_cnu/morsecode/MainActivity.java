@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText box_text;
     private TextView text_result;
     private Button btn_speaker;
+    private ProgressBar pbar_duration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         box_text = (EditText) findViewById(R.id.box_text);
         text_result = (TextView) findViewById(R.id.text_result);
         btn_speaker = (Button) findViewById(R.id.btn_speaker);
+        pbar_duration = (ProgressBar) findViewById(R.id.pbar_duration);
 
         // https://developer.android.com/reference/android/view/View#setOnClickListener(android.view.View.OnClickListener)
         btn_speaker.setOnClickListener(new View.OnClickListener() {
