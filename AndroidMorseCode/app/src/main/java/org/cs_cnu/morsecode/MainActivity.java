@@ -64,11 +64,14 @@ public class MainActivity extends AppCompatActivity {
                     new MorseSpeakerThread(generator, new MorseSpeakerThread.MorseSpeakerCallback() {
                         @Override
                         public void onProgress(int current, int total) {
+                            pbar_duration.setMax(total);
+                            pbar_duration.setProgress(current);
                         }
 
                         @Override
                         public void onDone() {
                             btn_speaker.setEnabled(true);
+                            pbar_duration.setProgress(0);
                         }
                     },
                             sample_rate, frequency, unit).start();
