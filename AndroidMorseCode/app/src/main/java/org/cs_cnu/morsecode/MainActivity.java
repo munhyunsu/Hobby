@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText box_text;
     private TextView text_result;
     private Button btn_speaker;
+    private Button btn_microphone;
     private ProgressBar pbar_duration;
 
     // Requesting permission to RECORD_AUDIO
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         box_text = (EditText) findViewById(R.id.box_text);
         text_result = (TextView) findViewById(R.id.text_result);
         btn_speaker = (Button) findViewById(R.id.btn_speaker);
+        btn_microphone = (Button) findViewById(R.id.btn_microphone);
         pbar_duration = (ProgressBar) findViewById(R.id.pbar_duration);
 
         // https://developer.android.com/reference/android/view/View#setOnClickListener(android.view.View.OnClickListener)
@@ -99,6 +101,12 @@ public class MainActivity extends AppCompatActivity {
                     },
                             sample_rate, frequency, unit).start();
                 }
+            }
+        });
+
+        btn_microphone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
             }
         });
     }
