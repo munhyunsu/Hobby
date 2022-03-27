@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("User input", message);
                 if (message.length() > 0) {
                     btn_speaker.setEnabled(false);
+                    btn_microphone.setEnabled(false);
                     MorseSpeakerCodeGenerator generator = new MorseSpeakerCodeGenerator(message, map);
                     text_result.setText(generator.getMorseCode());
                     new MorseSpeakerThread(generator, new MorseSpeakerThread.MorseSpeakerCallback() {
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onDone() {
                             btn_speaker.setEnabled(true);
+                            btn_microphone.setEnabled(true);
                             pbar_duration.setProgress(0);
                         }
                     },
@@ -107,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
         btn_microphone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn_speaker.setEnabled(false);
+                btn_microphone.setEnabled(false);
             }
         });
     }
