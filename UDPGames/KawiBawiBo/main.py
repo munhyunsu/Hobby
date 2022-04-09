@@ -1,5 +1,10 @@
+import socketserver
+
 FLAGS = _ = None
 DEBUG = False
+
+class ThreadedUDPRequestHandler(socketserver.DatagramRequestHandler):
+    pass
 
 
 def main():
