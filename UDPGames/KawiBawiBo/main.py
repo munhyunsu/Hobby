@@ -1,3 +1,4 @@
+import threading
 import socketserver
 
 FLAGS = _ = None
@@ -16,6 +17,16 @@ def main():
     if DEBUG:
         print(f'Parsed arguments {FLAGS}')
         print(f'Unparsed arguments {_}')
+
+    
+    server = ThreadedUDPServer((FLAGS.address, FLAGS.port),
+                               ThreadedUDPRequestHandler)
+    with server:
+        server_thread = threading.Thread(target=server.serve_forever)
+        try:
+            server_thread.start()
+        except KeyboardInterrupt:
+            server.shutdown()
 
 
 if __name__ == '__main__':
