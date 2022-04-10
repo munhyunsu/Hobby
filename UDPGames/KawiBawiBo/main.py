@@ -4,6 +4,11 @@ FLAGS = _ = None
 DEBUG = False
 
 class ThreadedUDPRequestHandler(socketserver.DatagramRequestHandler):
+    def handle(self):
+        print(rfile, wfile)
+
+
+class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
     pass
 
 
