@@ -4,9 +4,13 @@ import socketserver
 FLAGS = _ = None
 DEBUG = False
 
+
 class ThreadedUDPRequestHandler(socketserver.DatagramRequestHandler):
     def handle(self):
-        print(rfile, wfile)
+        message = self.rfile.read().decode('utf-8')
+        print(f'{message} from {self.client_address}')
+        data = message.encode('utf-8')
+        self.wfile.write(data)
 
 
 class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
@@ -21,10 +25,13 @@ def main():
     
     server = ThreadedUDPServer((FLAGS.address, FLAGS.port),
                                ThreadedUDPRequestHandler)
+    server.allow_reuse_address = True
+
     with server:
         server_thread = threading.Thread(target=server.serve_forever)
         try:
             server_thread.start()
+            server_thread.join()
         except KeyboardInterrupt:
             server.shutdown()
 
