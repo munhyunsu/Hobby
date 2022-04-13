@@ -35,17 +35,16 @@ class ThreadedUDPRequestHandler(socketserver.DatagramRequestHandler):
         message = self.rfile.read().decode('utf-8')
         if DEBUG:
             print(f'{message} from {self.client_address}')
-        lock.acquire()
         try:
             card = process_message(message)
+            lock.acquire()
             storage.append(process_message(message))
+            lock.release()
             data = f'Ok'.encode('utf-8')
             self.wfile.write(data)
         except:
             data = f'Error'.encode('utf-8')
             self.wfile.write(data)
-        finally:
-            lock.release()
 
 
 class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
@@ -83,6 +82,8 @@ if __name__ == '__main__':
                         help='The address to serve service')
     parser.add_argument('--port', type=int, default=6292+2022,
                         help='The poort to serve service')
+    parser.add_argument('--final', type=int, default=4,
+                        help='The final players')
 
     FLAGS, _ = parser.parse_known_args()
     DEBUG = FLAGS.debug
