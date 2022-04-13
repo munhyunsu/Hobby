@@ -1,11 +1,22 @@
 import threading
 import socketserver
+import itertools
 
 FLAGS = _ = None
 DEBUG = False
 
 lock = threading.Lock()
 storage = []
+
+
+def do_full_league(pools, rounds):
+    for p1, p2 in itertools.combinations(pools, 2):
+        if DEBUG:
+            print(f'{p1.name} vs {p2.name}')
+        for r, h1, h2 in zip(range(1, rounds+1),
+                             itertools.cycle(p1.hands),
+                             itertools.cycle(p2.hands)):
+            print(f'{r} {h1} {h2}')
 
 
 class Player():
@@ -68,8 +79,12 @@ def main():
         except KeyboardInterrupt:
             server.shutdown()
 
-    for item in storage:
-        print(item)
+    if DEBUG:
+        print('Players')
+        for item in storage:
+            print(item)
+
+    do_full_league(storage, FLAGS.rounds)
 
 
 if __name__ == '__main__':
@@ -84,6 +99,8 @@ if __name__ == '__main__':
                         help='The poort to serve service')
     parser.add_argument('--final', type=int, default=4,
                         help='The final players')
+    parser.add_argument('--rounds', type=int, default=10,
+                        help='The rounds')
 
     FLAGS, _ = parser.parse_known_args()
     DEBUG = FLAGS.debug
