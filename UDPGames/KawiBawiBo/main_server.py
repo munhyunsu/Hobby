@@ -1,6 +1,7 @@
 import threading
 import socketserver
 import itertools
+import operator
 
 FLAGS = _ = None
 DEBUG = False
@@ -10,13 +11,43 @@ storage = []
 
 
 def do_full_league(pools, rounds):
+    result = {}
     for p1, p2 in itertools.combinations(pools, 2):
         if DEBUG:
             print(f'{p1.name} vs {p2.name}')
+        s1 = 0
+        s2 = 0
         for r, h1, h2 in zip(range(1, rounds+1),
                              itertools.cycle(p1.hands),
                              itertools.cycle(p2.hands)):
-            print(f'{r} {h1} {h2}')
+            if h1 == 'kawi' and h2 == 'kawi':
+                pass
+            elif h1 == 'kawi' and h2 == 'bawi':
+                s2 = s2 + 1
+            elif h1 == 'kawi' and h2 == 'bo':
+                s1 = s1 + 1
+            elif h1 == 'bawi' and h2 == 'kawi':
+                s1 = s1 + 1
+            elif h1 == 'bawi' and h2 == 'bawi':
+                pass
+            elif h1 == 'bawi' and h2 == 'bo':
+                s2 = s2 + 1
+            elif h1 == 'bo' and h2 == 'kawi':
+                s2 = s2 + 1
+            elif h1 == 'bo' and h2 == 'bawi':
+                s1 = s1 + 1
+            elif h1 == 'bo' and h2 == 'bo':
+                pass
+        if s1 > s2:
+            result[p1] = result.get(p1, 0) + 3
+            result[p2] = result.get(p2, 0) - 1
+        elif s1 < s2:
+            result[p1] = result.get(p1, 0) - 1
+            result[p2] = result.get(p2, 0) + 3
+        else:
+            result[p1] = result.get(p1, 0) + 1
+            result[p2] = result.get(p2, 0) + 1
+    return result
 
 
 class Player():
@@ -48,8 +79,9 @@ class ThreadedUDPRequestHandler(socketserver.DatagramRequestHandler):
             print(f'{message} from {self.client_address}')
         try:
             card = process_message(message)
+            print(f'Join {card.name}')
             lock.acquire()
-            storage.append(process_message(message))
+            storage.append(card)
             lock.release()
             data = f'Ok'.encode('utf-8')
             self.wfile.write(data)
@@ -84,7 +116,25 @@ def main():
         for item in storage:
             print(item)
 
-    do_full_league(storage, FLAGS.rounds)
+    pools = []
+    for player in storage:
+        pools.append(player)
+    while True:
+        result = do_full_league(pools, FLAGS.rounds)
+        sorted_result = sorted(result.items(),
+                               key=operator.itemgetter(1),
+                               reverse=True)
+        if FLAGS.show:
+            print(f'Scoreboard with {len(result)} players')
+            for idx, item in enumerate(sorted_result, start=1):
+                print(f'[{idx:>2d}] {item[0].name:>10s} {item[1]:>3d}')
+            print(f'Press enter', end='')
+            input()
+        if len(result) <= FLAGS.final:
+            break
+        pools.clear()
+        for i in range(len(result)//2):
+            pools.append(sorted_result[i][0])
 
 
 if __name__ == '__main__':
@@ -99,8 +149,10 @@ if __name__ == '__main__':
                         help='The poort to serve service')
     parser.add_argument('--final', type=int, default=4,
                         help='The final players')
-    parser.add_argument('--rounds', type=int, default=10,
+    parser.add_argument('--rounds', type=int, default=100,
                         help='The rounds')
+    parser.add_argument('--show', action='store_true',
+                        help='The break show per split')
 
     FLAGS, _ = parser.parse_known_args()
     DEBUG = FLAGS.debug
