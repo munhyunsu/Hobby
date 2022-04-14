@@ -153,9 +153,12 @@ if __name__ == '__main__':
                         help='The rounds')
     parser.add_argument('--show', action='store_true',
                         help='The break show per split')
+    parser.add_argument('--verify', type=str,
+                        help='The player verifing data')
 
     FLAGS, _ = parser.parse_known_args()
     DEBUG = FLAGS.debug
+
 
     main()
 
