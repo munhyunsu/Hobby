@@ -1,14 +1,16 @@
+import os
 import threading
 import socketserver
 import itertools
 import operator
+import csv
 
 FLAGS = _ = None
 DEBUG = False
 
 lock = threading.Lock()
 storage = []
-
+verifier = set()
 
 def do_full_league(pools, rounds):
     result = {}
@@ -79,12 +81,17 @@ class ThreadedUDPRequestHandler(socketserver.DatagramRequestHandler):
             print(f'{message} from {self.client_address}')
         try:
             card = process_message(message)
-            print(f'Join {card.name}')
-            lock.acquire()
-            storage.append(card)
-            lock.release()
-            data = f'Ok'.encode('utf-8')
-            self.wfile.write(data)
+            if len(verifier) == 0 or card.name in verifier:
+                print(f'Join {card.name}')
+                lock.acquire()
+                storage.append(card)
+                lock.release()
+                data = f'Ok'.encode('utf-8')
+                self.wfile.write(data)
+            else:
+                print(f'Failed {card.name}')
+                data = f'Not verified'.encode('utf-8')
+                self.wfile.write(data)
         except:
             data = f'Error'.encode('utf-8')
             self.wfile.write(data)
@@ -98,6 +105,14 @@ def main():
     if DEBUG:
         print(f'Parsed arguments {FLAGS}')
         print(f'Unparsed arguments {_}')
+
+    if FLAGS.verify is not None:
+        with open(FLAGS.verify, 'r') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                verifier.add(row[0])
+    if DEBUG:
+        print(f'{verifier=}')
 
     server = ThreadedUDPServer((FLAGS.address, FLAGS.port),
                                ThreadedUDPRequestHandler)
@@ -159,6 +174,8 @@ if __name__ == '__main__':
     FLAGS, _ = parser.parse_known_args()
     DEBUG = FLAGS.debug
 
+    if FLAGS.verify is not None:
+        FLAGS.verify = os.path.abspath(os.path.expanduser(FLAGS.verify))
 
     main()
 
