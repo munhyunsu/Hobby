@@ -9,7 +9,7 @@ FLAGS = _ = None
 DEBUG = False
 
 lock = threading.Lock()
-storage = []
+storage = {}
 verifier = set()
 
 def do_full_league(pools, rounds):
@@ -84,7 +84,9 @@ class ThreadedUDPRequestHandler(socketserver.DatagramRequestHandler):
             if len(verifier) == 0 or card.name in verifier:
                 print(f'Join {card.name}')
                 lock.acquire()
-                storage.append(card)
+                if card.name in storage.keys():
+                    storage.pop(card.name)
+                storage[card.name] = card
                 lock.release()
                 data = f'Ok'.encode('utf-8')
                 self.wfile.write(data)
@@ -128,21 +130,21 @@ def main():
 
     if DEBUG:
         print('Players')
-        for item in storage:
+        for item in storage.values():
             print(item)
 
     pools = []
-    for player in storage:
+    for player in storage.values():
         pools.append(player)
     while True:
         result = do_full_league(pools, FLAGS.rounds)
         sorted_result = sorted(result.items(),
                                key=operator.itemgetter(1),
                                reverse=True)
+        print(f'Scoreboard with {len(result)} players')
+        for idx, item in enumerate(sorted_result, start=1):
+            print(f'[{idx:>2d}] {item[0].name:>10s} {item[1]:>3d}')
         if FLAGS.show:
-            print(f'Scoreboard with {len(result)} players')
-            for idx, item in enumerate(sorted_result, start=1):
-                print(f'[{idx:>2d}] {item[0].name:>10s} {item[1]:>3d}')
             print(f'Press enter', end='')
             input()
         if len(result) <= FLAGS.final:
