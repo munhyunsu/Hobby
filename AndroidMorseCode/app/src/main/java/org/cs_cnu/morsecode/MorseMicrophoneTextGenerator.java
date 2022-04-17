@@ -19,7 +19,7 @@ public class MorseMicrophoneTextGenerator {
         sb.append("CSE");
 // Need to edit abobe!
 
-        this.text = "";
+        this.text = sb.toString();
         Log.i("Sound input", text);
     }
 
