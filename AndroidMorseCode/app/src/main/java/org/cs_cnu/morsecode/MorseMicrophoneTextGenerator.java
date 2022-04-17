@@ -1,5 +1,7 @@
 package org.cs_cnu.morsecode;
 
+import android.util.Log;
+
 import java.util.Map;
 
 public class MorseMicrophoneTextGenerator {
@@ -12,7 +14,13 @@ public class MorseMicrophoneTextGenerator {
         this.morse_code = morse_code;
         this.map = map;
 
+// Need to edit below!
+        StringBuilder sb = new StringBuilder();
+        sb.append("CSE");
+// Need to edit abobe!
+
         this.text = "";
+        Log.i("Sound input", text);
     }
 
     public String getText() {
