@@ -1,7 +1,9 @@
 package org.cs_cnu.morsecode;
 
+import android.annotation.SuppressLint;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
+import android.media.MediaRecorder;
 
 public class MorseMicrophoneThread extends Thread {
     public interface MorseMicrophoneCallback {
@@ -30,5 +32,12 @@ public class MorseMicrophoneThread extends Thread {
 
     @Override
     public void run() {
+        @SuppressLint("MissingPermission")
+        final AudioRecord record = new AudioRecord(
+                MediaRecorder.AudioSource.DEFAULT,
+                this.sample_rate,
+                AudioFormat.CHANNEL_IN_MONO,
+                AudioFormat.ENCODING_PCM_16BIT,
+                2 * sample_rate);
     }
 }
