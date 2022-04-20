@@ -32,12 +32,21 @@ public class MorseMicrophoneThread extends Thread {
 
     @Override
     public void run() {
-        @SuppressLint("MissingPermission")
-        final AudioRecord record = new AudioRecord(
+        @SuppressLint("MissingPermission") final AudioRecord record = new AudioRecord(
                 MediaRecorder.AudioSource.DEFAULT,
                 this.sample_rate,
                 AudioFormat.CHANNEL_IN_MONO,
                 AudioFormat.ENCODING_PCM_16BIT,
                 2 * sample_rate);
+
+        final short[] samples = new short[unit_size];
+
+        record.startRecording();
+
+        while (true) {
+            record.stop();
+            record.release();
+            break;
+        }
     }
 }
