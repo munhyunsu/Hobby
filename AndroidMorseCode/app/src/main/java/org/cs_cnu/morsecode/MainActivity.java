@@ -111,6 +111,34 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btn_speaker.setEnabled(false);
                 btn_microphone.setEnabled(false);
+                new MorseMicrophoneThread(new MorseMicrophoneThread.MorseMicrophoneCallback() {
+                    @Override
+                    public void onProgress(String value) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                text_result.setText(value);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onDone(String value) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String morse_code = value;
+                                text_result.setText(value);
+                                MorseMicrophoneTextGenerator generator = new MorseMicrophoneTextGenerator(morse_code, map);
+                                String text = generator.getText();
+                                box_text.setText(text);
+                                btn_speaker.setEnabled(true);
+                                btn_microphone.setEnabled(true);
+                            }
+                        });
+                    }
+                },
+                        sample_rate, frequency, unit).start();
             }
         });
     }
