@@ -68,10 +68,8 @@ def play_audio(audio):
 
 def send_data():
     while True:
-        print('Type some text (only English)')
+        print('Type some text')
         text = input('User input: ').strip()
-        if re.match(r'[A-Za-z0-9 ]+', text):
-            break
     morse = text2morse(text)
     print(f'MorseCode: {morse}')
     audio = morse2audio(morse)
