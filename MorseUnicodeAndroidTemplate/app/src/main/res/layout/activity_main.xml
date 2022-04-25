@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/box_text"
+            style="@android:style/Widget.DeviceDefault.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
+            android:ems="10"
+            android:gravity="center_horizontal|center_vertical"
+            android:hint="@string/box_text"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:minHeight="48dip"
+            android:text="@string/box_text_sample"
+            android:textColor="#9C27B0"
+            android:textColorHint="#757575" />
+
+        <Button
+            android:id="@+id/btn_speaker"
+            style="@android:style/Widget.DeviceDefault.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dip"
+            android:text="@string/btn_speaker_text"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_microphone"
+            style="@android:style/Widget.DeviceDefault.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dip"
+            android:text="@string/btc_microphone_text"
+            android:textAllCaps="false" />
+
+        <ProgressBar
+            android:id="@+id/pbar_duration"
+            style="@android:style/Widget.DeviceDefault.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="24dip" />
+
+        <TextView
+            android:id="@+id/text_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
