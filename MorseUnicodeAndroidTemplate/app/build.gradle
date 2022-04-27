@@ -6,7 +6,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "org.cs_cnu.morsecode"
+        applicationId "org.cs_cnu.morseunicode"
         minSdk 23
         targetSdk 31
         versionCode 1
