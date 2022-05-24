@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Log and Error Test</title>
+  </head>
+  <body>
+    <h1>Log and Error Test</h1>
+  </body>
+
+<script>
+  console.log('This appears in the developer console');
+</script>
+
+<script>
+  // This will cause an error that appears in the console
+  const myNumber = 
+</script>
+
+<script>
+'use strict';
+// This function adds a list of consecutive numbers
+function addRange(start, end) {
+let sum = 0;
+for (let i = start; i < end+1; i++) {
+sum += i;
+}
+return sum;
+}
+// Add numbers from 10 to 15
+let startNumber = 10;
+let endNumber = 15;
+console.log(addRange(startNumber,endNumber)); // Displays 75
+// Now add numbers from 1 to 5
+startnumber = 1;
+endNumber = 5;
+console.log(addRange(startNumber,endNumber)); // Displays 0, but we expect 15
+</script>
+  </body>
+</html>
