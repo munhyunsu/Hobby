@@ -27,3 +27,21 @@
 - console.time(label)
 - console.timeEnd(label)
 
+## Variable time time
+
+- Run below code twice, error was occured.
+  - already declared variable!
+
+```javascript
+const testValue = 40+12;
+console.log(testValue);
+```
+
+- we can enclose block of code in a set of braces
+
+```javascript
+{
+  const testValue = 40+12;
+  console.log(testValue);
+}
+```
