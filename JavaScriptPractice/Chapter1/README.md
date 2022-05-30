@@ -70,3 +70,7 @@ startnumber = 1;
 endNumber = 5;
 console.log(addRange(startNumber,endNumber)); // Displays 0, but we expect 15
 ```
+
+- Above code error caused by `JavaScript` assign rule.
+- `JavaScript` creates variables whenever we assign a value.
+- So, If we put `'use strict'` the most top of source code, then error appears.
