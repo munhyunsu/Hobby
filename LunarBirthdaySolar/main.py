@@ -53,6 +53,9 @@ def main():
                              f'{root.findall("*//solDay")[0].text}')
                     solar = datetime.date.fromisoformat(solar)
                 print(f'{name} ({birthday}) ==> {solar} (-1 Day)')
+            except Exception as e:
+                if DEBUG:
+                    print(f'[ERROR] {url} => {e}')
 
 
 if __name__ == '__main__':
