@@ -26,18 +26,17 @@ def main():
                     continue
                 if entry.is_dir():
                     leaf = {'type': 'd',
-                            'name': os.path.relpath(rootfs, entry.path),
+                            'name': os.path.relpath(entry.path, rootfs),
                             'child': []}
                     node['child'].append(leaf)
                     queue.append((entry.path, leaf))
                 elif entry.is_file():
                     leaf = {'type': 'f',
-                            'name': os.path.relpath(rootfs, entry.path),
+                            'name': os.path.relpath(entry.path, rootfs),
                             'child': []}
                     node['child'].append(leaf)
 
-    pprint.pprint(tree)
-    
+    print(json.dumps(tree))
 
 
 if __name__ == '__main__':
