@@ -1,0 +1,18 @@
+body {
+    background-color: lightblue;
+}
+
+h1 {
+    color: navy;
+    margin-left: 20px;
+}
+
+/*
+.check {
+  #display: none;
+}
+
+.check.active {
+  display: block;
+}
+*/
