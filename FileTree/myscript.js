@@ -22,25 +22,18 @@ function traverse(node, root, sp) {
   }
 }
 
-function checkboxParentAll(elem, bool) {
-  var pelem = elem.parentNode;
-  var childCheck = pelem.children;
-  for (var i = 0; i < childCheck.length; i++) {
-    if (childCheck[i].tagName == "INPUT") {
-      childCheck[i].checked = bool;
-    } else if (childCheck[i].tagName == "DIV") {
-      checkboxChildAll(childCheck[i], bool);
-    }
+function checkboxAll(elem, bool, rel) {
+  if (rel == "parent") {
+    var pelem = elem.parentNode;
+    var childCheck = pelem.children;
+  } else {
+    var childCheck = elem.children;
   }
-}
-
-function checkboxChildAll(elem, bool) {
-  var childCheck = elem.children;
   for (var i = 0; i < childCheck.length; i++) {
     if (childCheck[i].tagName == "INPUT") {
       childCheck[i].checked = bool;
     } else if (childCheck[i].tagName == "DIV") {
-      checkboxChildAll(childCheck[i], bool);
+      checkboxAll(childCheck[i], bool, "child");
     }
   }
 }
@@ -57,9 +50,9 @@ async function fetchRequestWithError() {
       for (var i = 0; i < checks.length; i++) {
         checks[i].addEventListener('change', function() {
           if (this.checked) {
-            checkboxParentAll(this, true);
+            checkboxAll(this, true, "parent");
           } else {
-            checkboxParentAll(this, false);
+            checkboxAll(this, false, "parent");
           }
         })
       }
