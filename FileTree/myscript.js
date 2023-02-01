@@ -4,19 +4,17 @@ function traverse(node, root, sp) {
       if (!node[child].hasOwnProperty(key)) {
         continue;
       }
+      if (key != "type") {
+        continue;
+      }
+      ldiv = document.createElement("div");
+      ldiv.className = "check";
+      ldiv.setAttribute("style", `margin-left: ${sp*10}px`);
+      ldiv.innerHTML = `<input type="checkbox"><label>${node[child]["name"]}</label>`
+      root.appendChild(ldiv);
       if (key == "type" && node[child][key] == "d") {
-        ldiv = document.createElement("div");
-        ldiv.className = "check";
-        ldiv.setAttribute("style", `margin-left: ${sp*10}px`);
-        ldiv.innerHTML = `<input type="checkbox"><label>${node[child]["name"]}</label>`
-        root.appendChild(ldiv);
         traverse(node[child]["child"], ldiv, sp+1);
       } else if (key == "type" && node[child][key] == "f") {
-        ldiv = document.createElement("div");
-        ldiv.className = "check";
-        ldiv.setAttribute("style", `margin-left: ${sp*10}px`);
-        ldiv.innerHTML = `<input type="checkbox"><label>${node[child]["name"]}</label>`
-        root.appendChild(ldiv);
       }
     }
   }
