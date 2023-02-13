@@ -1,5 +1,6 @@
 import os
 import asyncio
+import pprint
 
 import simpleobsws
 
@@ -16,7 +17,7 @@ async def make_job(ws, job):
 
     ret = await ws.call(request)
     if ret.ok():
-        print(f'Response: {ret.responseData}')
+        pprint.pprint(ret.responseData)
 
     await ws.disconnect()
 
@@ -29,8 +30,24 @@ def main():
     ws = simpleobsws.WebSocketClient(url=f'ws://{secret.ip}:{secret.port}',
                                      password=f'{secret.password}')
 
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(make_job(ws, FLAGS.job))
+    #asyncio.run(make_job(ws, FLAGS.job))
+    #loop = asyncio.new_event_loop()
+    #asyncio.set_event_loop(loop)
+    #loop = asyncio.get_event_loop()
+    #loop.run_until_complete(make_job(ws, FLAGS.job))
+    asyncio.create_task(make_job(ws, FLAGS.job))
+
+
+async def amain():
+    if DEBUG:
+        print(f'Parsed arguments {FLAGS}')
+        print(f'Unparsed arguments {_}')
+
+    ws = simpleobsws.WebSocketClient(url=f'ws://{secret.ip}:{secret.port}',
+                                     password=f'{secret.password}')
+
+    asyncio.create_task(make_job(ws, FLAGS.job))
+
 
 
 if __name__ == '__main__':
@@ -45,4 +62,5 @@ if __name__ == '__main__':
     FLAGS, _ = parser.parse_known_args()
     DEBUG = FLAGS.debug
 
-    main()
+    #main()
+    asyncio.run(amain())
