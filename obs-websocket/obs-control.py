@@ -46,7 +46,7 @@ async def amain():
     ws = simpleobsws.WebSocketClient(url=f'ws://{secret.ip}:{secret.port}',
                                      password=f'{secret.password}')
 
-    asyncio.create_task(make_job(ws, FLAGS.job))
+    await asyncio.create_task(make_job(ws, FLAGS.job))
 
 
 
