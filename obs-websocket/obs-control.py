@@ -62,5 +62,7 @@ if __name__ == '__main__':
     FLAGS, _ = parser.parse_known_args()
     DEBUG = FLAGS.debug
 
+    #loop = asyncio.new_event_loop()
+    #asyncio.set_event_loop(loop)
     #main()
     asyncio.run(amain())
