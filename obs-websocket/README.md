@@ -1,3 +1,5 @@
+# Simple OBS controller using WebSocket
+
 # References
 
 - [Official OBS websocket information](https://github.com/obsproject/obs-websocket)
