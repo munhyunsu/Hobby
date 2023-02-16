@@ -1,5 +1,11 @@
 # Simple OBS controller using WebSocket
 
+## Preparation
+
+1. Update OBS up-to-date
+
+2. Tools - WebSocket Server Settings - Enable WebSocket server
+
 # References
 
 - [Official OBS websocket information](https://github.com/obsproject/obs-websocket)
