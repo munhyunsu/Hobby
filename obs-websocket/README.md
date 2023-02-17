@@ -6,6 +6,16 @@
 
 2. Tools - WebSocket Server Settings - Enable WebSocket server
 
+3. Tools - WebSocket Server Settings - Show Connect Info
+
+- vi `secret.py`
+
+```python
+ip = ''
+port = 
+password ''
+```
+
 # References
 
 - [Official OBS websocket information](https://github.com/obsproject/obs-websocket)
