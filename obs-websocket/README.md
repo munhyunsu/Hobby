@@ -4,16 +4,24 @@
 
 1. Update OBS up-to-date
 
-2. Tools - WebSocket Server Settings - Enable WebSocket server
+2. Tools - WebSocket Server Settings - **Check** Enable WebSocket server
 
 3. Tools - WebSocket Server Settings - Show Connect Info
 
-- vi `secret.py`
+- `vi secret.py`
 
 ```python
 ip = ''
 port = 
 password ''
+```
+
+# `obs-control.py`
+
+## Usage
+
+```bash
+python3 obs-control.py --job GerVersion
 ```
 
 # References
