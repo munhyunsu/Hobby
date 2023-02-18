@@ -24,6 +24,14 @@ password ''
 python3 obs-control.py --job GerVersion
 ```
 
+# `main_timered_record.py`
+
+## Usage
+
+```bash
+python3 main_timered_record.py --minutes 120 --audio_only
+```
+
 # References
 
 - [Official OBS websocket information](https://github.com/obsproject/obs-websocket)
