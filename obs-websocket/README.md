@@ -21,7 +21,11 @@ password ''
 ## Usage
 
 ```bash
-python3 obs-control.py --job GerVersion
+python3 obs-control.py --job METHOD
+```
+
+```bash
+python3 obs-control.py --job GetVersion
 ```
 
 # `main_timered_record.py`
