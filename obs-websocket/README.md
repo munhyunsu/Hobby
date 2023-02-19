@@ -33,6 +33,10 @@ python3 obs-control.py --job GetVersion
 ## Usage
 
 ```bash
+python3 main_timered_record.py --minutes MINUTES --audio_only
+```
+
+```bash
 python3 main_timered_record.py --minutes 120 --audio_only
 ```
 
