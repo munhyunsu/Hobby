@@ -16,6 +16,8 @@ port =
 password ''
 ```
 
+4. **(Important)** Launch OBS
+
 # `obs-control.py`
 
 ## Usage
