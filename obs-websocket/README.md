@@ -46,6 +46,12 @@ python3 main_timered_record.py --minutes MINUTES --audio_only
 python3 main_timered_record.py --minutes 120 --audio_only
 ```
 
+# Scheduling using a crontab
+
+```
+0 22 * * * cd obs-websocket; source venv/bin/activate; python3 obs-control.py --job GetVersion
+```
+
 # References
 
 - [Official OBS websocket information](https://github.com/obsproject/obs-websocket)
