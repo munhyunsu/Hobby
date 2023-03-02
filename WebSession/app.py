@@ -17,3 +17,10 @@ def login():
         return redirect(url_for('index'))
     print(session)
     return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    print(session)
+    return redirect(url_for('index'))
