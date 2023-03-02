@@ -3,6 +3,7 @@ from flask import Flask, session, render_template, request, redirect, url_for
 app = Flask(__name__)
 app.secret_key = 'It is my secret key'
 
+
 @app.route('/')
 def index():
     print(session)

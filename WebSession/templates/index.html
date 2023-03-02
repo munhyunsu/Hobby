@@ -1,7 +1,7 @@
 <!doctype html>
 <title>Hello from Flask</title>
 {% if 'username' in session %}
-  <h1>You are logged in as {{ username }}</h1>
+  <h1>You are logged in as {{ session['username'] }}</h1>
 {% else %}
   <h1>You are not logged in.</h1>
 {% endif %}
