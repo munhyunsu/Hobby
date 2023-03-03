@@ -9,13 +9,17 @@ db = {}
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if 'sid' in session:
+        sdata = db.get(session['sid'], {})
+    else:
+       sdata = {}
+    return render_template('index.html', session=sdata)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        sid = secret.token_hex()
+        sid = secrets.token_hex()
         sdata = db.get(sid, {})
         sdata = {'username': request.form['username']}
         db[sid] = sdata
@@ -27,5 +31,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    session.pop('username', None)
+    if 'sid' in session:
+        db.pop(session['sid'])
+        session.pop('sid', None)
     return redirect(url_for('index'))
