@@ -24,7 +24,7 @@ def login():
         sdata = {'username': request.form['username']}
         db[sid] = sdata
         session['sid'] = sid
-        print(sdata)
+        print(session, db, sdata)
         return redirect(url_for('index'))
     return render_template('login.html')
 
