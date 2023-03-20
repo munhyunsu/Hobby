@@ -1,0 +1,6 @@
+#!/bin/bash
+
+wget https://dlm.mariadb.com/2862631/Connectors/c/connector-c-3.3.4/mariadb-connector-c-3.3.4-ubuntu-focal-amd64.tar.gz
+tar -xvf mariadb-connector-c-3.3.4-ubuntu-focal-amd64.tar.gz
+mv mariadb-connector-c-3.3.4-ubuntu-focal-amd64 mariadb-connector-c-3.3.4
+rm mariadb-connector-c-3.3.4-ubuntu-focal-amd64.tar.gz
