@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+export PATH="$(realpath ./mariadb-connector-c-3.3.4/bin):${PATH}"
+export PKG_CONFIG_PATH="$(realpath ./mariadb-connector-c-3.3.4/lib/pkgconfig/):${PKG_CONFIG_PATH}"
+
