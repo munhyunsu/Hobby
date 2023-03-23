@@ -6,3 +6,6 @@ mariadb
 SQLAlchemy
 alembic
 flask
+python-multipart
+python-jose[cryptography]
+passlib[bcrypt]
