@@ -1,2 +1,1 @@
-venv/
-mariadb-connector-c*/
+../dynamic_load_module/.gitignore
