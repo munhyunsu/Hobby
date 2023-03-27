@@ -2,3 +2,4 @@ venv
 venv/
 mariadb-connector-c*
 mariadb-connector-c*/
+files/
