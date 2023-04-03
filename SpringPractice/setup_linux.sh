@@ -8,6 +8,7 @@
 # https://bell-sw.com/
 ## https://bell-sw.com/pages/downloads/
 wget https://download.bell-sw.com/java/17.0.7+7/bellsoft-jdk17.0.7+7-linux-amd64.tar.gz -O bellsoft-jdk17.0.7+7-linux-amd64.tar.gz
+tar -xvf bellsoft-jdk17.0.7+7-linux-amd64.tar.gz
 
 # https://gradle.org/
 ## https://gradle.org/releases/
