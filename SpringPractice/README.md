@@ -13,4 +13,7 @@
 source enable_spring.sh
 ```
 
+## Initialize project
+
+- [Spring Initializr](https://start.spring.io/)
 
