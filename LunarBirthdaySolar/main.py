@@ -37,6 +37,9 @@ def main():
                              f'{root.findall("*//solDay")[0].text}')
                     solar = datetime.date.fromisoformat(solar)
                 print(f'{name} ({birthday}) ==> {solar}')
+            # TODO(LuHa): IndexError 가 2가지 원인으로 나타남
+            ## 1. 윤달이 생일인 경우! (기존 버전 코드)
+            ## 2. API 사용 권한이 만료된 경우!! (이거 개선 필요!!)
             except IndexError: # Minor calandar!
                 birthday = birthday - datetime.timedelta(days=1)
                 data = {'lunYear': FLAGS.year,
