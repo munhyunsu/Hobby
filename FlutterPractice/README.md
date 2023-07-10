@@ -11,3 +11,9 @@ if [ -d "$HOME/.local/share/flutter/bin" ] ; then
 fi
 ```
 
+3. Check version
+
+```bash
+flutter --version
+```
+
