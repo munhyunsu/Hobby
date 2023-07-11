@@ -15,5 +15,11 @@ fi
 
 ```bash
 flutter --version
+flutter precache
 ```
 
+4. Upgrade version
+
+```bash
+flutter upgrade
+```
