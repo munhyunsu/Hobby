@@ -1,5 +1,15 @@
 # `Flutter` Installation
 
+0. Install requirements
+
+- clang++
+
+```bash
+apt install clang
+```
+
+- Android studio
+
 1. Download `Flutter` SDK
   - [SDK Archive](https://docs.flutter.dev/release/archive)
 
