@@ -10,6 +10,10 @@ apt install clang
 
 - Android studio
 
+  - Download Android SDK
+  - Download Commandline tools
+  - Setup `$PATH`
+
 1. Download `Flutter` SDK
   - [SDK Archive](https://docs.flutter.dev/release/archive)
 
