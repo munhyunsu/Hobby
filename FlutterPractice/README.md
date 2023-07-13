@@ -25,11 +25,12 @@ if [ -d "$HOME/.local/share/flutter/bin" ] ; then
 fi
 ```
 
-3. Set flutter configuration
+3. Setup flutter configuration and accept licenses
 
 ```bash
 flutter config --android-sdk ~/.local/share/Android-SDK/
 flutter config --android-studio-dir ~/.local/share/android-studio/
+flutter doctor --android-licenses
 ```
 
 3. Check version
