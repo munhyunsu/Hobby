@@ -25,6 +25,13 @@ if [ -d "$HOME/.local/share/flutter/bin" ] ; then
 fi
 ```
 
+3. Set flutter configuration
+
+```bash
+flutter config --android-sdk ~/.local/share/Android-SDK/
+flutter config --android-studio-dir ~/.local/share/android-studio/
+```
+
 3. Check version
 
 ```bash
