@@ -5,7 +5,7 @@
 - clang++
 
 ```bash
-apt install clang
+apt install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
 ```
 
 - Android studio
