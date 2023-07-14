@@ -14,6 +14,14 @@ apt install clang
   - Download Commandline tools
   - Setup `$PATH`
 
+  ```bash
+  if [ -d "$HOME/.local/share/Android-SDK" ] ; then
+    ANDROID_HOME="$HOME/.local/share/Android-SDK"
+    PATH="$ANDROID_HOME/platform-tools:$PATH"
+    PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+  fi
+  ```
+
 1. Download `Flutter` SDK
   - [SDK Archive](https://docs.flutter.dev/release/archive)
 
@@ -33,14 +41,14 @@ flutter config --android-studio-dir ~/.local/share/android-studio/
 flutter doctor --android-licenses
 ```
 
-3. Check version
+4. Check version
 
 ```bash
 flutter --version
 flutter precache
 ```
 
-4. Upgrade version
+5. Upgrade version
 
 ```bash
 flutter upgrade
