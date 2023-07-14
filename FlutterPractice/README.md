@@ -1,6 +1,6 @@
 # `Flutter` Installation
 
-0. Install requirements
+1. Install requirements
 
 - clang++
 
@@ -22,10 +22,10 @@ apt install clang
   fi
   ```
 
-1. Download `Flutter` SDK
+2. Download `Flutter` SDK
   - [SDK Archive](https://docs.flutter.dev/release/archive)
 
-2. SET `PATH` environment variable
+3. SET `PATH` environment variable
 
 ```bash
 if [ -d "$HOME/.local/share/flutter/bin" ] ; then
@@ -33,7 +33,7 @@ if [ -d "$HOME/.local/share/flutter/bin" ] ; then
 fi
 ```
 
-3. Setup flutter configuration and accept licenses
+4. Setup flutter configuration and accept licenses
 
 ```bash
 flutter config --android-sdk ~/.local/share/Android-SDK/
@@ -41,15 +41,21 @@ flutter config --android-studio-dir ~/.local/share/android-studio/
 flutter doctor --android-licenses
 ```
 
-4. Check version
+5. Check version
 
 ```bash
 flutter --version
 flutter precache
 ```
 
-5. Upgrade version
+6. Upgrade version
 
 ```bash
 flutter upgrade
+```
+
+7. Check doctor
+
+```bash
+flutter doctor
 ```
