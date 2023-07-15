@@ -23,7 +23,7 @@ apt install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc+
   ```
 
 2. Download `Flutter` SDK
-  - [SDK Archive](https://docs.flutter.dev/release/archive)
+  - [Flutter SDK Archive](https://docs.flutter.dev/release/archive)
 
 3. SET `PATH` environment variable
 
