@@ -6,6 +6,7 @@
 
 ```bash
 apt install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
+# (Based Ubuntu 20.04) apt install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-10-dev
 ```
 
 - Android studio
