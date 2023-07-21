@@ -40,6 +40,13 @@ class MyHomePage extends StatelessWidget {
           Text(''),
           Text('A random AWESOME idea:'),
           Text(appState.current.asLowerCase),
+
+          ElevatedButton(
+            onPressed: () {
+              print('button pressed!');
+            },
+            child: Text('Next'),
+          ),
         ],
       ),
     );
