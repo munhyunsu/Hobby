@@ -45,7 +45,7 @@ class MyHomePage extends StatelessWidget {
         children: [
           Text(''),
           Text('A random AWESOME idea:'),
-          Text(pair.asLowerCase),
+          BigCard(pair.asLowerCase),
 
           ElevatedButton(
             onPressed: () {
@@ -58,3 +58,4 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
+
