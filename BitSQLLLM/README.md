@@ -2,3 +2,5 @@
 
 - [llama github](https://github.com/facebookresearch/llama/blob/main/README.md)
 
+1. Accept their license. [Meta AI](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)
+
