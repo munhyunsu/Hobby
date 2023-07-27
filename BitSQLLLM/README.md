@@ -4,3 +4,6 @@
 
 1. Accept their license. [Meta AI](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)
 
+2. Request permission to meta-llama on [Huggingface](https://huggingface.co/meta-llama)
+  - Each models
+
