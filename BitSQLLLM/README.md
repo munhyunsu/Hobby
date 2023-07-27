@@ -7,3 +7,7 @@
 2. Request permission to meta-llama on [Huggingface](https://huggingface.co/meta-llama)
   - Each models
 
+3. Clone the [llama repo](https://github.com/facebookresearch/llama)
+
+
+
