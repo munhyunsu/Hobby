@@ -1,5 +1,9 @@
 # Download model weights
 
+1. Install Git large file system (`git-lfs`)
+  - [Github LFS](https://github.com/git-lfs/git-lfs/blob/main/INSTALLING.md)
+
+
 - [llama github](https://github.com/facebookresearch/llama/blob/main/README.md)
 
 1. Accept their license. [Meta AI](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)
