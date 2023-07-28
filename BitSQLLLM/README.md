@@ -2,7 +2,10 @@
 
 1. Install Git large file system (`git-lfs`)
   - [Github LFS](https://github.com/git-lfs/git-lfs/blob/main/INSTALLING.md)
-
+  ```bash
+  # Linuxmint 20.3 Una based on Ubuntu Focal
+  curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | os=ubuntu dist=focal sudo -E bash
+  ```
 
 - [llama github](https://github.com/facebookresearch/llama/blob/main/README.md)
 
