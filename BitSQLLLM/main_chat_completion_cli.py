@@ -61,7 +61,7 @@ def main(
             'content': response['content'],
         })
 
-        print(f'Llama2: {response["content"}}')
+        print(f'Llama2: {response["content"]}')
         prompt = input('You :')
 
         dialog[0].append({
