@@ -56,7 +56,7 @@ def main(
         
         response = results[0]['generation']
 
-        dialog[0].append({
+        dialogs[0].append({
             'role': 'assistant',
             'content': response['content'],
         })
