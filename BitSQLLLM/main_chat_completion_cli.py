@@ -64,6 +64,8 @@ def main(
         
         response = results[0]['generation']
 
+        dialogs: List[Dialog] = [[]]
+
         dialogs[0].append({
             'role': 'assistant',
             'content': response['content'],
