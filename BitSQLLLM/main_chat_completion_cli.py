@@ -39,14 +39,22 @@ def main(
         max_batch_size=max_batch_size,
     )
 
-    print('Llama2: Hello! How can I assist you?')
-    prompt = input('You :')
+    dialogs: List[Dialog] = [[]]
 
-    dialogs: List[Dialog] = [
-        [{'role': 'user', 'content': prompt}],
-    ]
+    print('Llama2: Hello! How can I assist you?')
 
     while True:
+        while True:
+            prompt = input('You: ').strip()
+            if len(prompt):
+                break
+
+        dialogs[0].append(
+            {'role': 'user',
+             'content': prompt,
+            }
+        )
+        
         results = generator.chat_completion(
             dialogs,  # type: ignore
             max_gen_len=max_gen_len,
@@ -61,27 +69,7 @@ def main(
             'content': response['content'],
         })
 
-        print(f'Llama2: {response["content"]}')
-        prompt = input('You :')
-
-        dialogs[0].append({
-            'role': 'user',
-            'content': prompt,
-        })
-        
-
-        
-
-
-    
-
-    for dialog, result in zip(dialogs, results):
-        for msg in dialog:
-            print(f"{msg['role'].capitalize()}: {msg['content']}\n")
-        print(
-            f"> {result['generation']['role'].capitalize()}: {result['generation']['content']}"
-        )
-        print("\n==================================\n")
+        print(f'Llama2:{response["content"]}\n')
 
 
 if __name__ == "__main__":
