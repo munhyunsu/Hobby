@@ -64,7 +64,7 @@ def main(
         print(f'Llama2: {response["content"]}')
         prompt = input('You :')
 
-        dialog[0].append({
+        dialogs[0].append({
             'role': 'user',
             'content': prompt,
         })
