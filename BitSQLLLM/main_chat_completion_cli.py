@@ -44,6 +44,7 @@ def main(
     print('Llama2: Hello! How can I assist you?')
 
     while True:
+        dialogs: List[Dialog] = [[]]
         while True:
             prompt = input('You: ').strip()
             if len(prompt):
@@ -63,8 +64,6 @@ def main(
         )
         
         response = results[0]['generation']
-
-        dialogs: List[Dialog] = [[]]
 
         dialogs[0].append({
             'role': 'assistant',
