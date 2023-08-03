@@ -44,11 +44,21 @@ def main(
     print('Llama2: Hello! How can I assist you?')
 
     while True:
-        dialogs: List[Dialog] = [[]]
         while True:
             prompt = input('You: ').strip()
-            if len(prompt):
+            if len(prompt) > max_seq_len:
+                print(f'System: You exceed max_seq_len({max_seq_len}). Please type prompt less')
+            elif len(prompt):
                 break
+
+        while True:
+            seq_len = 0
+            for role, content in dialogs[0]:
+                seq_len = seq_len + content.split(' ')
+            if seq_len <= max_seq_len:
+                break
+            dialogs[0].pop(0)
+            dialogs[0].pop(0)
 
         dialogs[0].append(
             {'role': 'user',
