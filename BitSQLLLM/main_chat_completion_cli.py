@@ -54,9 +54,10 @@ def main(
         while True:
             seq_len = 0
             for role, content in dialogs[0]:
-                seq_len = seq_len + content.split(' ')
+                seq_len = seq_len + len(content.split(' '))
             if seq_len <= max_seq_len:
                 break
+            print('System: I forgot 2 oldest dialogs')
             dialogs[0].pop(0)
             dialogs[0].pop(0)
 
