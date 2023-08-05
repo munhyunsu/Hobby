@@ -6,6 +6,7 @@ from typing import List, Optional
 import fire
 
 from llama.llama import Llama, Dialog
+from llama.llama.tokenizer import Tokenizer
 
 
 def main(
@@ -39,6 +40,8 @@ def main(
         max_batch_size=max_batch_size,
     )
 
+    tokenizer = Tokenizer(model_path=tokenizer_path)
+
     dialogs: List[Dialog] = [[]]
 
     print('Llama2: Hello! How can I assist you?')
@@ -46,16 +49,19 @@ def main(
     while True:
         while True:
             prompt = input('You: ').strip()
-            if len(prompt) > max_seq_len:
+            if not len(prompt):
+                continue
+            token_len = len(tokenizer.encode(prompt, bos=True, eos=True))
+            if token_len > max_seq_len:
                 print(f'System: You exceed max_seq_len({max_seq_len}). Please type prompt less')
-            elif len(prompt):
-                break
+                continue
+            break
 
         while True:
-            seq_len = 0
+            tokens_len = 0
             for role, content in dialogs[0]:
-                seq_len = seq_len + len(content.split(' '))
-            if seq_len <= max_seq_len:
+                tokens_len = tokens_len + len(tokenizer.encode(content, bos=True, eos=True))
+            if tokens_len <= max_seq_len:
                 break
             print('System: I forgot 2 oldest dialogs')
             dialogs[0].pop(0)
