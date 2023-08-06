@@ -52,8 +52,7 @@ def main(
             if not len(prompt):
                 continue
             token = tokenizer.encode(prompt, bos=True, eos=True)
-            print(token)
-            token_len = len(tokenizer.encode(prompt, bos=True, eos=True))
+            token_len = len(token)
             if token_len > max_seq_len:
                 print(f'System: You exceed max_seq_len({max_seq_len}). Please type prompt less')
                 continue
@@ -62,7 +61,8 @@ def main(
         while True:
             tokens_len = 0
             for role, content in dialogs[0]:
-                tokens_len = tokens_len + len(tokenizer.encode(content, bos=True, eos=True))
+                token = tokenizer.encode(prompt, bos=True, eos=True)
+                tokens_len = tokens_len + len(token)
                 print(f'> {tokens_len}')
             if tokens_len <= max_seq_len:
                 break
