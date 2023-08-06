@@ -51,6 +51,8 @@ def main(
             prompt = input('You: ').strip()
             if not len(prompt):
                 continue
+            token = tokenizer.encode(prompt, bos=True, eos=True)
+            print(token)
             token_len = len(tokenizer.encode(prompt, bos=True, eos=True))
             if token_len > max_seq_len:
                 print(f'System: You exceed max_seq_len({max_seq_len}). Please type prompt less')
