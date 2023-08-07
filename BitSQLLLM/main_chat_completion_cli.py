@@ -58,10 +58,16 @@ def main(
                 continue
             break
 
+        dialogs[0].append(
+            {'role': 'user',
+             'content': prompt,
+            }
+        )
+
         while True:
             tokens_len = 0
             for role, content in dialogs[0]:
-                token = tokenizer.encode(prompt, bos=True, eos=True)
+                token = tokenizer.encode(content, bos=True, eos=True)
                 tokens_len = tokens_len + len(token)
                 print(f'> {tokens_len}')
             if tokens_len <= max_seq_len:
@@ -71,12 +77,6 @@ def main(
             dialogs[0].pop(0)
         print(f'Tokens len: {tokens_len}')
 
-        dialogs[0].append(
-            {'role': 'user',
-             'content': prompt,
-            }
-        )
-        
         results = generator.chat_completion(
             dialogs,  # type: ignore
             max_gen_len=max_gen_len,
