@@ -67,8 +67,8 @@ def main(
 
         while True:
             tokens_len = 0
-            for role, content in dialogs[0]:
-                token = tokenizer.encode(content, bos=True, eos=True)
+            for entry in dialogs[0]:
+                token = tokenizer.encode(entry['content'], bos=True, eos=True)
                 print(token)
                 tokens_len = tokens_len + len(token)
                 print(f'> {tokens_len}')
