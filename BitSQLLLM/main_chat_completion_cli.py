@@ -67,13 +67,11 @@ def main(
             tokens_len = 0
             for entry in dialogs[0]:
                 tokens_len = tokens_len + len(tokenizer.encode(entry['content'], bos=True, eos=True)) + len(tokenizer.encode(entry['role'], bos=True, eos=True))
-                print(f'> {tokens_len}')
             if tokens_len <= max_seq_len:
                 break
             print('System: I forgot 2 oldest dialogs')
             dialogs[0].pop(0)
             dialogs[0].pop(0)
-        print(f'Tokens len: {tokens_len}')
 
         results = generator.chat_completion(
             dialogs,  # type: ignore
