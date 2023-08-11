@@ -1,11 +1,39 @@
+import os
+import http
+import http.server
+
 FLAGS = _ = None
 DEBUG = False
+
+
+class MyHTTPDaemon(http.server.HTTPServer):
+    allow_reuse_address = True
+
+
+class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def do_GET(self):
+        if DEBUG:
+            print(f'Client: {self.client_address}')
+            print(f'Message: {self.command} {self.path} {self.request_version}')
+            print(f'Headers: {self.headers}')
 
 
 def main():
     if DEBUG:
         print(f'Parsed arguments {FLAGS}')
         print(f'Unparsed arguments {_}')
+
+    with MyHTTPDaemon((FLAGS.host, FLAGS.port),
+                      MyHTTPRequestHandler) as httpd:
+        try:
+            print(f'Start HTTP server {httpd.server_address}')
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            print(f'Terminate HTTP server {httpd.server_address}')
+            httpd.shutdown()
 
 
 if __name__ == '__main__':
