@@ -32,9 +32,15 @@ class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             print(f'Read {path}')
         if not os.path.exists(path):
             self.send_error(http.HTTPStatus.NOT_FOUND, 'Not Found')
-        print('??')
-
-
+            return
+        ext = os.path.splitext(path)[-1].lower()
+        self.send_response(http.HTTPStatus.OK)
+        self.send_header('Content-Type', EXT[ext])
+        with open(path, 'rb') as f:
+            body = f.read()
+        self.send_header('Content-Length', len(body))
+        self.end_headers()
+        self.wfile.write(body)
 
 
 def main():
