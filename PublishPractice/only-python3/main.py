@@ -27,6 +27,14 @@ class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             path = 'index.html'
         else:
             path = self.path[1:]
+        path = os.path.join(FLAGS.data, path)
+        if DEBUG:
+            print(f'Read {path}')
+        if not os.path.exists(path):
+            self.send_error(http.HTTPStatus.NOT_FOUND, 'Not Found')
+        print('??')
+
+
 
 
 def main():
