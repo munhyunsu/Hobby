@@ -5,6 +5,13 @@ import http.server
 FLAGS = _ = None
 DEBUG = False
 
+EXT = {'.html': 'text/html;charset=utf-8',
+       '.js'  : 'text/javascript;charset=utf-8',
+       '.css' : 'text/css;charset=utf-8',
+       '.jpg' : 'image/jpeg',
+       '.jpeg': 'image/jpeg',
+       '.png' : 'image/png'}
+
 
 class MyHTTPDaemon(http.server.HTTPServer):
     allow_reuse_address = True
@@ -35,9 +42,17 @@ class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             return
         ext = os.path.splitext(path)[-1].lower()
         self.send_response(http.HTTPStatus.OK)
-        self.send_header('Content-Type', EXT[ext])
+        if ext in EXT.keys():
+            self.send_header('Content-Type', EXT[ext])
+        else:
+            self.send_header('Content-Type', 'application/octet-stream')
+        content = ''
         with open(path, 'rb') as f:
             body = f.read()
+            body = body.replace('{{PREFIX}}'.encode('utf-8'), 
+                                f'{FLAGS.prefix}'.encode('utf-8'))
+            body = body.replace('{{DIV}}'.encode('utf-8'),
+                                f'{content}'.encode('utf-8'))
         self.send_header('Content-Length', len(body))
         self.end_headers()
         self.wfile.write(body)
