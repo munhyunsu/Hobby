@@ -83,7 +83,7 @@ if __name__ == '__main__':
                         help='The serving IP address')
     parser.add_argument('--port', default=8888, type=int,
                         help='The serving port number')
-    parser.add_argument('--prefix', default='', type=str,
+    parser.add_argument('--prefix', default='/sample', type=str,
                         help='The URL prefix')
     parser.add_argument('--data', default='./data', type=str,
                         help='The web data directory')
