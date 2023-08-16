@@ -77,7 +77,7 @@ def main():
                      id INTEGER PRIMARY KEY AUTOINCREMENT,
                      user TEXT,
                      content TEXT);''')
-    CUR.commit()
+    CONN.commit()
 
     with MyHTTPDaemon((FLAGS.host, FLAGS.port),
                       MyHTTPRequestHandler) as httpd:
