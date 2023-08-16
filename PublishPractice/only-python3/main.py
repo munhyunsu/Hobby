@@ -1,4 +1,5 @@
 import os
+import json
 import http
 import http.server
 import sqlite3
@@ -51,7 +52,19 @@ class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_header('Content-Type', EXT[ext])
         else:
             self.send_header('Content-Type', 'application/octet-stream')
-        content = 'Dynamic contents at server-side'
+
+        content = ''
+
+        CUR.execute('''SELECT user, content
+                       FROM Paste
+                       ORDER BY id DESC;''')
+        for row in CUR:
+            content = (f'{content}'
+                       f'<div>\n'
+                       f'<h3>{row[0]}</h3>\n'
+                       f'<p>{row[1]}</p>\n'
+                       f'</div>\n')
+
         with open(path, 'rb') as f:
             body = f.read()
             body = body.replace('{{PREFIX}}'.encode('utf-8'), 
@@ -61,6 +74,17 @@ class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         self.send_header('Content-Length', len(body))
         self.end_headers()
         self.wfile.write(body)
+
+    def do_POST(self):
+        global CONN
+        global CUR
+        if DEBUG:
+            print(f'Client: {self.client_address}')
+            print(f'Message: {self.command} {self.path} {self.request_version}')
+            print(f'Headers: {self.headers}')
+
+        body = self.rfile.read(int(self.headers['Content-Length']))
+        body = json.loads(body)
 
 
 def main():
@@ -75,7 +99,8 @@ def main():
     CUR = CONN.cursor()
     CUR.execute('''CREATE TABLE IF NOT EXISTS Paste (
                      id INTEGER PRIMARY KEY AUTOINCREMENT,
-                     user TEXT,
+                     user TEXT NOT NULL,
+                     utime INTEGER NOT NULL,
                      content TEXT);''')
     CONN.commit()
 
