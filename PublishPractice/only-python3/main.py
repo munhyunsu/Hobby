@@ -3,6 +3,7 @@ import json
 import http
 import http.server
 import sqlite3
+import urllib
 
 FLAGS = _ = None
 DEBUG = False
@@ -78,13 +79,16 @@ class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     def do_POST(self):
         global CONN
         global CUR
+        body = self.rfile.read(int(self.headers['Content-Length']))
         if DEBUG:
             print(f'Client: {self.client_address}')
             print(f'Message: {self.command} {self.path} {self.request_version}')
             print(f'Headers: {self.headers}')
+            print(f'Body: {body}')
+        body = urllib.parse.parse_qs(body.decode('utf-8'))
 
-        body = self.rfile.read(int(self.headers['Content-Length']))
-        body = json.loads(body)
+
+
 
 
 def main():
