@@ -1,5 +1,6 @@
 import os
 import json
+import time
 import http
 import http.server
 import sqlite3
@@ -87,8 +88,14 @@ class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             print(f'Body: {body}')
         body = urllib.parse.parse_qs(body.decode('utf-8'))
 
+        CUR.execute('''INSERT INTO Paste (user, utime, content) 
+                         VALUES (?, ?, ?);''',
+                    (body['username'][0], int(time.time()), body['content'][0]))
+        CONN.commit()
 
-
+        self.send_response(http.HTTPStatus.FOUND, 'Found')
+        self.send_header('Location', f'{self.path}')
+        self.end_headers()
 
 
 def main():
