@@ -69,16 +69,14 @@ class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             print(f'Headers: {self.headers}')
             print(f'Body: {body}')
         data = json.loads(body.decode('utf-8'))
-        print(data)
 
-#        CUR.execute('''INSERT INTO Paste (user, utime, content) 
-#                         VALUES (?, ?, ?);''',
-#                    (body['username'][0], int(time.time()), body['content'][0]))
-#        CONN.commit()
+        CUR.execute('''INSERT INTO Paste (user, utime, content) 
+                         VALUES (?, ?, ?);''',
+                    (data['username'], int(time.time()), data['content']))
+        CONN.commit()
 
-#        self.send_response(http.HTTPStatus.FOUND, 'Found')
-#        self.send_header('Location', f'{self.path}')
-#        self.end_headers()
+        self.send_response(http.HTTPStatus.CREATED, 'Created')
+        self.end_headers()
 
 
 def main():
