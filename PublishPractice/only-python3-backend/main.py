@@ -44,7 +44,7 @@ class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                            FROM Paste
                            ORDER BY id DESC;''')
             for row in CUR:
-                data['Pastes'][0].append({'User': row[0],
+                data['Pastes'].append({'User': row[0],
                                           'Content': row[1]})
 
             body = json.dumps(data)
