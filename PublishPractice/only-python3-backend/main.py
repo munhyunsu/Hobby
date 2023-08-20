@@ -116,7 +116,7 @@ if __name__ == '__main__':
                         help='The serving IP address')
     parser.add_argument('--port', default=10002, type=int,
                         help='The serving port number')
-    parser.add_argument('--prefix', default='/api/v1', type=str,
+    parser.add_argument('--prefix', default='/paste/api/v1', type=str,
                         help='The URL prefix')
     parser.add_argument('--database', default='./main.db', type=str,
                         help='The database path')
