@@ -122,7 +122,7 @@ if __name__ == '__main__':
                         help='The URL prefix')
     parser.add_argument('--data', default='./data', type=str,
                         help='The web data directory')
-    parser.add_argument('--backhost', default='0.0.0.0', type=str,
+    parser.add_argument('--backhost', default='127.0.0.1', type=str,
                         help='The backend server IP address')
     parser.add_argument('--backport', default=10002, type=int,
                         help='The backend server port')
