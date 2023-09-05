@@ -27,9 +27,6 @@ class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             print(f'Message: {self.command} {self.path} {self.request_version}')
             print(f'Headers: {self.headers}')
 
-        if not self.path.startswith(FLAGS.prefix):
-            return
-        self.path = self.path[len(FLAGS.prefix):]
         if self.path == '/':
             path = 'index.html'
         else:
