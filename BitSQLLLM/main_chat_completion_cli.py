@@ -42,9 +42,10 @@ def main(
 
     tokenizer = Tokenizer(model_path=tokenizer_path)
 
-    dialogs: List[Dialog] = [[]]
-
-    print('Llama2: Hello! How can I assist you?')
+    dialogs: (List[Dialog], List[int]) = [[{'role': 'system',
+                                            'content': 'Hello! How can I assist you?'},], 
+                                          []]
+    print(f'{dialogs[0][0]["role"]}: {dialogs[0][0]["content"]}')
 
     while True:
         while True:
