@@ -1,12 +1,16 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 # This software may be used and distributed according to the terms of the Llama 2 Community License Agreement.
 
-from typing import List, Optional
+from typing import List, Dict, Optional
 
 import fire
 
 from llama.llama import Llama, Dialog
 from llama.llama.tokenizer import Tokenizer
+
+
+def get_token_len(tokenizer: Tokenizer, content: str) -> int:
+    return len(tokenizer.encode(content, bos=True, eos=True))
 
 
 def main(
@@ -42,37 +46,37 @@ def main(
 
     tokenizer = Tokenizer(model_path=tokenizer_path)
 
-    dialogs: (List[Dialog], List[int]) = [[{'role': 'system',
-                                            'content': 'Hello! How can I assist you?'},], 
-                                          []]
-    print(f'{dialogs[0][0]["role"]}: {dialogs[0][0]["content"]}')
+    prompt = 'Hello! How can I assist you?'
+
+    history: List[Dict[int, Dialog]] = [{'token': len(tokenizer.encode(prompt, bos=True, eos=True)) + len(tokenizer.encode('user', bos=True, eos=True)),
+                                         'dialog': {'role': 'system',
+                                                    'content': prompt}
+                                        }]
+
+    print(f'{dialogs[0]["dialog"]["role"]}: {dialogs[0]["dialog"]["content"]}')
 
     while True:
         while True:
             prompt = input('You: ').strip()
             if not len(prompt):
                 continue
-            token_len = len(tokenizer.encode(prompt, bos=True, eos=True)) + len(tokenizer.encode('user', bos=True, eos=True))
-            if token_len > max_seq_len:
-                print(f'System: You exceed max_seq_len({max_seq_len}). Please type prompt less')
+            token_len = get_token_len(tokenizer, f'User: {prompt}')
+            if token_len > max_seq_len*0.7:
+                print(f'System: You exceed max_seq_len({max_seq_len*0,7:d}). Please type prompt less')
                 continue
             break
+        history.append({'token': token_len,
+                        'dialog': {'role': 'user',
+                                   'content': prompt}})
 
-        dialogs[0].append(
-            {'role': 'user',
-             'content': prompt,
-            }
-        )
-
-        while True:
-            tokens_len = 0
-            for entry in dialogs[0]:
-                tokens_len = tokens_len + len(tokenizer.encode(entry['content'], bos=True, eos=True)) + len(tokenizer.encode(entry['role'], bos=True, eos=True))
-            if tokens_len <= max_seq_len:
+        tokens_len = 0
+        cut = 0
+        for i in range(len(history), 0, -1):
+            if tokens_len + history[i]['token'] > max_seq_len:
                 break
-            print('System: I forgot 2 oldest dialogs')
-            dialogs[0].pop(0)
-            dialogs[0].pop(0)
+            else:
+                tokens_len = tokens_len + history[i]['token']
+                cut = i
 
         results = generator.chat_completion(
             dialogs,  # type: ignore
