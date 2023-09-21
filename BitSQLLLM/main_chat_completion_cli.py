@@ -78,6 +78,8 @@ def main(
                 tokens_len = tokens_len + history[i]['token']
                 cut = i
 
+        dialogs = [entry['dialog'] for entry in history]
+
         results = generator.chat_completion(
             dialogs,  # type: ignore
             max_gen_len=max_gen_len,
@@ -87,12 +89,12 @@ def main(
         
         response = results[0]['generation']
 
-        dialogs[0].append({
-            'role': 'assistant',
-            'content': response['content'],
-        })
+        history.append({'token': get_token_len(response['content']),
+                        'dialog': {'role': assistant,
+                                   'content' response['content']}})
 
-        print(f'Llama2:{response["content"]}\n')
+        print(f'{history[-1]["dialog"]["role"]}: {history[-1]["dialog"]["content"]}')
+        print()
 
 
 if __name__ == "__main__":
