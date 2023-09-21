@@ -91,7 +91,7 @@ def main(
 
         history.append({'token': get_token_len(response['content']),
                         'dialog': {'role': assistant,
-                                   'content' response['content']}})
+                                   'content': response['content']}})
 
         print(f'{history[-1]["dialog"]["role"]}: {history[-1]["dialog"]["content"]}')
         print()
