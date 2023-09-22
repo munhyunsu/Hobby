@@ -79,6 +79,7 @@ def main(
                 cut = i
 
         dialogs = [entry['dialog'] for entry in history]
+        print(dialogs)
 
         results = generator.chat_completion(
             dialogs,  # type: ignore
