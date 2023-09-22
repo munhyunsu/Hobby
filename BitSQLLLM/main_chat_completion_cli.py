@@ -71,7 +71,7 @@ def main(
 
         tokens_len = 0
         cut = 0
-        for i in range(len(history), 0, -1):
+        for i in range(len(history)-1, -1, -1):
             if tokens_len + history[i]['token'] > max_seq_len:
                 break
             else:
