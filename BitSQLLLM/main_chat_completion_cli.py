@@ -53,7 +53,7 @@ def main(
                                                     'content': prompt}
                                         }]
 
-    print(f'{dialogs[0]["dialog"]["role"]}: {dialogs[0]["dialog"]["content"]}')
+    print(f'{history[0]["dialog"]["role"]}: {history[0]["dialog"]["content"]}')
 
     while True:
         while True:
