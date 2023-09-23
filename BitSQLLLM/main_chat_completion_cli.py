@@ -78,8 +78,7 @@ def main(
                 tokens_len = tokens_len + history[i]['token']
                 cut = i
 
-        dialogs = [entry['dialog'] for entry in history]
-        print(dialogs)
+        dialogs = [[entry['dialog'] for entry in history]]
 
         results = generator.chat_completion(
             dialogs,  # type: ignore
