@@ -90,7 +90,7 @@ def main(
         response = results[0]['generation']
 
         history.append({'token': get_token_len(tokenizer, response['content']),
-                        'dialog': {'role': assistant,
+                        'dialog': {'role': 'assistant',
                                    'content': response['content']}})
 
         print(f'{history[-1]["dialog"]["role"]}: {history[-1]["dialog"]["content"]}')
