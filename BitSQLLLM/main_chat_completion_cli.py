@@ -70,16 +70,17 @@ def main(
                                    'content': prompt}})
 
         tokens_len = 0
-        cut = 0
+        cut = -1
         for i in range(len(history)-1, -1, -1):
             if tokens_len + history[i]['token'] > max_seq_len:
+                cut = i
                 break
             else:
                 tokens_len = tokens_len + history[i]['token']
-                cut = i
-        print(f'System forgot {cut} previous history')
-        for _ in range(cut):
-            history.pop(0)
+        if cut >= 0:
+            print(f'System forgot {cut+1} previous history')
+            for _ in range(cut+1):
+                history.pop(0)
 
         dialogs = [[entry['dialog'] for entry in history]]
         results = generator.chat_completion(
