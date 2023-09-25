@@ -77,9 +77,11 @@ def main(
             else:
                 tokens_len = tokens_len + history[i]['token']
                 cut = i
+        print(f'System forgot {cut} previous history')
+        for _ in range(cut):
+            history.pop(0)
 
         dialogs = [[entry['dialog'] for entry in history]]
-
         results = generator.chat_completion(
             dialogs,  # type: ignore
             max_gen_len=max_gen_len,
