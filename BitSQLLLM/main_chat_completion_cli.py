@@ -72,19 +72,17 @@ def main(
         tokens_len = 0
         cut = -1
         for i in range(len(history)-1, -1, -1):
-            if tokens_len + history[i]['token'] > max_seq_len:
+            tokens_len = tokens_len + history[i]['token']
+            if tokens_len > max_seq_len:
                 cut = i
                 break
-            else:
-                tokens_len = tokens_len + history[i]['token']
         if cut >= 0:
             print(f'System forgot {cut+1} previous history')
             for _ in range(cut+1):
                 history.pop(0)
 
-        dialogs = [[entry['dialog'] for entry in history]]
         results = generator.chat_completion(
-            dialogs,  # type: ignore
+            [[entry['dialog'] for entry in history]],  # type: ignore
             max_gen_len=max_gen_len,
             temperature=temperature,
             top_p=top_p,
@@ -92,7 +90,7 @@ def main(
         
         response = results[0]['generation']
 
-        history.append({'token': get_token_len(tokenizer, response['content']),
+        history.append({'token': get_token_len(tokenizer, f'Assistant: {response["content"]}'),
                         'dialog': {'role': 'assistant',
                                    'content': response['content']}})
 
