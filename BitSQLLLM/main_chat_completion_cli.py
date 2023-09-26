@@ -81,6 +81,7 @@ def main(
             for _ in range(cut+1):
                 history.pop(0)
 
+        print([[entry['dialog'] for entry in history]])
         results = generator.chat_completion(
             [[entry['dialog'] for entry in history]],  # type: ignore
             max_gen_len=max_gen_len,
