@@ -48,10 +48,7 @@ def main(
 
     prompt = 'Hello! How can I assist you?'
 
-    history: List[Dict[int, Dialog]] = [{'token': len(tokenizer.encode(prompt, bos=True, eos=True)) + len(tokenizer.encode('user', bos=True, eos=True)),
-                                         'dialog': {'role': 'system',
-                                                    'content': prompt}
-                                        }]
+    history: List[Dict[int, Dialog]] = []
 
     print(f'{history[0]["dialog"]["role"]}: {history[0]["dialog"]["content"]}')
 
@@ -77,8 +74,9 @@ def main(
                 cut = i
                 break
         if cut >= 0:
-            print(f'System forgot {cut+1} previous history')
-            for _ in range(cut+1):
+            ptr = (cut+1) + ((cut+1)%2)
+            print(f'System forgot {ptr} previous history')
+            for _ in range(ptr):
                 history.pop(0)
 
         print([[entry['dialog'] for entry in history]])
