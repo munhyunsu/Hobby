@@ -50,7 +50,7 @@ def main(
 
     history: List[Dict[int, Dialog]] = []
 
-    print(f'System: {prompt}')
+    print(f'Assistant: {prompt}')
 
     while True:
         while True:
@@ -79,7 +79,6 @@ def main(
             for _ in range(ptr):
                 history.pop(0)
 
-        print([[entry['dialog'] for entry in history]])
         results = generator.chat_completion(
             [[entry['dialog'] for entry in history]],  # type: ignore
             max_gen_len=max_gen_len,
