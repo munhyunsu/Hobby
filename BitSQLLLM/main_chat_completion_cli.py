@@ -50,7 +50,7 @@ def main(
 
     history: List[Dict[int, Dialog]] = []
 
-    print(f'{history[0]["dialog"]["role"]}: {history[0]["dialog"]["content"]}')
+    print(f'System: {prompt}')
 
     while True:
         while True:
