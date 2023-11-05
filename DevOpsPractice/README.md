@@ -6,6 +6,11 @@ cd my-app
 npm start
 ```
 
+```bash
+cd ~/my-app
+vi .env
+```
+
 # Express production
 
 ```bash
