@@ -7,9 +7,14 @@ npm start
 ```
 
 ```bash
+npm install serve -g
+```
+
+```bash
 cd ~/my-app
 vi .env
 ```
+
 
 # Express production
 
@@ -25,3 +30,5 @@ node app.js
 cd ~/myapp
 export NODE_ENV=production
 ```
+
+
