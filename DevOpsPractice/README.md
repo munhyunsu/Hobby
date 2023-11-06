@@ -18,4 +18,10 @@ mkdir myapp
 cd myapp
 npm init
 vi app.js
+node app.js
+```
+
+```bash
+cd ~/myapp
+export NODE_ENV=production
 ```
