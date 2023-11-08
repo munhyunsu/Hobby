@@ -4,7 +4,10 @@ const port = 3002;
 
 const apiRouter = express.Router();
 
+var counter = 0;
+
 apiRouter.get('/', (req, res) => {
+  counter = counter + 1;
   res.json({message: 'Hello, world!'});
 });
 
