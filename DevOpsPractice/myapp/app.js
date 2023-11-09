@@ -11,6 +11,11 @@ apiRouter.get('/', (req, res) => {
   res.json({message: 'Hello, world!'});
 });
 
+apiRouter.get('/counter' (req, res) => {
+  counter = counter + 1;
+  res.json({'counter': `${counter}`});
+});
+
 app.use('/myweb/api/v1', apiRouter);
 
 app.listen(port, () => {
