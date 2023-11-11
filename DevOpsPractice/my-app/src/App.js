@@ -7,7 +7,14 @@ function App() {
 
   const fetchCounterData = () => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/counter`)
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        setCounter(data);
+      })
   };
+
   return (
     <div className="App">
       <header className="App-header">
