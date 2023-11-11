@@ -15,6 +15,10 @@ function App() {
       })
   };
 
+  useEffect(() => {
+    fetchCounterData();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
