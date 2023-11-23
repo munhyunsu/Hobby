@@ -18,3 +18,8 @@ cp /etc/ssl/openssl.cnf ./
 openssl req -new -config openssl.cnf -key server.keypw -out server.csr
 ```
 
+4. Self signing cerficitate
+
+```
+openssl x509 -req -days 1825 -in server.csr -signkey server.keypw -out server.crt
+```
