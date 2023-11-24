@@ -1,5 +1,13 @@
 # Command history
 
+# Create Root CA Certificates
+
+1. Copy `openssl.cnf` to `ca_root.cnf`
+
+```bash
+cp /etc/ssl/openssl.cnf ./ca_root.cnf
+```
+
 # Create Self-signed certificates
 
 1. Generate private key for RootCA
