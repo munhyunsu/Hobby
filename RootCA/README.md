@@ -1,5 +1,7 @@
 # Command history
 
+# Create Self-signed certificates
+
 1. Generate private key for RootCA
 
 ```bash
@@ -23,3 +25,5 @@ openssl req -new -config openssl.cnf -key server.keypw -out server.csr
 ```
 openssl x509 -req -days 1825 -in server.csr -signkey server.keypw -out server.crt
 ```
+
+
