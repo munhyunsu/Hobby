@@ -14,6 +14,12 @@ cp /etc/ssl/openssl.cnf .
 openssl genrsa -aes256 -out private.keypw 4096
 ```
 
+3. Create Root CA Certificate
+
+```bash
+openssl req -config openssl.cnf -key private.keypw -new -x509 -days 1825 -sha256 -extensions v3_ca -out ca_root.crt
+```
+
 # Create Self-signed certificates
 
 1. Generate private key for RootCA
