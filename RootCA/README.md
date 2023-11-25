@@ -5,7 +5,13 @@
 1. Copy `openssl.cnf` to `ca_root.cnf`
 
 ```bash
-cp /etc/ssl/openssl.cnf ./ca_root.cnf
+cp /etc/ssl/openssl.cnf .
+```
+
+2. Create private key with strong encryption
+
+```bash
+openssl genrsa -aes256 -out private.keypw 4096
 ```
 
 # Create Self-signed certificates
