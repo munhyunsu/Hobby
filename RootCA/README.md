@@ -20,6 +20,12 @@ openssl genrsa -aes256 -out private.keypw 4096
 openssl req -config openssl.cnf -key private.keypw -new -x509 -days 1825 -sha256 -extensions v3_ca -out ca_root.crt
 ```
 
+4. Verify certificate
+
+```bash
+openssl x509 -noout -text -in ca_root.crt
+```
+
 # Create Self-signed certificates
 
 1. Generate private key for RootCA
