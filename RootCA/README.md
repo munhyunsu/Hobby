@@ -2,10 +2,10 @@
 
 # Create Root CA Certificates
 
-1. Copy `openssl.cnf`
+1. Copy `openssl.cnf` to `ca_root.cnf`
 
 ```bash
-cp /etc/ssl/openssl.cnf .
+cp /etc/ssl/openssl.cnf ./ca_root.cnf
 ```
 
 2. Create private key with strong encryption
@@ -28,10 +28,10 @@ openssl x509 -noout -text -in ca_root.crt
 
 # Create Intermediate CA Certificates
 
-1. Copy `openssl.cnf`
+1. Copy `openssl.cnf` to `ca_intermediate.cnf
 
 ```bash
-cp /etc/ssl/openssl.cnf .
+cp /etc/ssl/openssl.cnf ./ca_intermediate.cnf
 ```
 
 2. Create private key with strong encryption
