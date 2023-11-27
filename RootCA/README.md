@@ -2,7 +2,7 @@
 
 # Create Root CA Certificates
 
-1. Copy `openssl.cnf` to `ca_root.cnf`
+1. Copy `openssl.cnf`
 
 ```bash
 cp /etc/ssl/openssl.cnf .
@@ -24,6 +24,20 @@ openssl req -config openssl.cnf -key private.keypw -new -x509 -days 1825 -sha256
 
 ```bash
 openssl x509 -noout -text -in ca_root.crt
+```
+
+# Create Intermediate CA Certificates
+
+1. Copy `openssl.cnf`
+
+```bash
+cp /etc/ssl/openssl.cnf .
+```
+
+2. Create private key with strong encryption
+
+```bash
+openssl genrsa -aes256 -out private.keypw 4096
 ```
 
 # Create Self-signed certificates
