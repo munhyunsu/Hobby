@@ -12,7 +12,7 @@ cp /etc/ssl/openssl.cnf ./ca_root.cnf
 
 ```bash
 mkdir -p RootCA/private
-openssl genrsa -aes256 -out ./RootCA/private/cakey.pem 4096
+openssl genrsa -aes256 -out ./RootCA/private/cakey.pem 8192
 ```
 
 3. Create Root CA Certificate
@@ -48,7 +48,8 @@ cp /etc/ssl/openssl.cnf ./ca_intermediate.cnf
 2. Create private key with strong encryption
 
 ```bash
-openssl genrsa -aes256 -out private.keypw 4096
+mkdir -p LuHaCA/private
+openssl genrsa -aes256 -out ./LuHaCA/private/cakey.pem 4096
 ```
 
 # Create Self-signed certificates
