@@ -11,14 +11,21 @@ cp /etc/ssl/openssl.cnf ./ca_root.cnf
 2. Create private key with strong encryption
 
 ```bash
-mkdir -p RootCA/private
-openssl genrsa -aes256 -out ./RootCA/private/cakey.pem 8192
+mkdir RootCA
+cd RootCA
+mkdir certs crl newcerts private
+chmod 700 private
+touch index.txt
+echo 1000 > serial
+openssl genrsa -aes256 -out private/cakey.pem 8192
+chmod 400 private/cakey.pem
 ```
 
 3. Create Root CA Certificate
 
 ```bash
-openssl req -config ca_root.cnf -key ./RootCA/private/cakey.pem -new -x509 -days 3650 -sha256 -extensions v3_ca -out ./RootCA/cacert.pem
+openssl req -config ca_root.cnf -key private/cakey.pem -new -x509 -days 7300 -sha256 -extensions v3_ca -out certs/cacert.pem
+chmod 444 certs/cacert.pem
 ```
 
 ```
@@ -34,7 +41,7 @@ Email Address []:munhyunsu@gmail.com
 4. Verify certificate
 
 ```bash
-openssl x509 -noout -text -in ./RootCA/cacert.pe
+openssl x509 -noout -text -in certs/cacert.pem
 ```
 
 # Create Intermediate CA Certificates
@@ -48,7 +55,13 @@ cp /etc/ssl/openssl.cnf ./ca_intermediate.cnf
 2. Create private key with strong encryption
 
 ```bash
-mkdir -p LuHaCA/private
+mkdir IntermediateCA
+cd IntermediateCA
+mkdir certs crl newcerts private
+chmod 700 private
+touch index.txt
+echo 1000 > serial
+echo 1000 > crlnumber
 openssl genrsa -aes256 -out ./LuHaCA/private/cakey.pem 4096
 ```
 
@@ -78,4 +91,7 @@ openssl req -new -config openssl.cnf -key server.keypw -out server.csr
 openssl x509 -req -days 1825 -in server.csr -signkey server.keypw -out server.crt
 ```
 
+# References
+
+- [OpenSSL](https://openssl-ca.readthedocs.io/)
 
