@@ -1,0 +1,9 @@
+pip
+wheel
+fastapi
+uvicorn
+mariadb
+SQLAlchemy
+alembic
+flask
+python-jose[cryptography]
