@@ -18,9 +18,11 @@ app = FastAPI(
 )
 
 
-@app.get('/')
+@app.get('/', include_in_schema=False)
 def get_root():
     return {'message': 'Hello World!'}
 
 
-
+@app.get('/score/{name}')
+def get_score(name: str):
+    return {'식별자': name}
