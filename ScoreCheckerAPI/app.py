@@ -1,10 +1,8 @@
 from fastapi import FastAPI
 
-import schemas
-
 
 app = FastAPI(
-  title='Score checker'
+  title='Score checker',
   version='1.0.0',
   description='''성적 확인을 위한 API
   ''',
@@ -23,3 +21,6 @@ app = FastAPI(
 @app.get('/')
 def get_root():
     return {'message': 'Hello World!'}
+
+
+
