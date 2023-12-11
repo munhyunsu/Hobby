@@ -7,3 +7,4 @@ SQLAlchemy
 alembic
 flask
 python-jose[cryptography]
+email-validator
