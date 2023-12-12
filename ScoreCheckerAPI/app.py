@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 
 
+import schemas
+
+
 app = FastAPI(
   title='Score checker',
   version='1.0.0',
@@ -23,6 +26,7 @@ def get_root():
     return {'message': 'Hello World!'}
 
 
-@app.get('/score/{name}')
-def get_score(name: str):
-    return {'식별자': name}
+@app.post('/score', response_model=schemas.UserScore)
+def post_score(user: schemas.User):
+    score = schemas.UserScore(name=user.name, identifier=user.identifier, score=[])
+    return score
