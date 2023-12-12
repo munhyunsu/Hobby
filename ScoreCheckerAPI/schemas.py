@@ -10,4 +10,5 @@ class User(UserBase):
 
 
 class UserScore(User):
-    score: list
+    number: int | None = None
+    score: dict

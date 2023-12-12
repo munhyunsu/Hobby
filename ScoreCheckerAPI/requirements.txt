@@ -1,5 +1,7 @@
 pip
 wheel
+numpy
+pandas
 fastapi
 uvicorn
 mariadb
