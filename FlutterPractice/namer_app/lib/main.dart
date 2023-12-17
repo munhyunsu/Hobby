@@ -32,6 +32,9 @@ class MyAppState extends ChangeNotifier {
     current = WordPair.random();
     notifyListeners();
   }
+
+  var favorites = <WordPair>[];
+
 }
 
 class MyHomePage extends StatelessWidget {
