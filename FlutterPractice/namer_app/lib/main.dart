@@ -45,7 +45,6 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-//            Text('\n'),
             Text('A random AWESOME idea:'),
             BigCard(pair: pair),
             ElevatedButton(
