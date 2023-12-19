@@ -58,6 +58,7 @@ class MyHomePage extends StatelessWidget {
           children: [
             Text('A random AWESOME idea:'),
             BigCard(pair: pair),
+            SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 appState.getNext();
