@@ -170,17 +170,20 @@ class BigCard extends StatelessWidget {
       elevation: 4*2,
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Wrap(
-          children: [
-            Text(
-              pair.first,
-              style: style.copyWith(fontWeight: FontWeight.normal),
-            ),
-            Text(
-              pair.second,
-              style: style.copyWith(fontWeight: FontWeight.bold),
-            ),
-          ],
+        child: AnimatedSize(
+          duration: Duration(milliseconds: 200),
+          child: Wrap(
+            children: [
+              Text(
+                pair.first,
+                style: style.copyWith(fontWeight: FontWeight.normal),
+              ),
+              Text(
+                pair.second,
+                style: style.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
       ),
     );
