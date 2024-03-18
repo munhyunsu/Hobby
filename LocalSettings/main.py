@@ -4,7 +4,6 @@ from conf import *
 VAR1 = 'VAR1 of main.py'
 
 
-
 def main():
     print(__file__, VAR1)
     print(__file__, VAR2)
