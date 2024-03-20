@@ -19,6 +19,13 @@ openssl genrsa -aes256 -out private/cakey.pem 8192
 chmod 400 private/cakey.pem
 ```
 
+3. Create Root CA Certificate
+
+```bash
+openssl req -config ca_root.cnf -key private/cakey.pem -new -x509 -days 7300 -sha256 -extensions v3_ca -out certs/cacert.pem
+chmod 444 certs/cacert.pem
+```
+
 # References
 
 - [OpenSSL](https://openssl-ca.readthedocs.io/)
