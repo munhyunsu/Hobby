@@ -26,6 +26,17 @@ openssl req -config ca_root.cnf -key private/cakey.pem -new -x509 -days 7300 -sh
 chmod 444 certs/cacert.pem
 ```
 
+```
+Country Name (2 letter code) [AU]:KR
+State or Province Name (full name) [Some-State]:Daejeon
+Locality Name (eg, city) []:Yuseong
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Chungnam National University
+Organizational Unit Name (eg, section) []:Data Network Laboratory
+Common Name (e.g. server FQDN or YOUR name) []:DNLab
+Email Address []:munhyunsu@gmail.com
+```
+
+
 # References
 
 - [OpenSSL](https://openssl-ca.readthedocs.io/)
