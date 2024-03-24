@@ -12,3 +12,4 @@ class User(UserBase):
 class UserScore(User):
     number: int | None = None
     score: dict
+
