@@ -13,3 +13,8 @@ tar -xvf node-v20.12.0-linux-x64.tar.xz
 source enable_environments.sh
 ```
 
+## Disable or add React Native port
+
+- It use 8081
+- If other process use it, then 8082 (+1...)
+
