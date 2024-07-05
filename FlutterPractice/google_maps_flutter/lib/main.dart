@@ -1,7 +1,8 @@
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-
+import 'dart:io' as io;
+import 'dart:html';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -81,6 +82,13 @@ void main() {
     mapsImplementation.useAndroidViewSurface = true;
     initializeMapRenderer();
   }
+
+  const String apiKey = String.fromEnvironment('GOOGLE_MAPS_API_KEY_WEB');
+  final script = ScriptElement();
+  script.src = 'https://maps.googleapis.com/maps/api/js?key=$apiKey';
+  script.type = 'application/javascript';
+  document.head!.append(script);
+
   runApp(const MaterialApp(home: MapsDemo()));
 }
 
