@@ -60,9 +60,25 @@
       });
     });
     document.addEventListener('DOMContentLoaded', (event) => {
+      const metaTag = document.querySelector('meta[name="my-api-key"]');
+
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'content') {
+            const apiKey = metaTag.content;
+            console.log(`API Key mutation detected ${apiKey}`);
+          }
+        });
+      });
+
+      observer.observe(metaTag, {
+        attributes: true
+      });
+
       const apiKey = document.querySelector('meta[name="my-api-key"]').content;
       console.log(`API Key: ${apiKey}`);
     });
+
   </script>
 </body>
 </html>
