@@ -18,3 +18,8 @@ source enable_environments.sh
 - It use 8081
 - If other process use it, then 8082 (+1...)
 
+# Metro use port 8081, If you want to change port
+
+- `export RCT_MERTO_PORT=8082`
+- [Reference](https://stackoverflow.com/questions/34431052/react-native-change-listening-port/63683065#63683065)
+- `npx react-native start --port 8082`
