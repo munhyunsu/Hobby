@@ -22,4 +22,6 @@ source enable_environments.sh
 
 - `export RCT_MERTO_PORT=8082`
 - [Reference](https://stackoverflow.com/questions/34431052/react-native-change-listening-port/63683065#63683065)
-- `npx react-native start --port 8082`
+- `npx react-native start --port 8082`: Execute metro
+- `a`: Execute android App
+
