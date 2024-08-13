@@ -15,11 +15,11 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--logging', default='INFO',
+    parser.add_argument('--logging', default='WARNING',
                         choices=logging._nameToLevel.keys(),
-                        help='Set log level (default: INFO)')
+                        help='Set log level (default: WARNING)')
 
     FLAGS, _ = parser.parse_known_args()
+    logging.basicConfig(level=FLAGS.logging)
 
     main()
-
