@@ -1,21 +1,26 @@
+import logging
+
 FLAGS = _ = None
-DEBUG = False
 
 
 def main():
-    if DEBUG:
-        print(f'Parsed arguments {FLAGS}')
-        print(f'Unparsed arguments {_}')
+    logging.critical('Critical message example')
+    logging.error('Error message example')
+    logging.warning('Warning message example')
+    logging.info('Info message example')
+    logging.debug('Debug message example')
 
 
 if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_arguments('--debug', action='store_true',
-                         help='The present debug message')
+    parser.add_argument('--logging', default='WARNING',
+                        choices=logging._nameToLevel.keys(),
+                        help='Set log level (default: WARNING)')
 
     FLAGS, _ = parser.parse_known_args()
-    DEBUG = FLAGS.debug
+    logging.basicConfig(level=FLAGS.logging)
 
     main()
+
