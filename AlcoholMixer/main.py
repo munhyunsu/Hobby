@@ -18,8 +18,17 @@ def menu() -> str:
 def calc_v2():
     print('기준이 되는 술의 양을 입력해주세요 (ml).')
     v1 = float(input('사용자 입력: '))
+    logging.debug(f'{v1=}')
     print('기준이 되는 술의 도수를 입력해주세요.')
     c1 = float(input('사용자 입력: '))
+    logging.debug(f'{c1=}')
+    print('만들고자 하는 술의 도수를 입력해주세요.')
+    cf = float(input('사용자 입력: '))
+    c2 = 0.0
+
+    v2 = v1 * (c1 - cf) / (cf - c2)
+
+    print('넣어야 하는 토닉 워터의 양은 {v2} ml 입니다.')
 
 
 
