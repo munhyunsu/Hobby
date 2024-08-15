@@ -28,7 +28,7 @@ def calc_v2():
 
     v2 = v1 * (c1 - cf) / (cf - c2)
 
-    print('넣어야 하는 토닉 워터의 양은 {v2} ml 입니다.')
+    print(f'넣어야 하는 토닉 워터의 양은 {v2} ml 입니다.')
 
 
 
@@ -47,6 +47,8 @@ def main():
             break
         elif selected == '1':
             logging.debug('1번 선택')
+            calc_v2()
+
 
 
 if __name__ == '__main__':
