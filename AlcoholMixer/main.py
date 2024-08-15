@@ -4,7 +4,7 @@ FLAGS = _ = None
 
 
 
-def screen_menu() -> str:
+def menu() -> str:
     print('---------- Menu ----------')
     print('| 1. 토닉을 얼마나 타지?')
     print('| Q. 종료')
@@ -15,6 +15,14 @@ def screen_menu() -> str:
     return selected
 
 
+def calc_v2():
+    print('기준이 되는 술의 양을 입력해주세요 (ml).')
+    v1 = float(input('사용자 입력: '))
+    print('기준이 되는 술의 도수를 입력해주세요.')
+    c1 = float(input('사용자 입력: '))
+
+
+
 def main():
     logging.critical('Critical message example')
     logging.error('Error message example')
@@ -23,7 +31,7 @@ def main():
     logging.debug('Debug message example')
 
     while True:
-        selected = screen_menu().upper()
+        selected = menu().upper()
         logging.info(f'사용자 입력 {selected}')
         if selected == 'Q':
             print('종료합니다.')
