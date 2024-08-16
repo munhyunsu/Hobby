@@ -26,7 +26,11 @@ def calc_v2():
     cf = float(input('사용자 입력: '))
     c2 = 0.0
 
-    v2 = v1 * (c1 - cf) / (cf - c2)
+#    (v1+v2)*cf - v1*c1 = v2*c2
+#    v1*cf + v2*cf - v1*c1 = v2*c2
+#    v1*cf - v1*c1 = v2*c2 - v2*cf
+#    v1*(cf-c1) / (c2-cf) = v2
+    v2 = v1*(cf-c1) / (c2-cf)
 
     print(f'넣어야 하는 토닉 워터의 양은 {v2} ml 입니다.')
 
