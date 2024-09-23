@@ -10,6 +10,11 @@ def main():
     logging.debug(f'Parsed arguments: {FLAGS}')
     logging.debug(f'Unparsed arguments: {_}')
 
+    with open(FLAGS.input, 'r') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            print(row)
+
 
 if __name__ == '__main__':
     os.chdir(sys.path[0])
