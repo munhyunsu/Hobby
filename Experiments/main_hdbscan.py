@@ -4,7 +4,8 @@ import logging # debug, info, warning, error, critical
 import time
 import csv
 
-from sklearn.cluster import KMeans
+import numpy as np
+from sklearn.cluster import HDBSCAN
 from sklearn.metrics import silhouette_score
 
 
@@ -20,19 +21,26 @@ def main():
         reader = csv.DictReader(f)
         for row in reader:
             dataset.append((float(row['latitude']), float(row['longitude'])))
-    max_n_cluster = -1
-    max_silhouette_avg = 0
-    for i in range(2, 100, 1):
-        stime = time.time()
-        clusterer = KMeans(n_clusters=i)
-        cluster_labels = clusterer.fit_predict(dataset)
-        silhouette_avg = silhouette_score(dataset, cluster_labels)
-        if max_silhouette_avg <= silhouette_avg:
-            max_n_cluster = i
-            max_silhouette_avg = silhouette_avg
-            print(f'[Updated] {max_n_cluster}, {max_silhouette_avg}')
-        etime = time.time()
-        print(f'[{i}] {silhouette_avg} via {(etime-stime)*1000}')
+    stime = time.time()
+    clusterer = HDBSCAN()
+    cluster_labels = clusterer.fit_predict(dataset)
+    silhouette_avg = silhouette_score(dataset, cluster_labels)
+    etime = time.time()
+    print(f'{len(np.unique(cluster_labels))} {silhouette_avg} via {(etime-stime)*1000}')
+    with open(FLAGS.output, 'w') as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=['latitude', 'longitude', 'cluster'],
+            quoting=csv.QUOTE_MINIMAL,
+            lineterminator=os.linesep
+        )
+        writer.writeheader()
+        for (latitude, longitude), cluster in zip(dataset, cluster_labels):
+            writer.writerow({
+                'latitude': latitude,
+                'longitude': longitude,
+                'cluster': cluster
+            })
 
 
 if __name__ == '__main__':
@@ -45,7 +53,7 @@ if __name__ == '__main__':
                         help='Set log level (default: WARNING)')
     parser.add_argument('--input', required=True,
                         help='CSV input (latitude, longitude)')
-    parser.add_argument('--output', default=f'kmeans_{int(time.time())}.csv',
+    parser.add_argument('--output', default=f'hdbscan_{int(time.time())}.csv',
                         help='CSV output')
 
     FLAGS, _ = parser.parse_known_args()
