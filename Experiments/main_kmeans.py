@@ -22,17 +22,31 @@ def main():
             dataset.append((float(row['latitude']), float(row['longitude'])))
     max_n_cluster = -1
     max_silhouette_avg = 0
-    for i in range(2, 100, 1):
+    for i in range(2, 21, 1):
         stime = time.time()
         clusterer = KMeans(n_clusters=i)
         cluster_labels = clusterer.fit_predict(dataset)
         silhouette_avg = silhouette_score(dataset, cluster_labels)
+        etime = time.time()
+        print(f'[{i}] {silhouette_avg} via {(etime-stime)*1000}')
         if max_silhouette_avg <= silhouette_avg:
             max_n_cluster = i
             max_silhouette_avg = silhouette_avg
             print(f'[Updated] {max_n_cluster}, {max_silhouette_avg}')
-        etime = time.time()
-        print(f'[{i}] {silhouette_avg} via {(etime-stime)*1000}')
+            with open(FLAGS.output, 'w') as f:
+                writer = csv.DictWriter(
+                    f,
+                    fieldnames=['latitude', 'longitude', 'cluster'],
+                    quoting=csv.QUOTE_MINIMAL,
+                    lineterminator=os.linesep
+                )
+                writer.writeheader()
+                for (latitude, longitude), cluster in zip(dataset, cluster_labels):
+                    writer.writerow({
+                        'latitude': latitude,
+                        'longitude': longitude,
+                        'cluster': cluster
+                    })
 
 
 if __name__ == '__main__':
