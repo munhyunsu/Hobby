@@ -26,8 +26,8 @@ def main():
         stime = time.time()
         clusterer = KMeans(n_clusters=i)
         cluster_labels = clusterer.fit_predict(dataset)
-        silhouette_avg = silhouette_score(dataset, cluster_labels)
         etime = time.time()
+        silhouette_avg = silhouette_score(dataset, cluster_labels)
         print(f'[{i}] {silhouette_avg} via {(etime-stime)*1000}')
         if max_silhouette_avg <= silhouette_avg:
             max_n_cluster = i
