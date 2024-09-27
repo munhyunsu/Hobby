@@ -4,6 +4,8 @@ import logging # debug, info, warning, error, critical
 import time
 import csv
 
+import numpy as np
+from sklearn.metrics import silhouette_score
 
 FLAGS = _ = None
 
@@ -25,6 +27,7 @@ def main():
     size_longitude = base_longitude / 2**FLAGS.level
 
     cluster_labels = []
+    stime = time.time()
     for latitude, longitude in dataset:
         index_latitude = latitude//size_latitude
         position_latitude = latitude%size_latitude
@@ -38,8 +41,11 @@ def main():
         ## 21
 
         division = 2**FLAGS.level
-        locid = division*index_latitude + index_longitude
+        locid = int(division*index_latitude + index_longitude)
         cluster_labels.append(locid)
+    etime = time.time()
+    silhouette_avg = silhouette_score(dataset, cluster_labels)
+    print(f'{len(np.unique(cluster_labels))} {silhouette_avg} via {(etime-stime)*1000}')
 
     with open(FLAGS.output, 'w') as f:
         writer = csv.DictWriter(
@@ -55,6 +61,7 @@ def main():
                 'longitude': longitude,
                 'cluster': cluster
             })
+
 
 
 if __name__ == '__main__':
