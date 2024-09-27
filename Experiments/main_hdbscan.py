@@ -24,8 +24,8 @@ def main():
     stime = time.time()
     clusterer = HDBSCAN()
     cluster_labels = clusterer.fit_predict(dataset)
-    silhouette_avg = silhouette_score(dataset, cluster_labels)
     etime = time.time()
+    silhouette_avg = silhouette_score(dataset, cluster_labels)
     print(f'{len(np.unique(cluster_labels))} {silhouette_avg} via {(etime-stime)*1000}')
     with open(FLAGS.output, 'w') as f:
         writer = csv.DictWriter(
