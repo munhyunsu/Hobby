@@ -46,9 +46,9 @@ def main():
     print(f'The number of cluster: {y.nunique()}')
     cluster_centers = compute_cluster_centers(df)
     avg_distance_to_center = average_distance_to_center(df, cluster_centers)
-    print(f'The average distance within cluster: {avg_distance_to_center}')
+    print(f'The average distance within cluster: {avg_distance_to_center}km')
     avg_distance_between_centers = average_distance_between_centers(cluster_centers)
-    print(f'The average distance between each cluster: {avg_distance_between_centers}')
+    print(f'The average distance between each cluster: {avg_distance_between_centers}km')
     silhouette_avg = silhouette_score(X, y)
     print(f'The average of Silhouette score: {silhouette_avg}')
     
