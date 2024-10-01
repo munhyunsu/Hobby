@@ -9,6 +9,8 @@ import pandas as pd
 from geopy.distance import great_circle
 from sklearn.metrics import pairwise_distances
 from sklearn.metrics import silhouette_score
+import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
 
 
 FLAGS = _ = None
@@ -51,9 +53,20 @@ def main():
     print(f'The average distance between each cluster: {avg_distance_between_centers}km')
     silhouette_avg = silhouette_score(X, y)
     print(f'The average of Silhouette score: {silhouette_avg}')
-    
-    
 
+    colors = plt.get_cmap('tab20').colors + plt.get_cmap('tab20b').colors + plt.get_cmap('tab20c').colors
+    cmap = ListedColormap(colors)
+    plt.figure(figsize=(8, 6))
+    scatter = plt.scatter(df['longitude'], df['latitude'], c=df['cluster'], cmap=cmap, s=100, alpha=0.6)
+    plt.xlim(-180, 180)
+    plt.ylim(-90, 90)
+    cbar = plt.colorbar(scatter)
+    cbar.set_ticks([])
+    cbar.set_label('Cluster', fontsize='large')
+    plt.xlabel('Longitude', fontsize='large')
+    plt.ylabel('Latitude', fontsize='large')
+    plt.tight_layout()
+    plt.show()
 
 
 if __name__ == '__main__':
@@ -66,6 +79,8 @@ if __name__ == '__main__':
                         help='Set log level (default: WARNING)')
     parser.add_argument('--input', required=True,
                         help='CSV input (latitude, longitude)')
+    parser.add_argument('--chart', default='scatter.png',
+                        help='Scatter chart output file')
 
     FLAGS, _ = parser.parse_known_args()
     logging.basicConfig(level=FLAGS.logging)
