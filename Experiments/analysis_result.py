@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 from geopy.distance import great_circle
 from sklearn.metrics import pairwise_distances
+from scipy.spatial.distance import pdist
 from sklearn.metrics import silhouette_score
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
@@ -32,8 +33,20 @@ def average_distance_to_center(df, cluster_centers):
 
 def average_distance_between_centers(cluster_centers):
     center_coords = cluster_centers[['latitude', 'longitude']].values
-    distances = pairwise_distances(center_coords, metric=lambda u, v: great_circle(u, v).kilometers)
-    return np.mean(distances[np.triu_indices(len(cluster_centers), k=1)])
+    try:
+        distances = pairwise_distances(center_coords, metric=lambda u, v: great_circle(u, v).kilometers)
+        return np.mean(distances[np.triu_indices(len(cluster_centers), k=1)])
+    except np._core._exceptions._ArrayMemoryError:
+        total_distance = 0
+        count = 0
+
+        for i in range(len(center_coords)):
+            for j in range(i + 1, len(center_coords)):
+                dist = great_circle(center_coords[i], center_coords[j]).kilometers
+                total_distance += dist
+                count += 1
+
+        return total_distance / count if count > 0 else 0
 
 
 def main():
