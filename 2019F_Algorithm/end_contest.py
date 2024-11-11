@@ -1,1 +1,0 @@
-print('End contest')
