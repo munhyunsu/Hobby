@@ -1,7 +1,0 @@
-scapy
-matplotlib
-pandas
-PyX
-cryptography
-IPython
-jupyter
