@@ -1,1 +1,4 @@
 AppIcon.png
+AppIcon-*.png
+android/
+ios/
