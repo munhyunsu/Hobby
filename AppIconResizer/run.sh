@@ -131,3 +131,23 @@ mkdir -p $TARGET_DIR
 TARGET_PATH=$TARGET_DIR/Icon-App-1024x1024@1x.png
 convert AppIcon.png -resize $TARGET_SIZE $TARGET_PATH
 
+
+mkdir -p ios/Runner/Assets.xcassets/LaunchImage.imageset
+
+TARGET_DIR=ios/Runner/Assets.xcassets/LaunchImage.imageset
+TARGET_SIZE=40x40
+mkdir -p $TARGET_DIR
+TARGET_PATH=$TARGET_DIR/Icon-App-40x40@1x.png
+convert AppIcon.png -resize $TARGET_SIZE $TARGET_PATH
+
+TARGET_DIR=ios/Runner/Assets.xcassets/LaunchImage.imageset
+TARGET_SIZE=80x80
+mkdir -p $TARGET_DIR
+TARGET_PATH=$TARGET_DIR/Icon-App-40x40@2x.png
+convert AppIcon.png -resize $TARGET_SIZE $TARGET_PATH
+
+TARGET_DIR=ios/Runner/Assets.xcassets/LaunchImage.imageset
+TARGET_SIZE=120x120
+mkdir -p $TARGET_DIR
+TARGET_PATH=$TARGET_DIR/Icon-App-40x40@3x.png
+convert AppIcon.png -resize $TARGET_SIZE $TARGET_PATH
