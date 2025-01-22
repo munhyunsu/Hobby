@@ -1,14 +1,18 @@
 #!/bin/bash
 
 export OLD_PATH=$PATH
+export OLD_PS1=$PS1
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 export PATH=${DIR}/nodejs/bin:${PATH}
+export PS1="(nodejs) $PS1"
 
 deactivate_node() {
     export PATH=$OLD_PATH
+    export PS1=$OLD_PS1
     unset OLD_PATH
+    unset OLD_PS1
     unset -f deactivate_node
 }
 
