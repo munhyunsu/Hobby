@@ -4,13 +4,15 @@ import LittleLemonFooter from './components/LittleLemonFooter';
 
 export default function App() {
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: '#495E57',
-      }}>
-      <LittleLemonHeader />
-      <LittleLemonFooter />
+    <View style={{ flex: 1, backgroundColor: 'green' }}>
+      <View style={{ paddingTop: 30, backgroundColor: 'yellow' }}>
+        <LittleLemonHeader />
+      </View>
+      <View style={{ flex: 1, backgroundColor: 'brown'}}>
+      </View>
+      <View style={{ backgroundColor: 'blue' }}>
+        <LittleLemonFooter />
+      </View>
     </View>
   );
 }
