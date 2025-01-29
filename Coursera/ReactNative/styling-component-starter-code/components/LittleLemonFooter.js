@@ -13,7 +13,7 @@ export default function LittleLemonFooter() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#F4CE14',
+    backgroundColor: '#EE9972',
     marginBottom: 10,
   },
   text: {

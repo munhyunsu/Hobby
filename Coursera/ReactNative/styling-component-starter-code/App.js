@@ -22,9 +22,9 @@ export default function App() {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#495E57',
+    backgroundColor: '#333333',
   },
   footerContainer: {
-    backgroundColor: '#495E57',
+    backgroundColor: '#333333',
   },
 });

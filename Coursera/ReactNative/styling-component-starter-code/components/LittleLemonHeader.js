@@ -12,7 +12,7 @@ export default function LittleLemonHeader() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#F4CE14'
+    backgroundColor: '#EE9972'
   },
   text: {
     padding: 40,
