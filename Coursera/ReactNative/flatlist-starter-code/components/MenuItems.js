@@ -62,9 +62,11 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: 'white',
+    fontSize: 30,
     textAlign: 'center',
   },
   itemText: {
     color: '#F4CE14',
+    fontSize: 24,
   }
 });
