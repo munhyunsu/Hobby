@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { ScrollView, Text, StyleSheet } from 'react-native';
+import { ScrollView, Text, StyleSheet, TextInput } from 'react-native';
 
 export default function WelcomeScreen() {
+  const [value, setValue] = React.useState('');
+
   return (
     <ScrollView indicatorStyle="white" style={styles.container}>
       <Text style={styles.headerText}>Welcome to Little Lemon</Text>
@@ -10,6 +12,11 @@ export default function WelcomeScreen() {
         and classic cocktails in a lively but casual environment. We would love
         to hear more about your experience with us!
       </Text>
+      <TextInput
+        style={styles.valueInput}
+        value={value}
+        onChangeText={setValue}
+      />
     </ScrollView>
   );
 }
@@ -31,4 +38,10 @@ const styles = StyleSheet.create({
     color: '#EDEFEE',
     textAlign: 'center',
   },
+  valueInput: {
+    padding: 4,
+    margin: 16,
+    fontSize: 16,
+    backgroundColor: '#EDEFEE',
+  }
 });
