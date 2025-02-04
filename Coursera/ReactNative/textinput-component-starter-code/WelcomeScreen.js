@@ -16,6 +16,7 @@ export default function WelcomeScreen() {
         style={styles.valueInput}
         value={value}
         onChangeText={setValue}
+        placeholder={'Input value'}
       />
     </ScrollView>
   );
