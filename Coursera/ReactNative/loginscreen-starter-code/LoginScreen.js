@@ -21,6 +21,7 @@ export default function LoginScreen() {
         value={password}
         onChangeText={setPassword}
         placeholder={'Password'}
+        keyboardType={'default'}
         secureTextEntry={true}
       />
     </ScrollView>
