@@ -1,29 +1,45 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, StyleSheet, TextInput } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, TextInput, Pressable } from 'react-native';
 
 export default function LoginScreen() {
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
+  const [loggedIn, onChangeLoggedIn] = useState(false);
+
+  const toggleLoggedIn = () => onChangeLoggedIn(!loggedIn);
 
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.headerText}>Welcome to Little Lemon</Text>
-      <Text style={styles.regularText}>Login to continue </Text>
-      <TextInput
-        style={styles.inputBox}
-        value={email}
-        onChangeText={onChangeEmail}
-        placeholder={'email'}
-        keyboardType={'email-address'}
-      />
-      <TextInput
-        style={styles.inputBox}
-        value={password}
-        onChangeText={onChangePassword}
-        placeholder={'password'}
-        keyboardType={'default'}
-        secureTextEntry={true}
-      />
+        <Text style={styles.regularText}>
+          {loggedIn ? 'You are logged in' : 'Login to continue'}
+        </Text>
+        {!loggedIn && (
+          <View>
+          <TextInput
+            style={styles.inputBox}
+            value={email}
+            onChangeText={onChangeEmail}
+            placeholder={'email'}
+            keyboardType={'email-address'}
+          />
+          <TextInput
+            style={styles.inputBox}
+            value={password}
+            onChangeText={onChangePassword}
+            placeholder={'password'}
+            keyboardType={'default'}
+            secureTextEntry={true}
+          />
+            <Pressable
+              style={styles.button}
+              onPress={toggleLoggedIn}>
+              <Text style={styles.buttonText}>
+                Login
+              </Text>
+            </Pressable>
+          </View>
+        )}
     </ScrollView>
   );
 }
@@ -53,5 +69,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderColor: 'EDEFEE',
     backgroundColor: '#EDEFEE',
+  },
+  button: {
+    backgroundColor: '#EE9972',
+    borderColor: '#EE9972',
+    borderRadius: 12,
+    margin: 40,
+    padding: 6,
+  },
+  buttonText: {
+    fontSize: 32,
+    textAlign: 'center',
   },
 });
