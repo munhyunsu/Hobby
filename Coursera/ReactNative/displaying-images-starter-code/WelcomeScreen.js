@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { ScrollView, Text, StyleSheet } from 'react-native';
+import { ScrollView, Text, StyleSheet, Image } from 'react-native';
 
 export default function WelcomeScreen() {
   return (
     <ScrollView indicatorStyle="white" style={styles.container}>
+      <Image style={styles.logo} source={require('./img/logo.png')} />
       <Text style={styles.headerText}>Welcome to Little Lemon</Text>
       <Text style={styles.regularText}>
         Little Lemon is a charming neighborhood bistro that serves simple food
@@ -31,4 +32,9 @@ const styles = StyleSheet.create({
     color: '#EDEFEE',
     textAlign: 'center',
   },
+  logo: {
+    height: 100,
+    width: 300,
+    resizeMode: 'contain',
+  }
 });
