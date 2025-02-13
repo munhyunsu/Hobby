@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
   headerWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   headerText: {
     padding: 40,
