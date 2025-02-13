@@ -40,8 +40,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   logo: {
-    height: 100,
+    height: 117,
     width: 100,
     resizeMode: 'contain',
+    borderRadius: 20,
   }
 });
