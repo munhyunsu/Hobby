@@ -42,14 +42,12 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingBottom: 10,
     fontSize: 30,
-    color: '#EDEFEE',
     textAlign: 'center',
   },
   regularText: {
     fontSize: 24,
     padding: 20,
     marginVertical: 8,
-    color: '#EDEFEE',
     textAlign: 'center',
   },
   image: {
