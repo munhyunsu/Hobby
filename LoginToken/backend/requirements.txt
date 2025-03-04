@@ -1,0 +1,9 @@
+pip
+wheel
+fastapi[all]
+uvicorn[standard]
+gunicorn
+SQLAlchemy
+alembic
+python-jose[cryptography]
+passlib[bcrypt]
