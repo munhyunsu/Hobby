@@ -1,7 +1,16 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 
-from . import conf
+from . import conf, models, database
 
+
+models.Base.metadata.create_all(bind=database.engine)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    yield
+    if conf.DEVMODE:
+        models.Base.metadata.drop_all(bind=engine)
 
 app = FastAPI(
     root_path=conf.URLPREFIX
