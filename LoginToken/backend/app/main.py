@@ -10,9 +10,10 @@ models.Base.metadata.create_all(bind=database.engine)
 async def lifespan(app: FastAPI):
     yield
     if conf.DEVMODE:
-        models.Base.metadata.drop_all(bind=engine)
+        models.Base.metadata.drop_all(bind=database.engine)
 
 app = FastAPI(
+    lifespan=lifespan,
     root_path=conf.URLPREFIX
 )
 
