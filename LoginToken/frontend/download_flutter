@@ -1,0 +1,40 @@
+#!/bin/bash
+
+FLUTTER_VERSION="3.29.2"
+OS=$(uname -s)
+ARCH=$(uname -m)
+
+if [[ "$OS" == "Linux" ]]; then
+    FLUTTER_FILE="flutter_linux_${FLUTTER_VERSION}-stable.tar.xz"
+    FLUTTER_URL="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FLUTTER_FILE"
+elif [[ "$OS" == "Darwin" ]]; then
+    if [[ "$ARCH" == "arm64" ]]; then
+        FLUTTER_FILE="flutter_macos_arm64_${FLUTTER_VERSION}-stable.zip"
+    else
+        FLUTTER_FILE="flutter_macos_${FLUTTER_VERSION}-stable.zip"
+    fi
+    FLUTTER_URL="https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/$FLUTTER_FILE"
+else
+    echo "Unsupported OS: $OS"
+    exit 1
+fi
+
+echo "Downloading Flutter from: $FLUTTER_URL"
+curl -# -C - -o "$FLUTTER_FILE" "$FLUTTER_URL"
+
+mkdir -p flutter
+
+if [[ "$FLUTTER_FILE" == *.tar.xz ]]; then
+    tar -xf "$FLUTTER_FILE" -C flutter --strip-components 1
+elif [[ "$FLUTTER_FILE" == *.zip ]]; then
+    unzip -q "$FLUTTER_FILE" -d flutter
+    if [[ -d "flutter/flutter" ]]; then
+        mv flutter/flutter/* flutter/
+        rmdir flutter/flutter
+    fi
+fi
+
+rm "$FLUTTER_FILE"
+
+echo "Flutter $FLUTTER_VERSION 설치 완료!"
+
