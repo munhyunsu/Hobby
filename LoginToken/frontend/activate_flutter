@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [[ -n "${BASH_SOURCE[0]}" ]]; then
+  SCRIPT_PATH="${BASH_SOURCE[0]}"
+elif [[ -n "${(%):-%N}" ]]; then
+  SCRIPT_PATH="${(%):-%N}"
+else
+  echo "Unsupported shell. Please use bash or zsh."
+  return 1
+fi
+
+DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
+
+export OLD_PATH=$PATH
+export OLD_PS1=$PS1
+
+export PATH=${DIR}/flutter/bin:${PATH}
+export PS1="(flutter) $PS1"
+
+deactivate_flutter() {
+    export PATH=$OLD_PATH
+    export PS1=$OLD_PS1
+    unset OLD_PATH
+    unset OLD_PS1
+    unset -f deactivate_flutter
+}
+
+echo "Environment activated. Use 'deactivate_flutter' to revert."
+
