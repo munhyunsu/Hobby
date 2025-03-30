@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'my_home_page.dart';
+import 'navigation_page.dart';
 
 
 void main() {
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         // https://api.flutter.dev/flutter/material/Colors-class.html
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
       ),
-      home: const MyHomePage(title: 'Login Token Demo Page using Flutter'),
+      home: const NavigationPage(title: 'Login Token Demo'),
     );
   }
 }
