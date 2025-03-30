@@ -19,7 +19,7 @@ class _NavigationPageState extends State<NavigationPage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          bottom: const TabBar(
+          bottom: TabBar(
             tabs: [
               Tab(icon: Icon(Icons.home)),
               Tab(icon: Icon(Icons.app_registration)),
@@ -28,7 +28,7 @@ class _NavigationPageState extends State<NavigationPage> {
           ),
           title: Text(widget.title),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
             MyHomePage(),
             Icon(Icons.app_registration),
