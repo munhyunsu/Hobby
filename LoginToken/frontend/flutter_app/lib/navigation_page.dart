@@ -27,6 +27,7 @@ class _NavigationPageState extends State<NavigationPage> {
               Tab(icon: Icon(Icons.login)),
             ],
           ),
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
         body: TabBarView(
