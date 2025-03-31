@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'my_home_page.dart';
+import 'register_page.dart';
 
 
 class NavigationPage extends StatefulWidget {
@@ -31,7 +32,7 @@ class _NavigationPageState extends State<NavigationPage> {
         body: TabBarView(
           children: [
             MyHomePage(),
-            Icon(Icons.app_registration),
+            RegisterPage(),
             Icon(Icons.login),
           ],
         ),
