@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -10,22 +14,76 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
 
-  String _email = '';
-  String _password = '';
-  String _confirmPassword = '';
+  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  String? _errorMessage;
 
-  void _submitForm() {
+  final _usernameRegExp = RegExp(r'^[a-zA-Z0-9_]+$');
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submitForm() async {
+    setState(() {
+      _errorMessage = null;
+    });
+
     if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      if (_password != _confirmPassword) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('비밀번호가 일치하지 않습니다.')),
-        );
+      final username = _usernameController.text;
+      final email = _emailController.text;
+      final password = _passwordController.text;
+      final confirmPassword = _confirmPasswordController.text;
+
+      if (password != confirmPassword) {
+        setState(() {
+          _errorMessage = '비밀번호가 일치하지 않습니다.';
+        });
         return;
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('회원가입 완료!')),
-      );
+
+      try {
+        final url = const String.fromEnvironment('BACKEND_ENDPOINT') + '/user-manager/user';
+        final response = await http.post(
+          Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'username': username,
+            'email': email,
+            'password': password,
+            'confirm_password': confirmPassword,
+          }),
+        );
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('회원가입 완료!')),
+          );
+          final tabController = DefaultTabController.of(context);
+          if (tabController != null) {
+            tabController.animateTo(0);
+          }
+        } else if (response.statusCode == 409) {
+          setState(() {
+            _errorMessage = '이미 사용 중인 사용자 이름 또는 이메일입니다.';
+          });
+        } else {
+          setState(() {
+            _errorMessage = '회원가입에 실패했습니다. 다시 시도해주세요.';
+          });
+        }
+      } catch (e) {
+        setState(() {
+          _errorMessage = '서버에 연결할 수 없습니다.';
+        });
+      }
     }
   }
 
@@ -42,11 +100,35 @@ class _RegisterPageState extends State<RegisterPage> {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
+
+            if (_errorMessage != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: Text(
+                  _errorMessage!,
+                  style: const TextStyle(color: Colors.red, fontSize: 14),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+
             TextFormField(
+              controller: _usernameController,
+              decoration: const InputDecoration(labelText: '사용자 이름'),
+              validator: (value) {
+                if (value == null || value.length < 3) {
+                  return '3자 이상 입력하세요.';
+                }
+                if (!_usernameRegExp.hasMatch(value)) {
+                  return '영문자, 숫자, 밑줄만 사용할 수 있습니다.';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _emailController,
               decoration: const InputDecoration(labelText: '이메일'),
               keyboardType: TextInputType.emailAddress,
-              onSaved: (value) => _email = value ?? '',
               validator: (value) {
                 if (value == null || value.isEmpty || !value.contains('@')) {
                   return '올바른 이메일을 입력하세요.';
@@ -55,9 +137,9 @@ class _RegisterPageState extends State<RegisterPage> {
               },
             ),
             TextFormField(
+              controller: _passwordController,
               decoration: const InputDecoration(labelText: '비밀번호'),
               obscureText: true,
-              onSaved: (value) => _password = value ?? '',
               validator: (value) {
                 if (value == null || value.length < 6) {
                   return '6자 이상 입력하세요.';
@@ -66,9 +148,9 @@ class _RegisterPageState extends State<RegisterPage> {
               },
             ),
             TextFormField(
+              controller: _confirmPasswordController,
               decoration: const InputDecoration(labelText: '비밀번호 확인'),
               obscureText: true,
-              onSaved: (value) => _confirmPassword = value ?? '',
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return '비밀번호를 한 번 더 입력하세요.';
