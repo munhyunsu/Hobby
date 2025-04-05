@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'my_home_page.dart';
 import 'register_page.dart';
+import 'login_page.dart';
 
 
 class NavigationPage extends StatefulWidget {
@@ -34,7 +35,7 @@ class _NavigationPageState extends State<NavigationPage> {
           children: [
             MyHomePage(),
             RegisterPage(),
-            Icon(Icons.login),
+            LoginPage(),
           ],
         ),
       ),
