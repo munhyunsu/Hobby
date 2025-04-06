@@ -4,7 +4,8 @@ from contextlib import asynccontextmanager
 
 from . import conf, models, database
 from . import (
-    user_manager
+    user_manager,
+    token_manager,
 )
 
 
@@ -30,6 +31,7 @@ app.add_middleware(
 )
 
 app.include_router(user_manager.router)
+app.include_router(token_manager.router)
 
 
 @app.get('/info', include_in_schema=False)
