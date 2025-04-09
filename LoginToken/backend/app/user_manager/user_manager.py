@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 
 from .. import database
-from . import models, schemas, crud, enums
+from . import models, schemas, crud, enums, utils
 
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
