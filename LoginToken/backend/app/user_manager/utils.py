@@ -1,6 +1,9 @@
 from sqlalchemy.orm import Session
+from passlib.context import CryptContext
 
 from . import crud
+
+pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 
 def validate_user(db: Session, username: str, password: str):

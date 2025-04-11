@@ -1,11 +1,9 @@
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, status as HTTPStatus
 from sqlalchemy.orm import Session
-from passlib.context import CryptContext
 
 from .. import database
 from . import models, schemas, crud, enums, utils
 
-pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 models.database.Base.metadata.create_all(bind=database.engine)
 
@@ -47,7 +45,7 @@ async def post_user(
         raise HTTPException(status_code=HTTPStatus.HTTP_409_CONFLICT,
                             detail='This email is already registered')
 
-    hashed_password = pwd_context.hash(user.password)
+    hashed_password = utils.pwd_context.hash(user.password)
     db_user = crud.insert_user(
         db=db,
         username=username,
