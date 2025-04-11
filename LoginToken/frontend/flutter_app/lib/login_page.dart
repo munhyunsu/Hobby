@@ -46,8 +46,9 @@ class _LoginPageState extends State<LoginPage> {
         );
 
         if (response.statusCode == 200) {
+          final responseData = jsonDecode(response.body);
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('로그인 성공!')),
+            SnackBar(content: Text('로그인 성공! ${responseData}')),
           );
           final tabController = DefaultTabController.of(context);
           if (tabController != null) {
