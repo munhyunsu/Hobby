@@ -54,3 +54,18 @@ async def post_user(
     )
     return db_user
 
+
+## 이 함수는 사용되지 않음! 그냥 연습용!
+@router.post('/login', response_model=schemas.User)
+async def post_login(
+    user: schemas.UserLogin,
+    db: Session = Depends(database.get_db),
+):
+    username = user.username.lower()
+    password = user.password
+    db_user = utils.validate_user(db=db, username=username, password=password)
+    if not db_user:
+        raise HTTPException(status_code=HTTPStatus.HTTP_403_FORBIDDEN,
+                            detail='Forbidden request')
+    return db_user
+
