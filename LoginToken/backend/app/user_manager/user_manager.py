@@ -63,7 +63,7 @@ async def post_login(
 ):
     username = user.username.lower()
     password = user.password
-    db_user = utils.validate_user(db=db, username=username, password=password)
+    db_user = utils.authenticate_user(db=db, username=username, password=password)
     if not db_user:
         raise HTTPException(status_code=HTTPStatus.HTTP_403_FORBIDDEN,
                             detail='Forbidden request')
