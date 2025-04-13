@@ -1,3 +1,5 @@
+APP_NAME = 'Token manager'
+APP_PREFIX = 'token-manager'
 SECRET_KEY = 'This is the secret key. you will need to change this when deploying.'
 ALGORITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_SECONDS = 60 * 2

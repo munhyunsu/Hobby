@@ -1,13 +1,16 @@
+import datetime
+from typing import Annotated
+
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, status as HTTPStatus
 from sqlalchemy.orm import Session
 
 from .. import database
 from ..user_manager import schemas as user_schemas, utils as user_utils
-from . import conf, schemas
+from . import conf, schemas, utils
 
 router = APIRouter(
-    prefix='/token-manager',
-    tags=['Token manager'],
+    prefix=f'/{conf.APP_PREFIX}' if conf.APP_PREFIX != '' else f'{conf.APP_PREFIX}',
+    tags=[f'{conf.APP_NAME}'],
     responses={404: {'description': 'Not Found'}},
 )
 
@@ -19,14 +22,22 @@ async def get_info():
             'responses': router.responses}
 
 
+@router.get('/token')
+async def get_token(
+    access_token: Annotated[str, Depends(utils.oauth2_scheme)],
+):
+    return access_token
+
+
 @router.post('/token', response_model=schemas.Token)
 async def post_token(
     user: user_schemas.UserLogin,
     db: Session = Depends(database.get_db),
 ):
+    print('wow')
     username = user.username.lower()
     password = user.password
-    db_user = utils.authenticate_user(db=db, username=username, password=password)
+    db_user = user_utils.authenticate_user(db=db, username=username, password=password)
     if not db_user:
         raise HTTPException(status_code=HTTPStatus.HTTP_401_UNAUTHORIZED,
                             detail='Incorrect username or password')
@@ -38,4 +49,6 @@ async def post_token(
         expires_delta=access_expires_delta
     )
     return {'token_type': 'bearer', 'access_token': access_token}
+
+
 

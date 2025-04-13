@@ -1,14 +1,17 @@
+import datetime
+
 from fastapi.security import OAuth2PasswordBearer
+import jwt
 
 from . import conf
 
 oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl='token-manager/token',
+    tokenUrl=f'{conf.APP_PREFIX}/token' if conf.APP_PREFIX != '' else 'token',
     auto_error=False
 )
 
 
-async def create_jwt(
+def create_jwt(
     data: dict,
     expires_delta: datetime.timedelta | None = None,
 ):

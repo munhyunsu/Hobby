@@ -7,3 +7,4 @@ SQLAlchemy
 alembic
 python-jose[cryptography]
 passlib[bcrypt]
+pyjwt
