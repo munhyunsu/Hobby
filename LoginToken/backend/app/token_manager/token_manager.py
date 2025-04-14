@@ -24,10 +24,10 @@ async def get_info():
 
 @router.get('/token')
 async def get_token(
-    access_token: Annotated[str, Depends(utils.oauth2_scheme)],
+    access_token: Annotated[str, Depends(utils.decode_access_token)],
+    refresh_token: Annotated[str, Depends(utils.decode_refresh_token)],
 ):
-    print(access_token)
-    return access_token
+    return access_token, refresh_token
 
 
 @router.post('/token', response_model=schemas.Token)
