@@ -1,7 +1,7 @@
 import datetime
 from typing import Annotated
 
-from fastapi import FastAPI, APIRouter, Depends, HTTPException, status as HTTPStatus
+from fastapi import FastAPI, APIRouter, Depends, HTTPException, status as HTTPStatus, Request, Form
 from sqlalchemy.orm import Session
 
 from .. import database
@@ -26,17 +26,31 @@ async def get_info():
 async def get_token(
     access_token: Annotated[str, Depends(utils.oauth2_scheme)],
 ):
+    print(access_token)
     return access_token
 
 
 @router.post('/token', response_model=schemas.Token)
 async def post_token(
-    user: user_schemas.UserLogin,
+    request: Request,
     db: Session = Depends(database.get_db),
 ):
-    print('wow')
-    username = user.username.lower()
-    password = user.password
+    content_type = request.headers.get('content-type', '').lower()
+
+    if 'application/json' in content_type:
+        body = await request.json()
+        username = body.get('username', '').lower()
+        password = body.get('password', '')
+    elif 'application/x-www-form-urlencoded' in content_type:
+        form = await request.form()
+        username = form.get('username', '').lower()
+        password = form.get('password', '')
+    else:
+        raise HTTPException(
+            status_code=HTTPStatus.HTTP_400_BAD_REQUEST,
+            detail='Unsupported Content-Type. Use \'application/json\' or \'application/x-www-form-urlencoded\'',
+        )
+
     db_user = user_utils.authenticate_user(db=db, username=username, password=password)
     if not db_user:
         raise HTTPException(status_code=HTTPStatus.HTTP_401_UNAUTHORIZED,
