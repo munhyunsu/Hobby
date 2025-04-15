@@ -1,7 +1,7 @@
 import datetime
 from typing import Annotated
 
-from fastapi import FastAPI, APIRouter, Depends, HTTPException, status as HTTPStatus, Request, Form
+from fastapi import FastAPI, APIRouter, Depends, HTTPException, status as HTTPStatus, Request, Response, Form
 from sqlalchemy.orm import Session
 
 from .. import database
@@ -33,6 +33,7 @@ async def get_token(
 @router.post('/token', response_model=schemas.Token)
 async def post_token(
     request: Request,
+    response: Response,
     db: Session = Depends(database.get_db),
 ):
     content_type = request.headers.get('content-type', '').lower()
@@ -55,6 +56,7 @@ async def post_token(
     if not db_user:
         raise HTTPException(status_code=HTTPStatus.HTTP_401_UNAUTHORIZED,
                             detail='Incorrect username or password')
+
     access_expires_delta = datetime.timedelta(
         seconds=conf.ACCESS_TOKEN_EXPIRE_SECONDS
     )
@@ -62,7 +64,25 @@ async def post_token(
         data={'sub': db_user.username},
         expires_delta=access_expires_delta
     )
+
+
+    refresh_expires_delta = datetime.timedelta(
+        seconds=conf.REFRESH_TOKEN_EXPIRE_SECONDS
+    )
+    refresh_token = utils.create_jwt(
+        data={'sub': db_user.username},
+        expires_delta=refresh_expires_delta
+    )
+
+    response.set_cookie(
+        key='refresh_token',
+        value=refresh_token,
+        httponly=True,
+        max_age=conf.REFRESH_TOKEN_EXPIRE_SECONDS,
+        secure=False,
+        samesite='lax',
+        path=conf.COOKIE_PATH,
+    )
+
     return {'token_type': 'bearer', 'access_token': access_token}
-
-
 
