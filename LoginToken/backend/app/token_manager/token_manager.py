@@ -79,7 +79,7 @@ async def post_token(
         value=refresh_token,
         httponly=True,
         max_age=conf.REFRESH_TOKEN_EXPIRE_SECONDS,
-        secure=False,
+        secure=conf.COOKIE_SECURE,
         samesite='lax',
         path=conf.COOKIE_PATH,
     )
