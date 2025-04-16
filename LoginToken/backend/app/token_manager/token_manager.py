@@ -100,7 +100,7 @@ async def is_healthy(
     }
 
 
-@router.post('/renew/access', response_model=schemas.Token)
+@router.post('/renew/access_token', response_model=schemas.Token)
 def renew_access_token(
     refresh_token: Annotated[dict, Depends(utils.verify_refresh_token)],
 ):
@@ -120,7 +120,7 @@ def renew_access_token(
     return {'token_type': 'bearer', 'access_token': access_token}
 
 
-@router.post('/renew/refresh', response_model=schemas.Token)
+@router.post('/renew/refresh_token', response_model=schemas.Token)
 def renew_refresh_token(
     response: Response,
     refresh_token: Annotated[dict, Depends(utils.verify_refresh_token)],
