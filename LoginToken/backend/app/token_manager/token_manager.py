@@ -24,10 +24,10 @@ async def get_info():
 
 @router.get('/token')
 async def get_token(
-    access_token: Annotated[str, Depends(utils.decode_access_token)],
-    refresh_token: Annotated[str, Depends(utils.decode_refresh_token)],
+    access_token_payload: Annotated[str, Depends(utils.decode_access_token)],
+    refresh_token_payload: Annotated[str, Depends(utils.decode_refresh_token)],
 ):
-    return access_token, refresh_token
+    return access_token_payload, refresh_token_payload
 
 
 @router.post('/token', response_model=schemas.Token)
@@ -65,12 +65,84 @@ async def post_token(
         expires_delta=access_expires_delta
     )
 
-
     refresh_expires_delta = datetime.timedelta(
         seconds=conf.REFRESH_TOKEN_EXPIRE_SECONDS
     )
     refresh_token = utils.create_jwt(
         data={'sub': db_user.username},
+        expires_delta=refresh_expires_delta
+    )
+
+    response.set_cookie(
+        key='refresh_token',
+        value=refresh_token,
+        httponly=True,
+        max_age=conf.REFRESH_TOKEN_EXPIRE_SECONDS,
+        secure=conf.COOKIE_SECURE,
+        samesite='lax',
+        path=conf.COOKIE_PATH,
+    )
+
+    return {'token_type': 'bearer', 'access_token': access_token}
+
+
+@router.get('/is-healthy')
+async def is_healthy(
+    access_token: Annotated[dict, Depends(utils.verify_access_token)]
+):
+    exp = access_token_payload.get('exp', 0)
+    now = datetime.datetime.now(tz=datetime.UTC).timestamp()
+    remaining = exp - now
+
+    return {
+        'is_healthy': remaining > conf.ACCESS_TOKEN_UNHEALTHY_SECONDS,
+        'remaining_seconds': remaining
+    }
+
+
+@router.post('/renew/access', response_model=schemas.Token)
+def renew_access_token(
+    refresh_token: Annotated[dict, Depends(utils.verify_refresh_token)],
+):
+    username = refresh_token.get('sub')
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail='Unauthorized refresh token')
+    
+    access_expires_delta = datetime.timedelta(
+        seconds=conf.ACCESS_TOKEN_EXPIRE_SECONDS
+    )
+    access_token = utils.create_jwt(
+        data={'sub': username},
+        expires_delta=access_expires_delta
+    )
+
+    return {'token_type': 'bearer', 'access_token': access_token}
+
+
+@router.post('/renew/refresh', response_model=schemas.Token)
+def renew_refresh_token(
+    response: Response,
+    refresh_token: Annotated[dict, Depends(utils.verify_refresh_token)],
+):
+    username = refresh_token.get('sub')
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail='Unauthorized refresh token')
+    
+    access_expires_delta = datetime.timedelta(
+        seconds=conf.ACCESS_TOKEN_EXPIRE_SECONDS
+    )
+    access_token = utils.create_jwt(
+        data={'sub': username},
+        expires_delta=access_expires_delta
+    )
+
+    refresh_expires_delta = datetime.timedelta(
+        seconds=conf.REFRESH_TOKEN_EXPIRE_SECONDS
+    )
+    refresh_token = utils.create_jwt(
+        data={'sub': username},
         expires_delta=refresh_expires_delta
     )
 
