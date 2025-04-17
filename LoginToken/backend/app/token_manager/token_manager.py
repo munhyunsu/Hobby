@@ -22,6 +22,14 @@ async def get_info():
             'responses': router.responses}
 
 
+@router.get('/token/decode')
+async def get_token_decode(
+    access_token: Annotated[dict, Depends(utils.verify_access_token)],
+    refresh_token: Annotated[dict, Depends(utils.verify_refresh_token)],
+):
+    return {'access_token': access_token, 'refresh_token': refresh_token}
+
+
 @router.get('/token')
 async def get_token(
     access_token_payload: Annotated[str, Depends(utils.decode_access_token)],
