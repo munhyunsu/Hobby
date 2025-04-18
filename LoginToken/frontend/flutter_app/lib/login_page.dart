@@ -47,6 +47,11 @@ class _LoginPageState extends State<LoginPage> {
 
         if (response.statusCode == 200) {
           final responseData = jsonDecode(response.body);
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('access_token', responseData['access_token']);
+          if (responseData.containsKey('refresh_token')) {
+            await prefs.setString('refresh_token', responseData['refresh_token']);
+          }
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('로그인 성공! ${responseData}')),
           );
