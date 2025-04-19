@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
       final password = _passwordController.text;
 
       try {
-        final url = const String.fromEnvironment('BACKEND_ENDPOINT') + '/user-manager/login';
+        final url = const String.fromEnvironment('BACKEND_ENDPOINT') + '/token-manager/token';
         final response = await http.post(
           Uri.parse(url),
           headers: {'Content-Type': 'application/json'},
