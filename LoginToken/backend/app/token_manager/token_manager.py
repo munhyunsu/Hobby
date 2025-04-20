@@ -96,15 +96,28 @@ async def post_token(
 
 @router.get('/is-healthy')
 async def is_healthy(
-    access_token: Annotated[dict, Depends(utils.verify_access_token)]
+    access_token_payload: Annotated[dict, Depends(utils.verify_access_token)],
+    refresh_token_payload: Annotated[dict, Depends(utils.verify_refresh_token)],
 ):
-    exp = access_token_payload.get('exp', 0)
     now = datetime.datetime.now(tz=datetime.UTC).timestamp()
-    remaining = exp - now
+
+    access_exp = access_token_payload.get('exp', 0)
+    access_remaining = access_exp - now
+    access_healthy = access_remaining > conf.ACCESS_TOKEN_UNHEALTHY_SECONDS
+
+    refresh_exp = refresh_token_payload.get('exp', 0)
+    refresh_remaining = refresh_exp - now
+    refresh_healthy = refresh_remaining > conf.REFRESH_TOKEN_UNHEALTHY_SECONDS
 
     return {
-        'is_healthy': remaining > conf.ACCESS_TOKEN_UNHEALTHY_SECONDS,
-        'remaining_seconds': remaining
+        "access_token": {
+            "is_healthy": access_healthy,
+            "remaining_seconds": access_remaining
+        },
+        "refresh_token": {
+            "is_healthy": refresh_healthy,
+            "remaining_seconds": refresh_remaining
+        }
     }
 
 
