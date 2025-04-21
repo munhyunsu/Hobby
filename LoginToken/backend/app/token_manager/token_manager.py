@@ -110,26 +110,34 @@ async def is_healthy(
     refresh_healthy = refresh_remaining > conf.REFRESH_TOKEN_UNHEALTHY_SECONDS
 
     return {
-        "access_token": {
-            "is_healthy": access_healthy,
-            "remaining_seconds": access_remaining
+        'access_token': {
+            'is_healthy': access_healthy,
+            'remaining_seconds': access_remaining
         },
-        "refresh_token": {
-            "is_healthy": refresh_healthy,
-            "remaining_seconds": refresh_remaining
+        'refresh_token': {
+            'is_healthy': refresh_healthy,
+            'remaining_seconds': refresh_remaining
         }
     }
 
 
 @router.post('/renew/access_token', response_model=schemas.Token)
 def renew_access_token(
-    refresh_token: Annotated[dict, Depends(utils.verify_refresh_token)],
+    access_token: Annotated[dict, Depends(utils.verify_access_token)],
 ):
-    username = refresh_token.get('sub')
+    username = access_token.get('sub')
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail='Unauthorized refresh token')
-    
+                            detail='Unauthorized access token')
+
+    now = datetime.datetime.now(tz=datetime.UTC).timestamp()
+    exp = access_token.get('exp', 0)
+    remaining = exp - now
+
+    if remaining > conf.ACCESS_TOKEN_UNHEALTHY_SECONDS:
+        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
+                            detail='Access token still healthy')
+
     access_expires_delta = datetime.timedelta(
         seconds=conf.ACCESS_TOKEN_EXPIRE_SECONDS
     )
@@ -150,7 +158,15 @@ def renew_refresh_token(
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail='Unauthorized refresh token')
-    
+
+    now = datetime.datetime.now(tz=datetime.UTC).timestamp()
+    exp = refresh_token.get('exp', 0)
+    remaining = exp - now
+
+    if remaining > conf.REFRESH_TOKEN_UNHEALTHY_SECONDS:
+        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
+                            detail='Refresh token still healthy')
+
     access_expires_delta = datetime.timedelta(
         seconds=conf.ACCESS_TOKEN_EXPIRE_SECONDS
     )
