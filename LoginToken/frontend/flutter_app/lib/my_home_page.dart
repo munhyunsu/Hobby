@@ -132,6 +132,30 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  Future<bool> _renewRefreshToken() async {
+    final url = const String.fromEnvironment('BACKEND_ENDPOINT') + '/user-manager/renew/refresh_token';
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('access_token');
+    if (token == null) return false;
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final newToken = data['access_token'];
+      await prefs.setString('access_token', newToken);
+      await _loadTokenInfo();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Refresh token 자동 갱신됨')),
+      );
+      return true;
+    }
+    return false;
+  }
+
   String _formatExp(int? exp) {
     if (exp == null) return '-';
     final dt = DateTime.fromMillisecondsSinceEpoch(exp * 1000, isUtc: true).toLocal();
