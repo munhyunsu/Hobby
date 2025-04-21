@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final token = prefs.getString('access_token');
     if (token == null) return;
 
-    final url = const String.fromEnvironment('BACKEND_ENDPOINT') + '/user-manager/token/decode';
+    final url = const String.fromEnvironment('BACKEND_ENDPOINT') + '/token-manager/token/decode';
     final response = await http.get(
       Uri.parse(url),
       headers: {'Authorization': 'Bearer $token'},
@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final token = prefs.getString('access_token');
     if (token == null) return;
 
-    final url = const String.fromEnvironment('BACKEND_ENDPOINT') + '/user-manager/is-healthy';
+    final url = const String.fromEnvironment('BACKEND_ENDPOINT') + '/token-manager/is-healthy';
     final response = await http.get(
       Uri.parse(url),
       headers: {'Authorization': 'Bearer $token'},
@@ -89,19 +89,29 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      final healthy = data['is_healthy'] as bool;
-      setState(() {
-        _isHealthy = healthy;
-      });
+      final access = data['access_token'];
+      final refresh = data['refresh_token'];
 
-      if (!healthy) {
+      final accessHealthy = access['is_healthy'] as bool;
+      final refreshHealthy = refresh['is_healthy'] as bool;
+
+      setState(() => _isHealthy = accessHealthy);
+
+      if (!accessHealthy) {
         await _renewAccessToken();
+      }
+
+      if (!refreshHealthy) {
+        final success = await _renewRefreshToken();
+        if (!success) {
+          await _logout();
+        }
       }
     }
   }
 
   Future<void> _renewAccessToken() async {
-    final url = const String.fromEnvironment('BACKEND_ENDPOINT') + '/user-manager/renew/access_token';
+    final url = const String.fromEnvironment('BACKEND_ENDPOINT') + '/token-manager/renew/access_token';
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('access_token');
     if (token == null) return;
