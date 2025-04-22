@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,10 +11,20 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   String? _errorMessage;
+
+  late final Dio _dio;
+
+  @override
+  void initState() {
+    super.initState();
+    _dio = Dio(BaseOptions(
+      baseUrl: const String.fromEnvironment('BACKEND_ENDPOINT'),
+      headers: {'Content-Type': 'application/json'},
+    ));
+  }
 
   @override
   void dispose() {
@@ -27,52 +34,47 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _submitLogin() async {
-    setState(() {
-      _errorMessage = null;
-    });
+    setState(() => _errorMessage = null);
 
     if (_formKey.currentState!.validate()) {
       final username = _usernameController.text;
       final password = _passwordController.text;
 
       try {
-        final url = const String.fromEnvironment('BACKEND_ENDPOINT') + '/token-manager/token';
-        final response = await http.post(
-          Uri.parse(url),
-          headers: {'Content-Type': 'application/json'},
-          body: json.encode({
+        final response = await _dio.post(
+          '/token-manager/token',
+          data: {
             'username': username,
             'password': password,
-          }),
+          },
+          options: Options(extra: {'withCredentials': true}),
         );
 
         if (response.statusCode == 200) {
-          final responseData = jsonDecode(response.body);
+          final data = response.data;
           final prefs = await SharedPreferences.getInstance();
-          await prefs.setString('access_token', responseData['access_token']);
-          if (responseData.containsKey('refresh_token')) {
-            await prefs.setString('refresh_token', responseData['refresh_token']);
+          await prefs.setString('access_token', data['access_token']);
+          if (data.containsKey('refresh_token')) {
+            await prefs.setString('refresh_token', data['refresh_token']);
           }
+
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('로그인 성공! ${responseData}')),
+            SnackBar(content: Text('로그인 성공! $data')),
           );
+
           final tabController = DefaultTabController.of(context);
           if (tabController != null) {
             tabController.animateTo(0);
           }
-        } else if (response.statusCode == 401) {
-          setState(() {
-            _errorMessage = '아이디 또는 비밀번호가 올바르지 않습니다.';
-          });
-        } else {
-          setState(() {
-            _errorMessage = '로그인에 실패했습니다. 다시 시도해주세요.';
-          });
         }
-      } catch (e) {
-        setState(() {
-          _errorMessage = '서버에 연결할 수 없습니다.';
-        });
+      } on DioException catch (e) {
+        if (e.response?.statusCode == 401) {
+          setState(() => _errorMessage = '아이디 또는 비밀번호가 올바르지 않습니다.');
+        } else {
+          setState(() => _errorMessage = '로그인에 실패했습니다. 다시 시도해주세요.');
+        }
+      } catch (_) {
+        setState(() => _errorMessage = '서버에 연결할 수 없습니다.');
       }
     }
   }
