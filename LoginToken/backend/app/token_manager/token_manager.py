@@ -126,7 +126,7 @@ def renew_access_token(
     access_token: Annotated[dict, Depends(utils.verify_access_token)],
 ):
     username = access_token.get('sub')
-    if not user:
+    if not username:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail='Unauthorized access token')
 
@@ -155,7 +155,7 @@ def renew_refresh_token(
     refresh_token: Annotated[dict, Depends(utils.verify_refresh_token)],
 ):
     username = refresh_token.get('sub')
-    if not user:
+    if not username:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail='Unauthorized refresh token')
 
