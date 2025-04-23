@@ -87,7 +87,7 @@ async def post_token(
         httponly=True,
         max_age=conf.REFRESH_TOKEN_EXPIRE_SECONDS,
         secure=conf.COOKIE_SECURE,
-        samesite='none', # lax로 변경 필요
+        samesite='lax',
         path=conf.COOKIE_PATH,
     )
 
@@ -189,7 +189,7 @@ def renew_refresh_token(
         httponly=True,
         max_age=conf.REFRESH_TOKEN_EXPIRE_SECONDS,
         secure=conf.COOKIE_SECURE,
-        samesite='none', # lax로 변경 필요
+        samesite='lax',
         path=conf.COOKIE_PATH,
     )
 
