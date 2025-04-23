@@ -134,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (token == null) return false;
 
     try {
-      final response = await _dio.post('/user-manager/renew/refresh_token',
+      final response = await _dio.post('/token-manager/renew/refresh_token',
           options: Options(headers: {'Authorization': 'Bearer $token'}, extra: {'withCredentials': true}));
       if (response.statusCode == 200) {
         final newToken = response.data['access_token'];
