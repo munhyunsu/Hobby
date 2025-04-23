@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
+import 'package:dio/dio.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -21,6 +18,17 @@ class _RegisterPageState extends State<RegisterPage> {
   String? _errorMessage;
 
   final _usernameRegExp = RegExp(r'^[a-zA-Z0-9_]+$');
+
+  late final Dio _dio;
+
+  @override
+  void initState() {
+    super.initState();
+    _dio = Dio(BaseOptions(
+      baseUrl: const String.fromEnvironment('BACKEND_ENDPOINT'),
+      headers: {'Content-Type': 'application/json'},
+    ));
+  }
 
   @override
   void dispose() {
@@ -50,16 +58,15 @@ class _RegisterPageState extends State<RegisterPage> {
       }
 
       try {
-        final url = const String.fromEnvironment('BACKEND_ENDPOINT') + '/user-manager/user';
-        final response = await http.post(
-          Uri.parse(url),
-          headers: {'Content-Type': 'application/json'},
-          body: json.encode({
+        final response = await _dio.post(
+          '/user-manager/user',
+          data: {
             'username': username,
             'email': email,
             'password': password,
             'confirm_password': confirmPassword,
-          }),
+          },
+          options: Options(extra: {'withCredentials': true}),
         );
 
         if (response.statusCode == 200 || response.statusCode == 201) {
@@ -70,7 +77,9 @@ class _RegisterPageState extends State<RegisterPage> {
           if (tabController != null) {
             tabController.animateTo(0);
           }
-        } else if (response.statusCode == 409) {
+        }
+      } on DioException catch (e) {
+        if (e.response?.statusCode == 409) {
           setState(() {
             _errorMessage = '이미 사용 중인 사용자 이름 또는 이메일입니다.';
           });
