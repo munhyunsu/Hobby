@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
       final refresh = data['refresh_token'];
 
       setState(() {
-        _username = access['username'];
+        _username = access['sub'];
         _exp = (access['exp'] as num).toInt();
         _refreshExp = (refresh['exp'] as num).toInt();
       });
