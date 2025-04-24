@@ -208,7 +208,7 @@ def renew_token(
                             detail='Unauthorized refresh token')
 
     now = datetime.datetime.now(tz=datetime.UTC).timestamp()
-    exp = access_token_layload.get('exp', 0)
+    exp = access_token_payload.get('exp', 0)
     remaining = exp - now
     if remaining > conf.ACCESS_TOKEN_UNHEALTHY_SECONDS:
         raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
