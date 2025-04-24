@@ -56,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       if (_exp != null && _exp! - _now < 30) {
         await _checkHealthAndRefresh();
+        await _checkHealthAndRefresh();
       }
 
       if (_refreshExp != null && _refreshExp! <= _now) {
@@ -100,10 +101,16 @@ class _MyHomePageState extends State<MyHomePage> {
       final refreshHealthy = refresh['is_healthy'] as bool;
 
       setState(() => _isHealthy = accessHealthy);
-
+      
+      /*
       if (!accessHealthy) await _renewAccessToken();
       if (!refreshHealthy) {
         final success = await _renewRefreshToken();
+        if (!success) await _logout();
+      }
+      */
+      if (!accessHealthy) {
+        final success = await _renewToken();
         if (!success) await _logout();
       }
     } catch (_) {}
@@ -142,6 +149,27 @@ class _MyHomePageState extends State<MyHomePage> {
         await _loadTokenInfo();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Refresh token 자동 갱신됨')),
+        );
+        return true;
+      }
+    } catch (_) {}
+    return false;
+  }
+
+  Future<bool> _renewToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('access_token');
+    if (token == null) return false;
+
+    try {
+      final response = await _dio.post('/token-manager/renew/token',
+          options: Options(headers: {'Authorization': 'Bearer $token'}, extra: {'withCredentials': true}));
+      if (response.statusCode == 200) {
+        final newToken = response.data['access_token'];
+        await prefs.setString('access_token', newToken);
+        await _loadTokenInfo();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Access token, Refresh token 자동 갱신됨')),
         );
         return true;
       }

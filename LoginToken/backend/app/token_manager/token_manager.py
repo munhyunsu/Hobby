@@ -195,3 +195,54 @@ def renew_refresh_token(
 
     return {'token_type': 'bearer', 'access_token': access_token}
 
+
+@router.post('/renew/token', response_model=schemas.Token)
+def renew_token(
+    response: Response,
+    access_token_payload: Annotated[str, Depends(utils.decode_access_token)],
+    refresh_token: Annotated[dict, Depends(utils.verify_refresh_token)],
+):
+    username = refresh_token.get('sub')
+    if not username:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail='Unauthorized refresh token')
+
+    now = datetime.datetime.now(tz=datetime.UTC).timestamp()
+    exp = access_token_layload.get('exp', 0)
+    remaining = exp - now
+    if remaining > conf.ACCESS_TOKEN_UNHEALTHY_SECONDS:
+        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
+                            detail='Access token still healthy')
+
+    access_expires_delta = datetime.timedelta(
+        seconds=conf.ACCESS_TOKEN_EXPIRE_SECONDS
+    )
+    access_token = utils.create_jwt(
+        data={'sub': username},
+        expires_delta=access_expires_delta
+    )
+
+    now = datetime.datetime.now(tz=datetime.UTC).timestamp()
+    exp = refresh_token.get('exp', 0)
+    remaining = exp - now
+    if remaining <= conf.REFRESH_TOKEN_UNHEALTHY_SECONDS:
+        refresh_expires_delta = datetime.timedelta(
+            seconds=conf.REFRESH_TOKEN_EXPIRE_SECONDS
+        )
+        refresh_token = utils.create_jwt(
+            data={'sub': username},
+            expires_delta=refresh_expires_delta
+        )
+
+        response.set_cookie(
+            key='refresh_token',
+            value=refresh_token,
+            httponly=True,
+            max_age=conf.REFRESH_TOKEN_EXPIRE_SECONDS,
+            secure=conf.COOKIE_SECURE,
+            samesite='lax',
+            path=conf.COOKIE_PATH,
+        )
+
+    return {'token_type': 'bearer', 'access_token': access_token}
+
