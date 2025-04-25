@@ -20,6 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int? _refreshExp;
   int _now = DateTime.now().toUtc().millisecondsSinceEpoch ~/ 1000;
   bool _isHealthy = true;
+  final int _tokenCheckSeconds = int.tryParse(const String.fromEnvironment('TOKEN_CHECK_SECONDS')) ?? 30;
 
   late final Dio _dio;
   final CookieJar _cookieJar = CookieJar();
@@ -54,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _now = DateTime.now().toUtc().millisecondsSinceEpoch ~/ 1000;
       });
 
-      if (_exp != null && _exp! - _now < 30) {
+      if (_exp != null && _exp! - _now < _tokenCheckSeconds) {
         await _checkHealthAndRefresh();
         await _checkHealthAndRefresh();
       }
