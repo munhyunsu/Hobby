@@ -1,14 +1,21 @@
 $NodeVersion = "v22.14.0"
 $BaseUrl = "https://nodejs.org/dist/$NodeVersion"
 
-$Arch = $(if ([System.Environment]::Is64BitOperatingSystem) {"x64"} else {"x86"})
+$Arch = $(if ([System.Environment]::Is64BitOperatingSystem) { 
+    if ($ENV:PROCESSOR_ARCHITECTURE -eq "ARM64") { "arm64" } else { "x64" } 
+} else { 
+    "x86" 
+})
+
 $OS = $env:OS
 
 if ($OS -match "Windows_NT") {
-    if ($ENV:PROCESSOR_ARCHITECTURE -eq "ARM64") {
+    if ($Arch -eq "arm64") {
         $NodeTar = "node-$NodeVersion-win-arm64.zip"
+    } elseif ($Arch -eq "x64") {
+        $NodeTar = "node-$NodeVersion-win-x64.zip"
     } else {
-        $NodeTar = "node-$NodeVersion-win-$Arch.zip"
+        $NodeTar = "node-$NodeVersion-win-x86.zip"
     }
 } else {
     Write-Host "Unsupported OS: $OS"
