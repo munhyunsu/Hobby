@@ -10,12 +10,20 @@ $Arch = $(if ([System.Environment]::Is64BitOperatingSystem) {
 $OS = $env:OS
 
 if ($OS -match "Windows_NT") {
-    if ($Arch -eq "arm64") {
-        $NodeTar = "node-$NodeVersion-win-arm64.zip"
-    } elseif ($Arch -eq "x64") {
-        $NodeTar = "node-$NodeVersion-win-x64.zip"
-    } else {
-        $NodeTar = "node-$NodeVersion-win-x86.zip"
+    switch ($Arch) {
+        "arm64" {
+            $NodeTar = "node-$NodeVersion-win-arm64.zip"
+        }
+        "x64" {
+            $NodeTar = "node-$NodeVersion-win-x64.zip"
+        }
+        "x86" {
+            $NodeTar = "node-$NodeVersion-win-x86.zip"
+        }
+        default {
+            Write-Host "Unsupported architecture: $Arch"
+            exit 1
+        }
     }
 } else {
     Write-Host "Unsupported OS: $OS"
