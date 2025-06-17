@@ -21,7 +21,7 @@ if ($OS -match "Windows_NT") {
             $NodeTar = "node-$NodeVersion-win-x86.zip"
         }
         default {
-            Write-Host "Unsupported architecture: $Arch"
+            Write-Host "NodeJS deos not support this architecture: $Arch"
             exit 1
         }
     }
