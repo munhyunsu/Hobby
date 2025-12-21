@@ -611,6 +611,5 @@ model Jwks {
 ```
 
 
-
 ## References
 - [Session Management](https://www.better-auth.com/docs/concepts/session-management)
