@@ -1,0 +1,5 @@
+pip
+wheel
+fastapi[standard]
+openai
+python-dotenv
