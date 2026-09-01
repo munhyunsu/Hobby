@@ -4,7 +4,7 @@ wheel
 ipykernel
 
 --find-links https://download.pytorch.org/whl/torch_stable.html
-torch==1.13.1
+torch==2.2.0
 torchvision==0.8.2+cpu
 torchaudio==0.7.2
 
