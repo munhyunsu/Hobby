@@ -12,6 +12,7 @@ REMOVE_DIRS=(
 )
 
 targets=()
+total_bytes=0
 
 echo "삭제 대상 검색 중..."
 echo
@@ -54,11 +55,35 @@ if ((${#targets[@]} == 0)); then
 fi
 
 for dir in "${targets[@]}"; do
-    echo "$dir"
+    # GNU du 기준: 바이트 단위 크기
+    size_bytes=$(du -sb -- "$dir" 2>/dev/null | cut -f1)
+
+    # 계산 실패 시 0 처리
+    if [[ -z "$size_bytes" ]]; then
+        size_bytes=0
+    fi
+
+    total_bytes=$((total_bytes + size_bytes))
+
+    # 사람이 읽기 쉬운 형식
+    size_human=$(du -sh -- "$dir" 2>/dev/null | cut -f1)
+
+    printf "%8s  %s\n" "$size_human" "$dir"
 done
 
 echo
-echo "총 ${#targets[@]}개의 디렉터리를 삭제합니다."
+echo "========================================"
+echo "요약"
+echo "========================================"
+echo "삭제 대상 : ${#targets[@]}개"
+
+if command -v numfmt >/dev/null 2>&1; then
+    total_human=$(numfmt --to=iec --suffix=B "$total_bytes")
+    echo "총 용량   : $total_human"
+else
+    echo "총 용량   : $total_bytes bytes"
+fi
+
 echo
 
 read -r -p "정말 삭제하시겠습니까? [y/N] " answer
